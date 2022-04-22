@@ -1,0 +1,34 @@
+main {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    max-width: 100%;
+}
+
+tr:nth-child(odd) {
+    background-color: #eee;
+}
+
+th {
+    background-color: #555;
+    color: #fff;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 0.5em 1em;
+}
+.button {
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

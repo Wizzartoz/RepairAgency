@@ -1,0 +1,64 @@
+h1 { color: #000000; font-family: 'Raleway',sans-serif; font-size: 62px; font-weight: 800; line-height: 72px; margin: 0 0 24px; text-align: center; text-transform: uppercase; }
+
+h2 { color: #000000; font-family: 'Raleway',sans-serif; font-size: 30px; font-weight: 800; line-height: 36px; margin: 0 0 24px; text-align: center; }
+
+p { color: #030303; font-family: 'Raleway',sans-serif; font-size: 18px; font-weight: 500; line-height: 32px; margin: 0 0 24px; }
+
+a { color: #151010; text-decoration: underline; }
+
+a:hover { color: #1c1c1c; text-decoration: underline; }
+.background {
+    background: black;
+    background-blend-mode: darken;
+    background-size: cover;
+}
+.text-footer {
+    text-align: center;
+    padding: 30px 0;
+    font-family: 'Ubuntu', sans-serif;
+    display: flex;
+    justify-content: center;
+    color: white;
+}
+.firstsection {
+    background-color: #f0f2f5;
+    height: 800px;
+}
+.box-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    max-width: 80%;
+    margin: auto;
+    height: 80%;
+}
+.navbar {
+    display: flex;
+    justify-content: right;
+    position: sticky;
+    top: 0;
+    cursor: pointer;
+}
+.background {
+    background: #151010;
+    background-blend-mode: darken;
+    background-size: cover;
+}
+#back-info {
+    font-size: 20px;
+}
+.nav-list li a {
+    text-decoration: none;
+    color: white;
+}
+.nav-list {
+    width: 70%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-list li {
+    list-style: none;
+    padding: 26px 30px;
+}
