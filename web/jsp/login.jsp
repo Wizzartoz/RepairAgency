@@ -20,7 +20,7 @@
         <div class="colm-form">
             <div class="form-container">
                 <form action="LoginServlet" method="post">
-                    <p>${requestScope.result}</p>
+                    <b>${requestScope.result}</b>
                 <input  type="text" placeholder="Login" name="login">
                 <input  type="password" placeholder="Password" name="pass">
                 <button class="btn-login">Login</button>

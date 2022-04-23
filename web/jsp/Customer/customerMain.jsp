@@ -26,21 +26,23 @@
 </nav>
 <section class="firstsection">
     <div class="form_text">
-    ${requestScope.sendRequest}<br>
-    <h1>Enter your request</h1>
-    <form class="request" action="CustomerSecondServlet" method="post">
-        <input id="request" type="text" name="user_message">
-        <button class="btn-login" type="submit">Send</button>
-    </form>
+        ${requestScope.sendRequest}<br>
+        <h1>Enter your request</h1>
+        <form class="request" action="CustomerSecondServlet" method="post">
+            <input id="request" type="text" name="user_message">
+            <button class="btn-login" type="submit">Send</button>
+        </form>
     </div>
-    <br>Здесь ты можешь пополнить свой счёт<br>
-    <b>${requestScope.replenishment}</b>
-    <form action="CustomerServlet" method="post">
-        <label>money:
-            <input type="number" name="money"><br/>
-        </label>
-        <button type="submit">replenishment</button>
-    </form>
+    <div class="form_text">
+        <br>Здесь ты можешь пополнить свой счёт<br>
+        <b>${requestScope.replenishment}</b>
+        <form action="CustomerServlet" method="post">
+            <label>money:
+                <input type="number" name="money"><br/>
+            </label>
+            <button class="btn-login" type="submit">replenishment</button>
+        </form>
+    </div>
 </section>
 <footer class="background">
     <p class="text-footer">

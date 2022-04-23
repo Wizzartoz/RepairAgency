@@ -15,17 +15,15 @@ public class Login implements Command {
         String login = req.getParameter("login");
         String password = req.getParameter("pass");
         if (login.isEmpty() || password.isEmpty()) {
-            return "Password or Login is empty";
+            req.setAttribute("result","Password or Login is empty");
+            return "/jsp/login.jsp";
         }
         User user;
         try {
             user = new UserDAO().getUser(login);
         } catch (DBException e) {
-            req.setAttribute("error",e.getMessage());
-            return "error";
-        }
-        if (user == null){
-            return "User didn't exist";
+            req.setAttribute("result","user didn't exist");
+            return "/jsp/login.jsp";
         }
         if (user.getPassword().equals(password)){
             httpSession.setAttribute("login",login);
@@ -34,6 +32,7 @@ public class Login implements Command {
             if (user.getRole().equals("MANAGER")) return "/ManagerServlet";
             if (user.getRole().equals("MASTER")) return "/MasterServlet";
         }
-        return "Wrong password";
+        req.setAttribute("result","Wrong password");
+        return "/jsp/login.jsp";
     }
 }

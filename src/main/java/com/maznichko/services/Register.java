@@ -20,16 +20,17 @@ public class Register implements Command {
         String password = req.getParameter("pass");
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
-        UserDAO userDAO = new UserDAO();
-
         if (login.isEmpty() || password.isEmpty()) {
-            return "Password or Login is empty";
+            req.setAttribute("result","Login or Password is empty");
+            return "/jsp/register.jsp";
         }
         if (name.isEmpty() || surname.isEmpty()) {
-            return "Name or Surname is empty";
+            req.setAttribute("result","Name or Surname is empty");
+            return "/jsp/register.jsp";
         }
         if (email.isEmpty()) {
-            return "Email is empty";
+            req.setAttribute("result","Email is empty");
+            return "/jsp/register.jsp";
         }
         User user = new User();
         user.setRole("CUSTOMER");
@@ -39,23 +40,15 @@ public class Register implements Command {
         user.setSurname(surname);
         user.setPhone(phone);
         user.setEmail(email);
-        User userCheck;
         try {
-            userCheck = userDAO.getUser(login);
+            new UserDAO().insertUser(user);
         } catch (DBException e) {
-            throw new RuntimeException(e);
-        }
-        if (userCheck != null)
-            return "User exist yet";
-        try {
-            userDAO.insertUser(user);
-        } catch (DBException e) {
-            req.setAttribute("error",e.getMessage());
-            return "error";
+            req.setAttribute("result","user already exists");
+            return "/jsp/register.jsp";
         }
         httpSession.setAttribute("login",login);
         httpSession.setAttribute("role","CUSTOMER");
-        return "Registration was completed";
+        return "/jsp/register.jsp";
     }
 }
 
