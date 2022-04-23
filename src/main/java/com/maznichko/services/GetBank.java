@@ -17,12 +17,9 @@ public class GetBank implements Command {
         try {
             user = new UserDAO().getUser(login);
         } catch (DBException e) {
-            return "false";
+            return "/jsp/Error.jsp";
         }
-        if (user.getBank() != null) {
-            httpSession.setAttribute("bank", user.getBank());
-            return "true";
-        }
-        return "false";
+        httpSession.setAttribute("bank", user.getBank());
+        return "/jsp/Customer/customerMain.jsp";
     }
 }

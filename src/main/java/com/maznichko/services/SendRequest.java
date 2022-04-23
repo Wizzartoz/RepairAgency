@@ -12,22 +12,25 @@ public class SendRequest implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession httpSession = req.getSession();
-        Request request1 = new Request();
-        request1.setDescription(req.getParameter("user_message"));
-        request1.setPrice(0f);
-        request1.setPaymentStatus("unpaid");
-        request1.setComplicationStatus("under consideration");
+        String login = (String) httpSession.getAttribute("login");
+        Request request = new Request();
+        request.setDescription(req.getParameter("user_message"));
+        request.setPrice(0f);
+        request.setPaymentStatus("unpaid");
+        request.setComplicationStatus("under consideration");
         try {
-            new RequestDAO().insertRequest(request1);
+            new RequestDAO().insertRequest(request);
         } catch (DBException e) {
-            return "false";
+            req.setAttribute("result",e.getMessage());
+            return "/jsp/Error.jsp";
         }
         try {
-            new RequestDAO().insertRequestInUserRequest((String) httpSession.getAttribute("login"), request1.getRequestID());
+            new RequestDAO().insertRequestInUserRequest(login, request.getRequestID());
         } catch (DBException e) {
-            return "false";
+            req.setAttribute("result",e.getMessage());
+            return "/jsp/Error.jsp";
         }
-        req.setAttribute("sendRequest", "you have successfully submitted your request");
-        return "true";
+        req.setAttribute("result", "you have successfully submitted your request");
+        return "/GeneralCustomerServlet";
     }
 }

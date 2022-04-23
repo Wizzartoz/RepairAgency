@@ -28,7 +28,7 @@ public class Login implements Command {
         if (user.getPassword().equals(password)){
             httpSession.setAttribute("login",login);
             httpSession.setAttribute("role",user.getRole());
-            if (user.getRole().equals("CUSTOMER")) return "/CustomerServlet";
+            if (user.getRole().equals("CUSTOMER")) return "/GeneralCustomerServlet";
             if (user.getRole().equals("MANAGER")) return "/ManagerServlet";
             if (user.getRole().equals("MASTER")) return "/MasterServlet";
         }

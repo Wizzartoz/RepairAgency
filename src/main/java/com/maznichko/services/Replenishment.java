@@ -14,29 +14,39 @@ public class Replenishment implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession httpSession = req.getSession();
-            Integer money = Integer.valueOf(req.getParameter("money"));
-            if (money <= 0) {
-                req.setAttribute("replenishment", "enter a positive number");
-                return "false";
-            }
-            UserDAO userDAO = new UserDAO();
-            User user;
-            try {
-                user = userDAO.getUser((String) httpSession.getAttribute("login"));
-            } catch (DBException e) {
-                throw new RuntimeException(e);
-            }
-            if (user != null) {
-                int wallet = user.getBank();
-                user.setBank(money + wallet);
-                try {
-                    userDAO.updateUser(user);
-                    return "true";
-                } catch (DBException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            return "false";
+        String login = (String) httpSession.getAttribute("login");
+        int money;
+        try {
+            money = Integer.parseInt(req.getParameter("money"));
+        } catch (NumberFormatException e) {
+            req.setAttribute("result", "you didn't enter anything");
+            return "/GeneralCustomerServlet";
         }
+
+        if (money <= 0) {
+            req.setAttribute("result", "Enter a positive number");
+            return "/GeneralCustomerServlet";
+        }
+        UserDAO userDAO = new UserDAO();
+        User user;
+        try {
+            user = userDAO.getUser(login);
+        } catch (DBException e) {
+            req.setAttribute("result", e.getMessage());
+            return "/jsp/Error.jsp";
+        }
+        if (user != null) {
+            int wallet = user.getBank();
+            user.setBank(money + wallet);
+            try {
+                userDAO.updateUser(user);
+                return "/GeneralCustomerServlet";
+            } catch (DBException e) {
+                req.setAttribute("result", e.getMessage());
+                return "/jsp/Error.jsp";
+            }
+        }
+        return "/jsp/Error.jsp";
     }
+}
 

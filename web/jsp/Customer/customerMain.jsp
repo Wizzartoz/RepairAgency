@@ -28,7 +28,7 @@
     <div class="form_text">
         ${requestScope.sendRequest}<br>
         <h1>Enter your request</h1>
-        <form class="request" action="CustomerSecondServlet" method="post">
+        <form class="request" action="GeneralCustomerServlet" method="post">
             <input id="request" type="text" name="user_message">
             <button class="btn-login" type="submit">Send</button>
         </form>
@@ -36,7 +36,7 @@
     <div class="form_text">
         <br>Здесь ты можешь пополнить свой счёт<br>
         <b>${requestScope.replenishment}</b>
-        <form action="CustomerServlet" method="post">
+        <form action="GeneralCustomerServlet" method="post">
             <label>money:
                 <input type="number" name="money"><br/>
             </label>

@@ -48,7 +48,7 @@ public class Register implements Command {
         }
         httpSession.setAttribute("login",login);
         httpSession.setAttribute("role","CUSTOMER");
-        return "/jsp/register.jsp";
+        return "/GeneralCustomerServlet";
     }
 }
 
