@@ -1,12 +1,12 @@
 #request{
     height: 400px;
     width: 800px;
-    background-color:whitesmoke;
+    background-color:white;
     border: none;
     border-radius: 6px;
     font-size: 20px;
     padding: 0 16px;
-    color: #ffffff;
+    color: black;
     font-weight: 700;
 }
 .form_text{

@@ -23,6 +23,7 @@ public class ReplenishmentCustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = new Replenishment();
         String res = command.execute(request, response);
-        response.sendRedirect(String.format("ReplenishmentCustomerServlet?res=%s&result=%s", res, request.getAttribute("result")));
+        String result = (String) request.getAttribute("result");
+        response.sendRedirect(String.format("ReplenishmentCustomerServlet?res=%s&result=%s", res, result));
     }
 }

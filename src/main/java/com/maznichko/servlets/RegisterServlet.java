@@ -17,6 +17,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         Command command = new Register();
         String result = command.execute(request, response);
         RequestDispatcher dispatcher = request.getRequestDispatcher(result);

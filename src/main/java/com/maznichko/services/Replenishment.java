@@ -40,6 +40,7 @@ public class Replenishment implements Command {
             user.setBank(money + wallet);
             try {
                 userDAO.updateUser(user);
+                req.setAttribute("result", "payment was successful");
                 return "/GeneralCustomerServlet";
             } catch (DBException e) {
                 req.setAttribute("result", e.getMessage());

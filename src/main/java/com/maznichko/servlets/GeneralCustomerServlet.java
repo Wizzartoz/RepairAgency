@@ -17,6 +17,7 @@ public class GeneralCustomerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         HttpSession httpSession = request.getSession();
         Command command = new GetBank();
         String result = command.execute(request, response);
@@ -27,6 +28,7 @@ public class GeneralCustomerServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/RequestCustomerServlet");
             dispatcher.forward(request, response);
         } else {;
+            request.setAttribute("result",request.getParameter("result"));
             Integer bank = (Integer) httpSession.getAttribute("bank");
             request.setAttribute("bank", bank);
             RequestDispatcher dispatcher = request.getRequestDispatcher(result);

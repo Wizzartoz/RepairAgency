@@ -15,7 +15,6 @@
 <body>
 <nav class="navbar background">
     <ul class="nav-list">
-        <li><h3>Customer</h3></li>
         <li>
             <div class="pill-nav">
                 <a href="RequestServlet">Requests</a>
@@ -35,13 +34,15 @@
     </div>
     <div class="form_text">
         <br>Здесь ты можешь пополнить свой счёт<br>
-        <b>${requestScope.replenishment}</b>
         <form action="GeneralCustomerServlet" method="post">
             <label>money:
                 <input type="number" name="money"><br/>
             </label>
             <button class="btn-login" type="submit">replenishment</button>
         </form>
+    </div>
+    <div>
+        <b>${requestScope.result}</b>
     </div>
 </section>
 <footer class="background">

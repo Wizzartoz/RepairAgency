@@ -13,8 +13,13 @@ public class SendRequest implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession httpSession = req.getSession();
         String login = (String) httpSession.getAttribute("login");
+        String message = req.getParameter("user_message");
+        if (message.isEmpty()){
+            req.setAttribute("result", "you sent an empty field");
+            return "/GeneralCustomerServlet";
+        }
         Request request = new Request();
-        request.setDescription(req.getParameter("user_message"));
+        request.setDescription(message);
         request.setPrice(0f);
         request.setPaymentStatus("unpaid");
         request.setComplicationStatus("under consideration");
