@@ -11,23 +11,29 @@ import javax.servlet.http.HttpSession;
 public class LeaveFeedback implements Command{
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String feedbackText = req.getParameter("feedback");
-        int rating = Integer.parseInt(req.getParameter("rating"));
-        FeedbackDAO feedbackDAO = new FeedbackDAO();
         HttpSession httpSession = req.getSession();
-        int id = Integer.parseInt((String) httpSession.getAttribute("feedbackID"));
-        Feedback feedback = new Feedback();
-        feedback.setFeedbackText(feedbackText);
-        feedback.setRating(rating);
-        feedback.setRequestID(id);
-        feedback.setMasterLogin("hoho");
-        try {
-            feedbackDAO.insertFeedback(feedback);
-        } catch (DBException e) {
-            req.setAttribute("resultFeedback","Can't leave a comment");
-            return "false";
+        if (httpSession.getAttribute("q")==null){
+            String feedbackText = req.getParameter("feedback");
+            int rating = Integer.parseInt(req.getParameter("rating"));
+            FeedbackDAO feedbackDAO = new FeedbackDAO();
+            int id = Integer.parseInt((String) httpSession.getAttribute("feedbackID"));
+            Feedback feedback = new Feedback();
+            feedback.setFeedbackText(feedbackText);
+            feedback.setRating(rating);
+            feedback.setRequestID(id);
+            feedback.setMasterLogin("hoho");
+            try {
+                feedbackDAO.insertFeedback(feedback);
+            } catch (DBException e) {
+                req.setAttribute("resultFeedback","Can't leave a comment");
+                return "false";
+            }
+            req.setAttribute("resultFeedback","comment successfully posted");
+            httpSession.setAttribute("q",true);
+            return "true";
+
         }
-        req.setAttribute("resultFeedback","comment successfully posted");
-        return "true";
+        return "false";
+
     }
 }

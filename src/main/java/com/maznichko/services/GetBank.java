@@ -20,7 +20,7 @@ public class GetBank implements Command {
             return "false";
         }
         if (user.getBank() != null) {
-            req.setAttribute("bank", user.getBank());
+            httpSession.setAttribute("bank", user.getBank());
             return "true";
         }
         return "false";

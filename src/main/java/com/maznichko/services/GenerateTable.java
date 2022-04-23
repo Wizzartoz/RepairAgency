@@ -35,7 +35,7 @@ public class GenerateTable implements Command{
                         "<td>" + x.getDate().toString() + "</td>"+
                         String.format("<td><form method=\"post\" action=\"/RequestServlet?id=%s\"><input type=\"submit\" value=\"Delete\"/></form></td>",id)+
                     String.format("<td><form method=\"post\" action=\"/RequestServlet?price=%s&payment=%s&paymentID=%s\"><input type=\"submit\" value=\"Paid\"/></form></td>",price,paymentStatus,id)+
-                    String.format("<td><form method=\"post\" action=\"/RequestServlet?feedbackID=%s&comp=%s\"><input type=\"submit\" value=\"Feedback\"/></form></td>",id,compStatus)+
+                    String.format("<td><form method=\"post\" action=\"/FeedbackServlet?feedbackID=%s&comp=%s\"><input type=\"submit\" value=\"Feedback\"/></form></td>",id,compStatus)+
                         "</tr>";
         }).reduce(String::concat).orElse("s");
 

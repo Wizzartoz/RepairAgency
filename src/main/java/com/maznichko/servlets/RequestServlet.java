@@ -41,11 +41,6 @@ public class RequestServlet extends HttpServlet {
                 dispatcher.forward(request, response);
             }
         }
-
-        if (request.getParameter("rating") != null) {
-            commandFeedback.execute(request, response);
-        }
-
         String result = command.execute(request, response);
         request.setAttribute("table", result);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Customer/customerRequests.jsp");
