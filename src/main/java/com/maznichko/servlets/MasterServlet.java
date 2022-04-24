@@ -1,5 +1,8 @@
 package com.maznichko.servlets;
 
+import com.maznichko.services.GenerateMasterTable;
+import com.maznichko.services.GenerateTable;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -14,6 +17,7 @@ public class MasterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        new GenerateMasterTable().execute(request, response);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Master/masterMain.jsp");
         dispatcher.forward(request, response);
     }

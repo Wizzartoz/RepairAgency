@@ -12,6 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackDAO {
+    public static void main(String[] args) {
+        Feedback feedback;
+        try {
+            feedback = new FeedbackDAO().getFeedback(7);
+        } catch (DBException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(feedback.getFeedbackID());
+    }
 
     private Feedback createFeedback(ResultSet resultSet) throws DBException {
         Feedback feedback = new Feedback();
@@ -96,6 +105,7 @@ public class FeedbackDAO {
         }
         return feedback;
     }
+
 
     public List<Feedback> findAllFeedback() throws DBException {
         List<Feedback> feedbacks = new ArrayList<>();

@@ -11,9 +11,9 @@
     <title>feedback</title>
 </head>
 <body>
-${requestScope.result}
+<b>${requestScope.result}</b>
 <h4>Можете оставить отзыв о работе</h4>
-<form action="RequestServlet" method="post">
+<form action="FeedbackServlet" method="post">
     <label>rating:
         <input type="number" name="rating"><br/>
     </label>
@@ -22,6 +22,5 @@ ${requestScope.result}
     <textarea id="msg" name="feedback"></textarea>
     <button type="submit">Send your feedback</button>
 </form>
-
 </body>
 </html>

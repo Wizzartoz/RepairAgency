@@ -1,7 +1,6 @@
 package com.maznichko.servlets;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.RequestDAO;
+import com.maznichko.DAO.entity.Feedback;
 import com.maznichko.services.*;
 
 import javax.servlet.*;
@@ -16,22 +15,16 @@ public class RequestServlet extends HttpServlet {
         doPost(request, response);
     }
 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String res;
-        res = new GenerateTable().execute(request, response);
         if (request.getParameter("id") != null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/DeleteRequestServlet");
-            dispatcher.forward(request, response);
+            new DeleteRequest().execute(request, response);
         } else if (request.getParameter("price") != null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/PaidRequestServlet");
-            dispatcher.forward(request, response);
-        } else {
-            request.setAttribute("result", request.getParameter("result"));
-            RequestDispatcher dispatcher = request.getRequestDispatcher(res);
-            dispatcher.forward(request, response);
+            new Paid().execute(request, response);
         }
-
-
+        new GenerateTable().execute(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Customer/customerRequests.jsp");
+        dispatcher.forward(request, response);
     }
 }

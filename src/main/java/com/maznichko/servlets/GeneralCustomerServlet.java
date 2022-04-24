@@ -11,7 +11,7 @@ import java.io.IOException;
 public class GeneralCustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        doPost(request, response);
 
     }
 
@@ -28,7 +28,7 @@ public class GeneralCustomerServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/RequestCustomerServlet");
             dispatcher.forward(request, response);
         } else {
-            request.setAttribute("result",request.getParameter("result"));
+            request.setAttribute("result", request.getParameter("result"));
             Integer bank = (Integer) httpSession.getAttribute("bank");
             request.setAttribute("bank", bank);
             RequestDispatcher dispatcher = request.getRequestDispatcher(result);

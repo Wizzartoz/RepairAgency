@@ -12,6 +12,9 @@
     <title>requests</title>
 </head>
 <body>
+<form action="GeneralCustomerServlet" method="post">
+    <button class="btn-login" type="submit">back</button>
+</form>
 <h4>${requestScope.result}</h4><br>
 
 <table>
@@ -22,7 +25,6 @@
         <th>payment status</th>
         <th>complication status</th>
         <th>date</th>
-
     </tr>
     ${requestScope.table}
 </table>

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class GenerateTable implements Command {
+public class GenerateMasterTable implements Command{
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession httpSession = req.getSession();
@@ -18,7 +18,7 @@ public class GenerateTable implements Command {
         try {
             requests = new RequestDAO().getRequestByLogin(login);
         } catch (DBException e) {
-            req.setAttribute("result", e.getMessage());
+            req.setAttribute("result",e.getMessage());
             return "/jsp/Error.jsp";
         }
         String table = requests.stream().map(x -> {
@@ -33,12 +33,11 @@ public class GenerateTable implements Command {
                     "<td>" + x.getPaymentStatus() + "</td>" +
                     "<td>" + x.getComplicationStatus() + "</td>" +
                     "<td>" + x.getDate().toString() + "</td>" +
-                    String.format("<td><form method=\"post\" action=\"/RequestServlet?id=%s\"><input type=\"submit\" value=\"Delete\"/></form></td>", id) +
-                    String.format("<td><form method=\"post\" action=\"/RequestServlet?price=%s&payment=%s&paymentID=%s\"><input type=\"submit\" value=\"Paid\"/></form></td>", price, paymentStatus, id) +
-                    String.format("<td><form method=\"post\" action=\"/FeedbackServlet?feedbackID=%s&comp=%s\"><input type=\"submit\" value=\"Feedback\"/></form></td>", id, compStatus) +
+                    String.format("<td><form method=\"post\" action=\"/MasterServlet?id=%s\"><input type=\"submit\" value=\"Take\"/></form></td>", id) +
+                    String.format("<td><form method=\"post\" action=\"/MasterServlet?price=%s&payment=%s&paymentID=%s\"><input type=\"submit\" value=\"Done\"/></form></td>", price, paymentStatus, id) +
                     "</tr>";
         }).reduce(String::concat).orElse(null);
-        req.setAttribute("table", table);
+        req.setAttribute("table",requests);
         return "/jsp/Customer/customerRequests.jsp";
     }
 }
