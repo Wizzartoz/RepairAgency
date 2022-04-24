@@ -11,6 +11,7 @@
     <title>feedback</title>
 </head>
 <body>
+${requestScope.result}
 <h4>Можете оставить отзыв о работе</h4>
 <form action="RequestServlet" method="post">
     <label>rating:

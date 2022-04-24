@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS public."request"
     complication_status VARCHAR(50)    NOT NULL DEFAULT 'under consideration',
     payment_status      VARCHAR(50)    NOT NULL DEFAULT 'unpaid',
     price               float4         NOT NULL DEFAULT 0
-
 );
 
 CREATE TABLE IF NOT EXISTS public."user_request"
@@ -43,7 +42,7 @@ CREATE TABLE IF NOT EXISTS public."feedback"
     rating        INTEGER       NOT NULL,
     date          timestamp DEFAULT current_timestamp,
     id_request    INTEGER   NOT NULL,
-    master_login  VARCHAR(50)   NOT NULL,
+    master_login  VARCHAR(50),
     FOREIGN KEY (id_request) REFERENCES request (id_request)
 );
 

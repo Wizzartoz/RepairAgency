@@ -12,28 +12,23 @@ public class LeaveFeedback implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession httpSession = req.getSession();
-        if (httpSession.getAttribute("q") == null) {
-            String feedbackText = req.getParameter("feedback");
-            int rating = Integer.parseInt(req.getParameter("rating"));
-            FeedbackDAO feedbackDAO = new FeedbackDAO();
-            int id = Integer.parseInt((String) httpSession.getAttribute("feedbackID"));
-            Feedback feedback = new Feedback();
-            feedback.setFeedbackText(feedbackText);
-            feedback.setRating(rating);
-            feedback.setRequestID(id);
-            feedback.setMasterLogin("hoho");
-            try {
-                feedbackDAO.insertFeedback(feedback);
-            } catch (DBException e) {
-                req.setAttribute("resultFeedback", "Can't leave a comment");
-                return "false";
-            }
-            req.setAttribute("resultFeedback", "comment successfully posted");
-            httpSession.setAttribute("q", true);
-            return "true";
-
+        String feedbackText = req.getParameter("feedback");
+        int rating = Integer.parseInt(req.getParameter("rating"));
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        int id = Integer.parseInt((String) httpSession.getAttribute("feedbackID"));
+        Feedback feedback = new Feedback();
+        feedback.setFeedbackText(feedbackText);
+        feedback.setRating(rating);
+        feedback.setRequestID(id);
+        try {
+            feedbackDAO.insertFeedback(feedback);
+        } catch (DBException e) {
+            req.setAttribute("result", "Can't leave a comment");
+            return "/jsp/Error.jsp";
         }
-        return "false";
+        req.setAttribute("result", "comment successfully posted");
+        return "/jsp/Customer/feedback.jsp";
+
 
     }
 }

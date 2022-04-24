@@ -26,8 +26,8 @@ public class RequestServlet extends HttpServlet {
         } else if (request.getParameter("price") != null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/PaidRequestServlet");
             dispatcher.forward(request, response);
-        }else {
-            request.setAttribute("result",request.getParameter("result"));
+        } else {
+            request.setAttribute("result", request.getParameter("result"));
             RequestDispatcher dispatcher = request.getRequestDispatcher(res);
             dispatcher.forward(request, response);
         }
