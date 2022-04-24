@@ -27,7 +27,7 @@ public class GeneralCustomerServlet extends HttpServlet {
         } else if (request.getParameter("user_message") != null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/RequestCustomerServlet");
             dispatcher.forward(request, response);
-        } else {;
+        } else {
             request.setAttribute("result",request.getParameter("result"));
             Integer bank = (Integer) httpSession.getAttribute("bank");
             request.setAttribute("bank", bank);

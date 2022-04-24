@@ -10,18 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 public class DeleteRequest implements Command{
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        System.out.println(req.getParameter("id"));
         RequestDAO requestDAO = new RequestDAO();
-        req.setAttribute("error","you cannot delete request");
         try {
             Request request = requestDAO.getRequestByID(Integer.parseInt(req.getParameter("id")));
             if (!request.getComplicationStatus().equals("under consideration") || request.getPaymentStatus().equals("paid")){
-                return "false";
+                req.setAttribute("result","you cannot delete request");
+                return "/RequestServlet";
             }
             requestDAO.deleteRequest(Integer.parseInt(req.getParameter("id")));
         } catch (DBException e) {
-            return "false";
+            req.setAttribute("result",e.getMessage());
+            return "/jsp/Error.jsp";
         }
-        req.removeAttribute("error");
-        return "true";
+        req.setAttribute("result","deletion successful");
+        return "/RequestServlet";
     }
 }

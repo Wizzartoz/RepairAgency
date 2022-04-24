@@ -12,9 +12,8 @@
     <title>requests</title>
 </head>
 <body>
-<h4>${requestScope.error}</h4><br>
-<h4>${requestScope.paid}</h4>
-<h4>${requestScope.resultFeedback}</h4>
+<h4>${requestScope.result}</h4><br>
+
 <table>
     <tr>
         <th>id</th>

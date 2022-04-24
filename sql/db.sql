@@ -59,7 +59,7 @@ VALUES (DEFAULT, 'user3', 'Wizzartoz', 'misha2@mail.ru', '+380958316826', 'MANAG
 INSERT INTO request
 VALUES (DEFAULT, 'ВОТ ТАКАЯ ВОТ ЖИЗНЬ', DEFAULT, 'under consideration', 'unpaid', 100);
 INSERT INTO request
-VALUES (DEFAULT, 'ВОТ ТАКАЯ ВОТ ЖИЗНЬ', DEFAULT, 'under consideration', 'waiting for paid', 1000);
+VALUES (DEFAULT, 'ВОТ ТАКАЯ ВОТ ЖИЗНЬ', DEFAULT, 'under consideration', 'waiting for payment', 1000);
 INSERT INTO request
 VALUES (DEFAULT, 'ВОТ ТАКАЯ ВОТ ЖИЗНЬ', DEFAULT, 'done', 'paid', 250);
 

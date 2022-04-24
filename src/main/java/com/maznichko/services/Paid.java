@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class Paid implements Command{
+public class Paid implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         //PAYMENT STATUS : unpaid waiting for payment,paid,refused COMPLICATION STATUS : under consideration ,in progress , done
@@ -21,37 +21,41 @@ public class Paid implements Command{
         RequestDAO requestDAO = new RequestDAO();
         UserDAO userDAO = new UserDAO();
         String paidStatus = req.getParameter("payment");
-        if (paidStatus.equals("waiting for payment")){
-            User user = null;
+        if (paidStatus.equals("waiting for payment")) {
+            User user;
             try {
                 user = userDAO.getUser(login);
             } catch (DBException e) {
-                throw new RuntimeException(e);
+                req.setAttribute("result", e.getMessage());
+                return "/jsp/Error.jsp";
             }
-            if (user.getBank() >= price){
-                user.setBank(user.getBank() - (int)price);
+            if (user.getBank() >= price) {
+                user.setBank(user.getBank() - (int) price);
                 try {
                     userDAO.updateUser(user);
                 } catch (DBException e) {
-                    throw new RuntimeException(e);
+                    req.setAttribute("result", e.getMessage());
+                    return "/jsp/Error.jsp";
                 }
             }
-            Request request = null;
+            Request request;
             try {
                 request = requestDAO.getRequestByID(id);
             } catch (DBException e) {
-                throw new RuntimeException(e);
+                req.setAttribute("result", e.getMessage());
+                return "/jsp/Error.jsp";
             }
             request.setPaymentStatus("paid");
             try {
-               requestDAO.updateRequest(request);
+                requestDAO.updateRequest(request);
             } catch (DBException e) {
-                throw new RuntimeException(e);
+                req.setAttribute("result", e.getMessage());
+                return "/jsp/Error.jsp";
             }
-            req.setAttribute("paid","payment was successful");
-            return "true";
+            req.setAttribute("result", "payment was successful");
+            return "/RequestServlet";
         }
-        req.setAttribute("paid","payment failed");
-        return "false";
+        req.setAttribute("result", "payment failed");
+        return "/RequestServlet";
     }
 }

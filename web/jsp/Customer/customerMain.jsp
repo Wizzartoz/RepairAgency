@@ -25,7 +25,6 @@
 </nav>
 <section class="firstsection">
     <div class="form_text">
-        ${requestScope.sendRequest}<br>
         <h1>Enter your request</h1>
         <form class="request" action="GeneralCustomerServlet" method="post">
             <input id="request" type="text" name="user_message">
