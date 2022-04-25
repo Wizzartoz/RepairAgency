@@ -34,10 +34,10 @@ public class GenerateMasterTable implements Command{
                     "<td>" + x.getComplicationStatus() + "</td>" +
                     "<td>" + x.getDate().toString() + "</td>" +
                     String.format("<td><form method=\"post\" action=\"/MasterServlet?id=%s\"><input type=\"submit\" value=\"Take\"/></form></td>", id) +
-                    String.format("<td><form method=\"post\" action=\"/MasterServlet?price=%s&payment=%s&paymentID=%s\"><input type=\"submit\" value=\"Done\"/></form></td>", price, paymentStatus, id) +
+                    String.format("<td><form method=\"post\" action=\"/MasterServlet?doneID=%s\"><input type=\"submit\" value=\"Done\"/></form></td>",id) +
                     "</tr>";
         }).reduce(String::concat).orElse(null);
-        req.setAttribute("table",requests);
+        req.setAttribute("table",table);
         return "/jsp/Customer/customerRequests.jsp";
     }
 }

@@ -69,7 +69,7 @@ VALUES ('user1', 1);
 INSERT INTO user_request
 VALUES ('user1', 2);
 INSERT INTO user_request
-VALUES ('user2', 3);
+VALUES ('user1', 3);
 
 
 
