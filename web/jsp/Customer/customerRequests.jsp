@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <link href="${pageContext.request.contextPath}/css/customerRequest.css" rel="stylesheet" type="text/css">
@@ -26,7 +27,30 @@
         <th>complication status</th>
         <th>date</th>
     </tr>
-    ${requestScope.table}
+    <c:forEach var="request" items="${requestScope.table}">
+        <tr>
+            <td><c:out value="${request.requestID}"/></td>
+            <td><c:out value="${request.description}"/></td>
+            <td><c:out value="${request.price}"/></td>
+            <td><c:out value="${request.paymentStatus}"/></td>
+            <td><c:out value="${request.complicationStatus}"/></td>
+            <td><c:out value="${request.date}"/></td>
+            <td>
+                <form method="post" action=${pageContext.request.contextPath}/RequestServlet?id=${request.requestID}>
+                    <input type="submit" value="Delete"/></form>
+            </td>
+            <td>
+                <form method="post"
+                      action=${pageContext.request.contextPath}/RequestServlet?price=${request.price}&payment=${request.paymentStatus}&paymentID=${request.requestID}>
+                    <input type="submit" value="Paid"/></form>
+            </td>
+            <td>
+                <form method="post"
+                      action=${pageContext.request.contextPath}/FeedbackServlet?feedbackID=${request.requestID}&comp=${request.complicationStatus}>
+                    <input type="submit" value="Feedback"/></form>
+            </td>
+        </tr>
+    </c:forEach>
 </table>
 </body>
 </html>

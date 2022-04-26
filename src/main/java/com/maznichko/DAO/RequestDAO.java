@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestDAO {
+
     private Request createRequest(ResultSet resultSet) throws DBException {
         Request request = new Request();
         try {

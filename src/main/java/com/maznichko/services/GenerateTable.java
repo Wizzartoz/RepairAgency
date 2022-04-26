@@ -21,24 +21,7 @@ public class GenerateTable implements Command {
             req.setAttribute("result", e.getMessage());
             return "/jsp/Error.jsp";
         }
-        String table = requests.stream().map(x -> {
-            int id = x.getRequestID();
-            float price = x.getPrice();
-            String paymentStatus = x.getPaymentStatus();
-            String compStatus = x.getComplicationStatus();
-            return "<tr>" +
-                    "<td>" + x.getRequestID() + "</td>" +
-                    "<td>" + x.getDescription() + "</td>" +
-                    "<td>" + x.getPrice() + "</td>" +
-                    "<td>" + x.getPaymentStatus() + "</td>" +
-                    "<td>" + x.getComplicationStatus() + "</td>" +
-                    "<td>" + x.getDate().toString() + "</td>" +
-                    String.format("<td><form method=\"post\" action=\"/RequestServlet?id=%s\"><input type=\"submit\" value=\"Delete\"/></form></td>", id) +
-                    String.format("<td><form method=\"post\" action=\"/RequestServlet?price=%s&payment=%s&paymentID=%s\"><input type=\"submit\" value=\"Paid\"/></form></td>", price, paymentStatus, id) +
-                    String.format("<td><form method=\"post\" action=\"/FeedbackServlet?feedbackID=%s&comp=%s\"><input type=\"submit\" value=\"Feedback\"/></form></td>", id, compStatus) +
-                    "</tr>";
-        }).reduce(String::concat).orElse(null);
-        req.setAttribute("table", table);
+        req.setAttribute("table", requests);
         return "/jsp/Customer/customerRequests.jsp";
     }
 }

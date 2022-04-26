@@ -21,23 +21,7 @@ public class GenerateMasterTable implements Command{
             req.setAttribute("result",e.getMessage());
             return "/jsp/Error.jsp";
         }
-        String table = requests.stream().map(x -> {
-            int id = x.getRequestID();
-            float price = x.getPrice();
-            String paymentStatus = x.getPaymentStatus();
-            String compStatus = x.getComplicationStatus();
-            return "<tr>" +
-                    "<td>" + x.getRequestID() + "</td>" +
-                    "<td>" + x.getDescription() + "</td>" +
-                    "<td>" + x.getPrice() + "</td>" +
-                    "<td>" + x.getPaymentStatus() + "</td>" +
-                    "<td>" + x.getComplicationStatus() + "</td>" +
-                    "<td>" + x.getDate().toString() + "</td>" +
-                    String.format("<td><form method=\"post\" action=\"/MasterServlet?id=%s\"><input type=\"submit\" value=\"Take\"/></form></td>", id) +
-                    String.format("<td><form method=\"post\" action=\"/MasterServlet?doneID=%s\"><input type=\"submit\" value=\"Done\"/></form></td>",id) +
-                    "</tr>";
-        }).reduce(String::concat).orElse(null);
-        req.setAttribute("table",table);
-        return "/jsp/Customer/customerRequests.jsp";
+        req.setAttribute("table",requests);
+        return "/jsp/Master/masterRequests.jsp";
     }
 }
