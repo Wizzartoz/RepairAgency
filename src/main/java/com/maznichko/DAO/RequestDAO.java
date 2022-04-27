@@ -8,6 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestDAO {
+    public static void main(String[] args) {
+        List<Request> requests;
+        try {
+            requests = new RequestDAO().findAllRequestByLimit(5,0);
+        } catch (DBException e) {
+            throw new RuntimeException(e);
+        }
+        requests.forEach(System.out::println);
+    }
 
     private Request createRequest(ResultSet resultSet) throws DBException {
         Request request = new Request();
@@ -22,6 +31,32 @@ public class RequestDAO {
             throw new DBException("Create user was failed!", e);
         }
         return request;
+    }
+
+    public List<Request> findAllRequestByLimit(int limit,int offset) throws DBException {
+        List<Request> requests = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            connection = DBManager.getInstance().connect();
+            pstmt = connection.prepareStatement(SQLQuery.RequestQuery.SELECT_ALL_FROM_REQUEST_LIMIT);
+            pstmt.setInt(1,limit);
+            pstmt.setInt(2,offset);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Request request = createRequest(rs);
+                requests.add(request);
+            }
+        } catch (SQLException e) {
+            throw new DBException("Find all request was failed", e);
+        } finally {
+            DBManager.getInstance()
+                    .close(rs)
+                    .close(pstmt)
+                    .close(connection);
+        }
+        return requests;
     }
 
     public boolean insertRequest(Request request) throws DBException {

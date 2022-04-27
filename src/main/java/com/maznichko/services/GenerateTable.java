@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GenerateTable implements Command {
     @Override
@@ -21,7 +22,18 @@ public class GenerateTable implements Command {
             req.setAttribute("result", e.getMessage());
             return "/jsp/Error.jsp";
         }
-        req.setAttribute("table", requests);
+        int size = requests.size();
+        int countPage = 5;
+        int pages = size / countPage;
+        int offset;
+        if (req.getParameter("offset") == null) {
+            offset = 0;
+        } else {
+            offset = Integer.parseInt(req.getParameter("offset"));
+        }
+        req.setAttribute("pages", pages);
+        List<Request> table = requests.stream().skip(offset).limit(countPage).collect(Collectors.toList());
+        req.setAttribute("table", table);
         return "/jsp/Customer/customerRequests.jsp";
     }
 }

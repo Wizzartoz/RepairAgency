@@ -132,7 +132,7 @@
                 </div>
                 <form action="GeneralCustomerServlet" method="post">
                     <label for="exampleFormControlTextarea1" class="form-label">Request</label>
-                    <textarea style="height: 600px" name="user_message" class="form-control" id="exampleFormControlTextarea1"
+                    <textarea style="height: 400px" name="user_message" class="form-control" id="exampleFormControlTextarea1"
                               rows="3"></textarea>
                     <div class="d-grid gap-2">
                         <button class="btn btn-warning" type="submit">Send request</button>
@@ -141,6 +141,11 @@
                 <b class="text-center text-danger ali">${requestScope.result}</b>
             </div>
             <div class="col-6">
+                <ul class="pagination">
+                <c:forEach var="i" begin="0" end="${requestScope.pages}">
+                        <li class="page-item"><a class="page-link" href="GeneralCustomerServlet?offset=${i*5}">${i+1}</a></li>
+                </c:forEach>
+                </ul>
                 <table class="table table-hover">
                     <tr class="border-dark">
                         <th>id</th>
