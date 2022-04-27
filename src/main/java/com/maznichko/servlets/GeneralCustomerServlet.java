@@ -1,6 +1,7 @@
 package com.maznichko.servlets;
 
 import com.maznichko.services.Command;
+import com.maznichko.services.GenerateTable;
 import com.maznichko.services.GetBank;
 
 import javax.servlet.*;
@@ -21,6 +22,7 @@ public class GeneralCustomerServlet extends HttpServlet {
         HttpSession httpSession = request.getSession();
         Command command = new GetBank();
         String result = command.execute(request, response);
+        new GenerateTable().execute(request,response);
         if (request.getParameter("money") != null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/ReplenishmentCustomerServlet");
             dispatcher.forward(request, response);

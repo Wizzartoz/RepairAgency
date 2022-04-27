@@ -19,7 +19,6 @@
 </nav>
 <section class="firstsection">
     <div class="box-main">
-        <h2>Repair agent</h2>
         <p>
             We are an excellent repair agency, we have been working for 10 years,<br>
             our customers are satisfied with us, we can organize discounts for<br>

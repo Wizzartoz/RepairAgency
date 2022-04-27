@@ -18,13 +18,15 @@ public class RequestServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession httpSession = request.getSession();
         if (request.getParameter("id") != null) {
             new DeleteRequest().execute(request, response);
         } else if (request.getParameter("price") != null) {
             new Paid().execute(request, response);
         }
         new GenerateTable().execute(request, response);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Customer/customerRequests.jsp");
+        request.setAttribute("bank",httpSession.getAttribute("bank"));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Customer/customerMain.jsp");
         dispatcher.forward(request, response);
     }
 }

@@ -127,6 +127,10 @@ toggle between hiding and showing the dropdown content */
                     <td><c:out value="${request.paymentStatus}"/></td>
                     <td><c:out value="${request.complicationStatus}"/></td>
                     <td><c:out value="${request.date}"/></td>
+                    <td>
+                        <form method="post" action=${pageContext.request.contextPath}/ManagerEditServlet?req=${request}>
+                            <input type="submit" value="Edit"/></form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

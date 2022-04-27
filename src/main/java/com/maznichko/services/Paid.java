@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 public class Paid implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        //PAYMENT STATUS : unpaid waiting for payment,paid,refused COMPLICATION STATUS : under consideration ,in progress , done
+        //PAYMENT STATUS : unpaid waiting for payment,paid,refused COMPLICATION STATUS : under consideration,consideration ,in progress , done
         HttpSession httpSession = req.getSession();
         String login = (String) httpSession.getAttribute("login");
         float price = Float.parseFloat(req.getParameter("price"));
