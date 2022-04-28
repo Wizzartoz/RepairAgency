@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 public class Sort implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        //сюда я могу подставлять фильтры , оно будет с бд доставать нужную колекцию , в зависимости от атрибута
+        //и от этого выбирать нужную коллекцию
         List<Request> request;
         try {
             request = new RequestDAO().findAllRequest();

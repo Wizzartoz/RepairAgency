@@ -25,6 +25,7 @@ public class ManagerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        new GetBank().execute(request,response);
         new GetMasters().execute(request, response);
         if (request.getParameter("sort") != null) {
             new Sort().execute(request, response);
@@ -35,6 +36,8 @@ public class ManagerServlet extends HttpServlet {
         } else {
             new GenerateManagerTable().execute(request, response);
         }
+        HttpSession httpSession = request.getSession();
+        request.setAttribute("bank",httpSession.getAttribute("bank"));
         RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Manager/managerMain.jsp");
         dispatcher.forward(request, response);
     }

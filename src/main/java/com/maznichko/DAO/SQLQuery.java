@@ -18,6 +18,7 @@ public class SQLQuery {
         static final String DELETE_FROM_REQUEST = "DELETE FROM request WHERE id_request=?";
         static final String INSERT_INTO_USER_REQUEST = "INSERT INTO user_request VALUES(?,?)";
         static final String SELECT_ALL_FROM_REQUEST_LIMIT = "SELECT * FROM request LIMIT ? OFFSET ?";
+        static final String SELECT_ALL_FROM_REQUEST_WHERE_LIMIT = "SELECT * FROM user_request WHERE login=? LIMIT ? OFFSET ?";
 
     }
     static class RequestFeedback{

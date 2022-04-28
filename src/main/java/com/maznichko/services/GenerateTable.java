@@ -22,9 +22,9 @@ public class GenerateTable implements Command {
             req.setAttribute("result", e.getMessage());
             return "/jsp/Error.jsp";
         }
-        int size = requests.size();
-        int countPage = 5;
-        int pages = size / countPage;
+        double size = requests.size();
+        int countPage = 8;
+        int pages = (int) Math.ceil(size / countPage);
         int offset;
         if (req.getParameter("offset") == null) {
             offset = 0;
@@ -32,7 +32,7 @@ public class GenerateTable implements Command {
             offset = Integer.parseInt(req.getParameter("offset"));
         }
         req.setAttribute("pages", pages);
-        List<Request> table = requests.stream().skip(offset).limit(countPage).collect(Collectors.toList());
+        List<Request> table = requests.stream().sorted((x, y) -> x.getDate().compareTo(y.getDate())).skip(offset).limit(countPage).collect(Collectors.toList());
         req.setAttribute("table", table);
         return "/jsp/Customer/customerRequests.jsp";
     }

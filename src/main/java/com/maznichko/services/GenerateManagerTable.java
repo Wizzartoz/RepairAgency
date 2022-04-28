@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GenerateManagerTable implements Command {
     @Override
@@ -19,7 +20,18 @@ public class GenerateManagerTable implements Command {
             req.setAttribute("result", e.getMessage());
             return "/jsp/Error.jsp";
         }
-        req.setAttribute("table", requests);
+        double size = requests.size();
+        int countPage = 8;
+        int pages = (int) Math.ceil(size / countPage);
+        int offset;
+        if (req.getParameter("offset") == null) {
+            offset = 0;
+        } else {
+            offset = Integer.parseInt(req.getParameter("offset"));
+        }
+        req.setAttribute("pages", pages);
+        List<Request> table = requests.stream().sorted((x, y) -> x.getDate().compareTo(y.getDate())).skip(offset).limit(countPage).collect(Collectors.toList());
+        req.setAttribute("table", table);
         return "/jsp/Manager/managerMain.jsp";
     }
 }

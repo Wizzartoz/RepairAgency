@@ -19,7 +19,7 @@
 <form action="GeneralCustomerServlet" method="post">
     <button class="btn-login" type="submit">back</button>
 </form>
-<h4>${requestScope.result}</h4><br>
+<h4 class="text-danger" >${requestScope.result}</h4><br>
 
 <table class="table table-hover">
     <tr>

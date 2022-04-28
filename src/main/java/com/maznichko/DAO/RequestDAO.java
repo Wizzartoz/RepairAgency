@@ -8,15 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestDAO {
-    public static void main(String[] args) {
-        List<Request> requests;
-        try {
-            requests = new RequestDAO().findAllRequestByLimit(5,0);
-        } catch (DBException e) {
-            throw new RuntimeException(e);
-        }
-        requests.forEach(System.out::println);
-    }
 
     private Request createRequest(ResultSet resultSet) throws DBException {
         Request request = new Request();
@@ -33,7 +24,7 @@ public class RequestDAO {
         return request;
     }
 
-    public List<Request> findAllRequestByLimit(int limit,int offset) throws DBException {
+    public List<Request> findAllRequestByLimit(int limit, int offset) throws DBException {
         List<Request> requests = new ArrayList<>();
         Connection connection = null;
         PreparedStatement pstmt = null;
@@ -41,8 +32,8 @@ public class RequestDAO {
         try {
             connection = DBManager.getInstance().connect();
             pstmt = connection.prepareStatement(SQLQuery.RequestQuery.SELECT_ALL_FROM_REQUEST_LIMIT);
-            pstmt.setInt(1,limit);
-            pstmt.setInt(2,offset);
+            pstmt.setInt(1, limit);
+            pstmt.setInt(2, offset);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Request request = createRequest(rs);
@@ -54,6 +45,30 @@ public class RequestDAO {
             DBManager.getInstance()
                     .close(rs)
                     .close(pstmt)
+                    .close(connection);
+        }
+        return requests;
+    }
+
+    public List<Request> getRequestsByLimit(String login, int limit, int offset) throws DBException {
+        Connection connection = null;
+        PreparedStatement prGet = null;
+        List<Request> requests = new ArrayList<>();
+        try {
+            connection = DBManager.getInstance().connect();
+            prGet = connection.prepareStatement(SQLQuery.RequestQuery.SELECT_ALL_FROM_REQUEST_WHERE_LIMIT);
+            prGet.setString(1, login);
+            prGet.setInt(2,limit);
+            prGet.setInt(3,offset);
+            ResultSet rs = prGet.executeQuery();
+            while (rs.next()) {
+                Request request = getRequestByID(rs.getInt("id_request"));
+                requests.add(request);
+            }
+        } catch (SQLException e) {
+            throw new DBException("Get request by id was failed", e);
+        } finally {
+            DBManager.getInstance().close(prGet)
                     .close(connection);
         }
         return requests;

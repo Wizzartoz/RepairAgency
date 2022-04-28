@@ -21,7 +21,10 @@
 <header>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-xxl">
-            <a class="navbar-brand text-white" href="GeneralCustomerServlet">RepairAgent</a>
+            <ul class="nav">
+                <li><a class="navbar-brand text-white"
+                       href="${pageContext.request.contextPath}/GeneralCustomerServlet">RepairAgent</a></li>
+            </ul>
             <ul class="nav">
                 <li class="nav-item mx-3 my-2"><b class="text-white">${requestScope.bank} - count</b></li>
                 <li class="nav-item">
@@ -29,6 +32,13 @@
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                         Replenishment
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-warning mx-3" data-bs-toggle="modal"
+                            data-bs-target="#">
+                        Log out
                     </button>
                 </li>
             </ul>
@@ -132,7 +142,8 @@
                 </div>
                 <form action="GeneralCustomerServlet" method="post">
                     <label for="exampleFormControlTextarea1" class="form-label">Request</label>
-                    <textarea style="height: 400px" name="user_message" class="form-control" id="exampleFormControlTextarea1"
+                    <textarea style="height: 400px" name="user_message" class="form-control"
+                              id="exampleFormControlTextarea1"
                               rows="3"></textarea>
                     <div class="d-grid gap-2">
                         <button class="btn btn-warning" type="submit">Send request</button>
@@ -142,45 +153,48 @@
             </div>
             <div class="col-6">
                 <ul class="pagination">
-                <c:forEach var="i" begin="0" end="${requestScope.pages}">
-                        <li class="page-item"><a class="page-link" href="GeneralCustomerServlet?offset=${i*5}">${i+1}</a></li>
-                </c:forEach>
+                    <c:forEach var="i" begin="0" end="${requestScope.pages}">
+                        <li class="page-item"><a style="color: #1c1c1c" class="page-link"
+                                                 href="GeneralCustomerServlet?offset=${i*8}">${i+1}</a></li>
+                    </c:forEach>
                 </ul>
                 <table class="table table-hover">
+                    <thead class="thead-dark">
                     <tr class="border-dark">
-                        <th>id</th>
-                        <th>description</th>
-                        <th>price</th>
-                        <th>payment status</th>
-                        <th>complication status</th>
-                        <th>date</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th scope="col">id</th>
+                        <th scope="col">description</th>
+                        <th scope="col">price</th>
+                        <th scope="col">payment status</th>
+                        <th scope="col">complication status</th>
+                        <th scope="col">date</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
+                    </thead>
                     <c:forEach var="request" items="${requestScope.table}">
                         <tr class="border-dark">
-                            <td><c:out value="${request.requestID}"/></td>
-                            <td><c:out value="${request.description}"/></td>
-                            <td><c:out value="${request.price}"/></td>
-                            <td><c:out value="${request.paymentStatus}"/></td>
-                            <td><c:out value="${request.complicationStatus}"/></td>
-                            <td><c:out value="${request.date}"/></td>
-                            <td>
+                            <td scope="col"><c:out value="${request.requestID}"/></td>
+                            <td scope="col"><c:out value="${request.description}"/></td>
+                            <td scope="col"><c:out value="${request.price}"/></td>
+                            <td scope="col"><c:out value="${request.paymentStatus}"/></td>
+                            <td scope="col"><c:out value="${request.complicationStatus}"/></td>
+                            <td scope="col"><c:out value="${request.date}"/></td>
+                            <td scope="col">
                                 <form method="post"
                                       action=${pageContext.request.contextPath}/RequestServlet?id=${request.requestID}>
                                     <input class="btn btn-outline-dark" type="submit" value="Delete"/></form>
                             </td>
-                            <td>
+                            <th scope="col">
                                 <form method="post"
                                       action=${pageContext.request.contextPath}/RequestServlet?price=${request.price}&payment=${request.paymentStatus}&paymentID=${request.requestID}>
                                     <input class="btn btn-outline-dark" type="submit" value="Paid"/></form>
-                            </td>
-                            <td>
+                            </th>
+                            <th scope="col">
                                 <form method="post"
                                       action=${pageContext.request.contextPath}/FeedbackServlet?feedbackID=${request.requestID}&comp=${request.complicationStatus}>
-                                    <input class="btn btn-outline-dark" type="submit" value="Feedback"/></form>
-                            </td>
+                                    <input class="btn btn-outline-warning" type="submit" value="Feedback"/></form>
+                            </th>
                         </tr>
                     </c:forEach>
                 </table>
@@ -188,6 +202,14 @@
         </div>
     </div>
 </section>
+<footer class="bg-dark text-center text-white fixed-bottom">
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2022 Copyright:
+        <b class="text-white">made by maznichko</b>
+    </div>
+    <!-- Copyright -->
+</footer>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
