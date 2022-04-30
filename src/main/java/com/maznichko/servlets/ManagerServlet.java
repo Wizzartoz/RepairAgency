@@ -1,6 +1,7 @@
 package com.maznichko.servlets;
 
 import com.maznichko.services.*;
+import com.maznichko.services.Filter;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,7 +16,7 @@ import java.io.IOException;
 //Менеджер может посмотреть отчет с списком заявок где он может провести сортировку : по дате , по статусу, по стоимости
 //Также менеджер имеет возможность фильтровать заявления по статусу , по мастеру
 
-
+//Cортировка должны работать с данными фильтра
 public class ManagerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,7 +31,7 @@ public class ManagerServlet extends HttpServlet {
         if (request.getParameter("sort") != null) {
             new Sort().execute(request, response);
         } else if (request.getParameter("status") != null) {
-            new FilterByStatus().execute(request, response);
+            new Filter().execute(request, response);
         } else if (request.getParameter("master") != null) {
             new MasterRequest().execute(request, response);
         } else {

@@ -9,30 +9,42 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FilterByStatus implements Command {
+public class Filter implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        String master = req.getParameter("master");
         String status = req.getParameter("status");
-        List<Request> requests;
-        try {
-            requests = new RequestDAO().findAllRequest();
-        } catch (DBException e) {
-            throw new RuntimeException(e);
+        List<Request> resultRequest;
+        List<Request> masterRequests = null;
+        List<Request> statusRequests = null;
+        if (status != null){
+            try {
+                statusRequests = new RequestDAO().findAllRequest();
+            } catch (DBException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (master != null) {
+            try {
+                masterRequests = new RequestDAO().getRequestByLogin(master);
+            } catch (DBException e) {
+                throw new RuntimeException(e);
+            }
         }
         if (status.equals("progress")) {
-            List<Request> filterByProgress = requests.stream()
+            List<Request> filterByProgress = statusRequests.stream()
                     .filter(x->x.getComplicationStatus().equals("in progress"))
                     .collect(Collectors.toList());
             req.setAttribute("table",filterByProgress);
         }
         else if (status.equals("consideration")){
-            List<Request> filterByProgress = requests.stream()
+            List<Request> filterByProgress = statusRequests.stream()
                     .filter(x->x.getComplicationStatus().equals("under consideration"))
                     .collect(Collectors.toList());
             req.setAttribute("table",filterByProgress);
         }
         else {
-            List<Request> filterByDone = requests.stream()
+            List<Request> filterByDone = statusRequests.stream()
                     .filter(x->x.getComplicationStatus().equals("done"))
                     .collect(Collectors.toList());
             req.setAttribute("table",filterByDone);

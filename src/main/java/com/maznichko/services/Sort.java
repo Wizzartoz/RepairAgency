@@ -6,6 +6,7 @@ import com.maznichko.DAO.entity.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,21 +26,21 @@ public class Sort implements Command {
         switch (sort) {
             case "date": {
                 List<Request> list = request.stream()
-                        .sorted((x, y) -> x.getDate().compareTo(y.getDate()))
+                        .sorted(Comparator.comparing(Request::getDate))
                         .collect(Collectors.toList());
                 req.setAttribute("table", list);
                 break;
             }
             case "status": {
                 List<Request> list = request.stream()
-                        .sorted((x, y) -> x.getComplicationStatus().compareTo(y.getComplicationStatus()))
+                        .sorted(Comparator.comparing(Request::getComplicationStatus))
                         .collect(Collectors.toList());
                 req.setAttribute("table", list);
                 break;
             }
             case "payStatus": {
                 List<Request> list = request.stream()
-                        .sorted((x, y) -> x.getPaymentStatus().compareTo(y.getPaymentStatus()))
+                        .sorted(Comparator.comparing(Request::getPaymentStatus))
                         .collect(Collectors.toList());
                 req.setAttribute("table", list);
                 break;
@@ -48,7 +49,7 @@ public class Sort implements Command {
                 List<Request> list;
                 if (order.equals("decrease")){
                     list = request.stream()
-                            .sorted((x, y) -> x.getPrice().compareTo(y.getPrice()))
+                            .sorted(Comparator.comparing(Request::getPrice))
                             .collect(Collectors.toList());
                 }else {
                     list = request.stream()
