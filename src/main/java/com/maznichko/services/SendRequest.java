@@ -16,7 +16,7 @@ public class SendRequest implements Command {
         String message = req.getParameter("user_message");
         if (message.isEmpty()){
             req.setAttribute("result", "you sent an empty field");
-            return "/GeneralCustomerServlet";
+            return "/RequestCustomerServlet";
         }
         Request request = new Request();
         request.setDescription(message);
@@ -36,6 +36,6 @@ public class SendRequest implements Command {
             return "/jsp/Error.jsp";
         }
         req.setAttribute("result", "you have successfully submitted your request");
-        return "/GeneralCustomerServlet";
+        return "/RequestCustomerServlet";
     }
 }

@@ -22,15 +22,15 @@ public class Register implements Command {
         String phone = req.getParameter("phone");
         if (login.isEmpty() || password.isEmpty()) {
             req.setAttribute("result", "Login or Password is empty");
-            return "/jsp/register.jsp";
+            return "/LoginServlet";
         }
         if (name.isEmpty() || surname.isEmpty()) {
             req.setAttribute("result", "Name or Surname is empty");
-            return "/jsp/register.jsp";
+            return "/LoginServlet";
         }
         if (email.isEmpty()) {
             req.setAttribute("result", "Email is empty");
-            return "/jsp/register.jsp";
+            return "/LoginServlet";
         }
         User user = new User();
         user.setRole("CUSTOMER");
@@ -44,7 +44,7 @@ public class Register implements Command {
             new UserDAO().insertUser(user);
         } catch (DBException e) {
             req.setAttribute("result", "user already exists");
-            return "/jsp/register.jsp";
+            return "/LoginServlet";
         }
         httpSession.setAttribute("login", login);
         httpSession.setAttribute("role", "CUSTOMER");

@@ -10,9 +10,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GenerateManagerTable implements Command {
-    @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+public class GenerateManagerTable {
+    public static String execute(HttpServletRequest req, HttpServletResponse resp) {
         List<Request> requests;
         try {
             requests = new RequestDAO().findAllRequest();

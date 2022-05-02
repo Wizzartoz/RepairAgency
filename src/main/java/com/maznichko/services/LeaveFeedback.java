@@ -11,30 +11,29 @@ import javax.servlet.http.HttpSession;
 public class LeaveFeedback implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        HttpSession httpSession = req.getSession();
         FeedbackDAO feedbackDAO = new FeedbackDAO();
         String feedbackText = req.getParameter("feedback");
-        String status = (String) httpSession.getAttribute("comp");
+        String status = req.getParameter("comp");
         int rating;
         try {
             rating = Integer.parseInt(req.getParameter("rating"));
         } catch (NumberFormatException e) {
             req.setAttribute("result", "data in evaluation field is incorrect");
-            return "/jsp/Customer/feedback.jsp";
+            return "/jsp/Customer/customerMain.jsp";
         }
 
-        int id = Integer.parseInt((String) httpSession.getAttribute("feedbackID"));
+        int id = Integer.parseInt(req.getParameter("feedbackID"));
         Feedback feedback = new Feedback();
         feedback.setFeedbackText(feedbackText);
         feedback.setRating(rating);
         feedback.setRequestID(id);
         if (feedbackText.isEmpty()) {
             req.setAttribute("result", "review is empty");
-            return "/jsp/Customer/feedback.jsp";
+            return "/jsp/Customer/customerMain.jsp";
         }
         if (!status.equals("done")) {
             req.setAttribute("result", "the master has not made an order yet");
-            return "/jsp/Customer/feedback.jsp";
+            return "/jsp/Customer/customerMain.jsp";
         }
         Feedback feedback1;
         try {
@@ -45,7 +44,7 @@ public class LeaveFeedback implements Command {
         }
         if (feedback1 != null) {
             req.setAttribute("result", "you have already submitted a request");
-            return "/jsp/Customer/feedback.jsp";
+            return "/jsp/Customer/customerMain.jsp";
         }
         try {
             feedbackDAO.insertFeedback(feedback);
@@ -54,7 +53,7 @@ public class LeaveFeedback implements Command {
             return "/jsp/Error.jsp";
         }
         req.setAttribute("result", "comment successfully posted");
-        return "/jsp/Customer/feedback.jsp";
+        return "/jsp/Customer/customerMain.jsp";
 
 
     }

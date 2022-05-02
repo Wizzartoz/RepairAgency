@@ -1,6 +1,7 @@
 package com.maznichko.servlets;
 
 import com.maznichko.services.Command;
+import com.maznichko.services.CommandContainer;
 import com.maznichko.services.GenerateTable;
 import com.maznichko.services.GetBank;
 
@@ -20,21 +21,16 @@ public class GeneralCustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         HttpSession httpSession = request.getSession();
-        Command command = new GetBank();
-        String result = command.execute(request, response);
-        new GenerateTable().execute(request,response);
-        if (request.getParameter("money") != null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/ReplenishmentCustomerServlet");
-            dispatcher.forward(request, response);
-        } else if (request.getParameter("user_message") != null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/RequestCustomerServlet");
-            dispatcher.forward(request, response);
-        } else {
-            request.setAttribute("result", request.getParameter("result"));
-            Integer bank = (Integer) httpSession.getAttribute("bank");
-            request.setAttribute("bank", bank);
-            RequestDispatcher dispatcher = request.getRequestDispatcher(result);
-            dispatcher.forward(request, response);
+        Command command = CommandContainer.get(request.getParameter("command"));
+        String result = "/jsp/Customer/customerMain.jsp";
+        if (command != null) {
+            result = command.execute(request, response);
         }
+        GenerateTable.execute(request, response);
+        GetBank.execute(request, response);
+        Integer bank = (Integer) httpSession.getAttribute("bank");
+        request.setAttribute("bank", bank);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(result);
+        dispatcher.forward(request, response);
     }
 }

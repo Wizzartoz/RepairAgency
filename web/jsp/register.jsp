@@ -19,7 +19,7 @@
     <div class="row">
         <div class="colm-form">
             <div class="form-container">
-                <form action="RegisterServlet" method="post">
+                <form action="LoginServlet" method="post">
                     <b>${requestScope.result}</b>
                     <input type="text" placeholder="Name" name="name">
                     <input type="text" placeholder="Surname" name="surname">
@@ -27,6 +27,7 @@
                     <input type="password" placeholder="Password" name="pass">
                     <input type="text" placeholder="Email" name="email">
                     <input type="text" placeholder="Phone" name="phone">
+                    <input type="hidden" name="command" value="register"/>
                     <button class="btn-login">Register</button>
                 </form>
             </div>

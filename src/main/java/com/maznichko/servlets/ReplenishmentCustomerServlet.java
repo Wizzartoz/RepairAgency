@@ -14,16 +14,14 @@ import java.io.IOException;
 public class ReplenishmentCustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String res = request.getParameter("res");
-        RequestDispatcher dispatcher = request.getRequestDispatcher(res);
+        request.setAttribute("result",request.getParameter("result"));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/GeneralCustomerServlet");
         dispatcher.forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Command command = new Replenishment();
-        String res = command.execute(request, response);
         String result = (String) request.getAttribute("result");
-        response.sendRedirect(String.format("ReplenishmentCustomerServlet?res=%s&result=%s", res, result));
+        response.sendRedirect(String.format("ReplenishmentCustomerServlet?result=%s", result));
     }
 }

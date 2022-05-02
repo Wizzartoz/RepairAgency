@@ -15,6 +15,7 @@
           rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
+    <link href="${pageContext.request.contextPath}/css/feedback.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -56,6 +57,7 @@
                                 <label>money:
                                     <input type="number" name="money"><br/>
                                 </label>
+                                <input type="hidden" name="command" value="replenishment">
                                 <button type="submit" class="btn btn-outline-warning">Replenishment</button>
                             </form>
                         </div>
@@ -145,6 +147,7 @@
                     <textarea style="height: 400px" name="user_message" class="form-control"
                               id="exampleFormControlTextarea1"
                               rows="3"></textarea>
+                    <input type="hidden" name="command" value="sendRequest">
                     <div class="d-grid gap-2">
                         <button class="btn btn-warning" type="submit">Send request</button>
                     </div>
@@ -182,18 +185,80 @@
                             <td scope="col"><c:out value="${request.date}"/></td>
                             <td scope="col">
                                 <form method="post"
-                                      action=${pageContext.request.contextPath}/RequestServlet?id=${request.requestID}>
-                                    <input class="btn btn-outline-dark" type="submit" value="Delete"/></form>
+                                      action=${pageContext.request.contextPath}/GeneralCustomerServlet>
+                                    <input class="btn btn-outline-dark" type="hidden" name="id"
+                                           value="${request.requestID}"/>
+                                    <input class="btn btn-outline-dark" type="hidden" name="command"
+                                           value="deleteRequest"/>
+                                    <input class="btn btn-outline-dark" type="submit" value="Delete"/>
+                                </form>
                             </td>
                             <th scope="col">
                                 <form method="post"
-                                      action=${pageContext.request.contextPath}/RequestServlet?price=${request.price}&payment=${request.paymentStatus}&paymentID=${request.requestID}>
-                                    <input class="btn btn-outline-dark" type="submit" value="Paid"/></form>
+                                      action=${pageContext.request.contextPath}/GeneralCustomerServlet>
+                                    <input class="btn btn-outline-dark" type="submit" value="Paid"/>
+                                    <input class="btn btn-outline-dark" type="hidden" name="price"
+                                           value="${request.price}"/>
+                                    <input class="btn btn-outline-dark" type="hidden" name="payment"
+                                           value="${request.paymentStatus}"/>
+                                    <input class="btn btn-outline-dark" type="hidden" name="paymentID"
+                                           value="${request.requestID}"/>
+                                    <input class="btn btn-outline-dark" type="hidden" name="command" value="paid"/>
+                                </form>
                             </th>
                             <th scope="col">
-                                <form method="post"
-                                      action=${pageContext.request.contextPath}/FeedbackServlet?feedbackID=${request.requestID}&comp=${request.complicationStatus}>
-                                    <input class="btn btn-outline-warning" type="submit" value="Feedback"/></form>
+                                <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                                        data-bs-target="#feedback">
+                                    Feedback
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="feedback" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="feedbackLabel">Feedback</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post"
+                                                      action=${pageContext.request.contextPath}/GeneralCustomerServlet>
+                                                    <div class="rating">
+                                                        <input type="radio" name="rating" value="5" id="5"><label
+                                                            for="5">☆</label>
+                                                        <input type="radio" name="rating" value="4" id="4"><label
+                                                            for="4">☆</label>
+                                                        <input type="radio" name="rating" value="3" id="3"><label
+                                                            for="3">☆</label>
+                                                        <input type="radio" name="rating" value="2" id="2"><label
+                                                            for="2">☆</label>
+                                                        <input type="radio" name="rating" value="1" id="1"><label
+                                                            for="1">☆</label>
+                                                    </div>
+                                                    <div>
+                                                        <textarea style="height: 200px;width: 450px" id="msg"
+                                                                  name="feedback"></textarea>
+                                                    </div>
+                                                    <input class="btn btn-outline-warning my-2" type="submit"
+                                                           value="Send request"/>
+                                                    <input  type="hidden"
+                                                           name="feedbackID"
+                                                           value="${request.requestID}"/>
+                                                    <input  type="hidden" name="comp"
+                                                           value="${request.complicationStatus}"/>
+                                                    <input  type="hidden" name="command"
+                                                           value="leaveFeedback"/>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </th>
                         </tr>
                     </c:forEach>

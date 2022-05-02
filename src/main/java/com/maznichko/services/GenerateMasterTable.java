@@ -10,9 +10,8 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GenerateMasterTable implements Command {
-    @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+public class GenerateMasterTable  {
+    public static String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession httpSession = req.getSession();
         String login = (String) httpSession.getAttribute("login");
         List<Request> requests;

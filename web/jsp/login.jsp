@@ -21,9 +21,10 @@
             <div class="form-container">
                 <form action="LoginServlet" method="post">
                     <b>${requestScope.result}</b>
-                <input  type="text" placeholder="Login" name="login">
-                <input  type="password" placeholder="Password" name="pass">
-                <button class="btn-login">Login</button>
+                    <input type="text" placeholder="Login" name="login">
+                    <input type="password" placeholder="Password" name="pass">
+                    <input type="hidden" name="command" value="login"/>
+                    <button class="btn-login">Login</button>
                 </form>
             </div>
         </div>

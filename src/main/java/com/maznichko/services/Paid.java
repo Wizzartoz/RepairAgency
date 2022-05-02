@@ -35,7 +35,7 @@ public class Paid implements Command {
                     userDAO.updateUser(user);
                 } catch (DBException e) {
                     req.setAttribute("result", e.getMessage());
-                    return "/jsp/Customer/customerRequests.jsp";
+                    return "/jsp/Customer/customerMain.jsp";
                 }
             } else {
                 req.setAttribute("result", "not enough money");
@@ -53,12 +53,12 @@ public class Paid implements Command {
                 requestDAO.updateRequest(request);
             } catch (DBException e) {
                 req.setAttribute("result", null);
-                return "/jsp/Customer/customerRequests.jsp";
+                return "/jsp/Customer/customerMain.jsp";
             }
             req.setAttribute("result", "payment was successful");
-            return "/jsp/Customer/customerRequests.jsp";
+            return "/jsp/Customer/customerMain.jsp";
         }
         req.setAttribute("result", "payment failed");
-        return "/jsp/Customer/customerRequests.jsp";
+        return "/jsp/Customer/customerMain.jsp";
     }
 }

@@ -17,17 +17,17 @@ public class MasterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        new GenerateMasterTable().execute(request, response);
-        new GetBank().execute(request,response);
-        if (request.getParameter("id") != null){
-            new TakeRequest().execute(request,response);
+        Command command = CommandContainer.get(request.getParameter("command"));
+        String result = "/jsp/Master/masterRequests.jsp";
+        if (command != null) {
+            result = command.execute(request, response);
         }
-        else if (request.getParameter("doneID") != null){
-            new DoneRequest().execute(request,response);
-        }
-        HttpSession httpSession =  request.getSession();
+        GenerateMasterTable.execute(request,response);
+        GetBank.execute(request,response);
+        HttpSession httpSession = request.getSession();
         request.setAttribute("bank",httpSession.getAttribute("bank"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/Master/masterRequests.jsp");
+        System.out.println(request.getAttribute("result"));
+        RequestDispatcher dispatcher = request.getRequestDispatcher(result);
         dispatcher.forward(request, response);
     }
 }

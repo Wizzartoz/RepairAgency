@@ -6,61 +6,48 @@ import com.maznichko.DAO.entity.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Sort implements Command {
-    @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        //сюда я могу подставлять фильтры , оно будет с бд доставать нужную колекцию , в зависимости от атрибута
-        //и от этого выбирать нужную коллекцию
-        List<Request> request;
-        try {
-            request = new RequestDAO().findAllRequest();
-        } catch (DBException e) {
-            throw new RuntimeException(e);
-        }
-        String sort = req.getParameter("sort");
-        String order = req.getParameter("order");
+public class Sort {
+    public List<Request> sort(String sort, List<Request> request) {
+        List<Request> list = null;
         switch (sort) {
             case "date": {
-                List<Request> list = request.stream()
+                list = request.stream()
                         .sorted(Comparator.comparing(Request::getDate))
                         .collect(Collectors.toList());
-                req.setAttribute("table", list);
                 break;
             }
             case "status": {
-                List<Request> list = request.stream()
+                list = request.stream()
                         .sorted(Comparator.comparing(Request::getComplicationStatus))
                         .collect(Collectors.toList());
-                req.setAttribute("table", list);
                 break;
             }
             case "payStatus": {
-                List<Request> list = request.stream()
+                list = request.stream()
                         .sorted(Comparator.comparing(Request::getPaymentStatus))
                         .collect(Collectors.toList());
-                req.setAttribute("table", list);
                 break;
             }
-            default: {
-                List<Request> list;
-                if (order.equals("decrease")){
-                    list = request.stream()
-                            .sorted(Comparator.comparing(Request::getPrice))
-                            .collect(Collectors.toList());
-                }else {
-                    list = request.stream()
-                            .sorted((x, y) -> -x.getPrice().compareTo(y.getPrice()))
-                            .collect(Collectors.toList());
-                }
-                req.setAttribute("table", list);
-                break;
-            }
-        }
-        return "";
+            case "ascending": {
+                list = request.stream().
+                        sorted((x, y) -> -x.getPrice().compareTo(y.getPrice())).
+                        collect(Collectors.toList());
 
+                break;
+            }
+            case "descending": {
+                list = request.stream().
+                        sorted(Comparator.comparing(Request::getPrice)).
+                        collect(Collectors.toList());
+                break;
+            }
+
+        }
+        return list;
     }
 }

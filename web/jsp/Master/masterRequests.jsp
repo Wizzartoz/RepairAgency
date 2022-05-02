@@ -148,14 +148,19 @@
                             <td><c:out value="${request.date}"/></td>
                             <td>
                                 <form method="post"
-                                      action=${pageContext.request.contextPath}/MasterServlet?id=${request.requestID}>
-                                    <input
-                                            type="submit" class="btn btn-outline-dark" value="Take"/></form>
+                                      action=${pageContext.request.contextPath}/MasterServlet>
+                                    <input type="submit" class="btn btn-outline-dark" value="Take"/>
+                                    <input type="hidden" name="id" value="${request.requestID}">
+                                    <input type="hidden" name="command" value="takeRequest">
+                                </form>
                             </td>
                             <td>
                                 <form method="post"
-                                      action=${pageContext.request.contextPath}/MasterServlet?doneID=${request.requestID}>
-                                    <input type="submit" class="btn btn-outline-warning" value="Done"/></form>
+                                      action=${pageContext.request.contextPath}/MasterServlet>
+                                    <input type="submit" class="btn btn-outline-warning" value="Done"/>
+                                <input type="hidden" name="doneID" value="${request.requestID}">
+                                <input type="hidden" name="command" value="doneRequest">
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

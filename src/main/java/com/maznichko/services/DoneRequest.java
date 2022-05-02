@@ -12,6 +12,7 @@ public class DoneRequest implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         int id = Integer.parseInt(req.getParameter("doneID"));
         Request request;
+        System.out.println(1);
         try {
             request = new RequestDAO().getRequestByID(id);
         } catch (DBException e) {
@@ -26,6 +27,7 @@ public class DoneRequest implements Command {
         try {
             new RequestDAO().updateRequest(request);
         } catch (DBException e) {
+            System.out.println(2);
             throw new RuntimeException(e);
         }
         req.setAttribute("result", "status changed successfully");

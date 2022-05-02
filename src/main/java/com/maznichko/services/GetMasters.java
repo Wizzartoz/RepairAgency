@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GetMasters implements Command{
-    @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+public  class GetMasters {
+    public static String execute(HttpServletRequest req, HttpServletResponse resp) {
         List<User> users;
         try {
            users = new UserDAO().findAllUsers();

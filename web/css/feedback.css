@@ -12,7 +12,7 @@
 .rating > label {
     position: relative;
     width: 1.1em;
-    font-size: 7vw;
+    font-size: 5vw;
     color: #FFD700;
     cursor: pointer;
 }

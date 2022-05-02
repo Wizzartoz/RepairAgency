@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS public."request"
     complication_status VARCHAR(50)    NOT NULL DEFAULT 'under consideration',
     payment_status      VARCHAR(50)    NOT NULL DEFAULT 'unpaid',
     price               float4         NOT NULL DEFAULT 0
+
+
 );
 
 CREATE TABLE IF NOT EXISTS public."user_request"

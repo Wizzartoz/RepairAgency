@@ -8,27 +8,21 @@ public class CommandContainer {
 
     static {
         commands.put("login", new Login());
-        commands.put("DeleteRequest", new Login());
-        commands.put("DoneRequest", new Login());
-        commands.put("GenerateTable", new Login());
-        commands.put("GenerateMasterTable", new Login());
-        commands.put("GenerateManagerTable", new Login());
-        commands.put("GetBank", new Login());
-        commands.put("GetMasters", new Login());
-        commands.put("GetRequest", new Login());
-        commands.put("LeaveFeedback", new Login());
-        commands.put("Register", new Login());
-        commands.put("Paid", new Login());
-        commands.put("Filter", new Login());
-        commands.put("Replenishment", new Login());
-        commands.put("SendRequest", new Login());
-        commands.put("Sort", new Login());
-        commands.put("TakeRequest", new Login());
+        commands.put("deleteRequest", new DeleteRequest());
+        commands.put("doneRequest", new DoneRequest());
+        commands.put("getRequest", new GetRequest());
+        commands.put("leaveFeedback", new LeaveFeedback());
+        commands.put("register", new Register());
+        commands.put("paid", new Paid());
+        commands.put("filter", new Filter());
+        commands.put("replenishment", new Replenishment());
+        commands.put("sendRequest", new SendRequest());
+        commands.put("takeRequest", new TakeRequest());
     }
 
-    public static Command get(String command) throws Exception {
+    public static Command get(String command)  {
         if (command == null || !commands.containsKey(command)) {
-            throw new Exception("Commands not exist");
+            return null;
         }
         return commands.get(command);
     }
