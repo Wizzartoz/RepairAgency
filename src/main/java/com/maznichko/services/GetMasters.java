@@ -19,7 +19,7 @@ public  class GetMasters {
             throw new RuntimeException(e);
         }
         List<User> list = users.stream().filter(x->x.getRole().equals("MASTER")).collect(Collectors.toList());
-        req.setAttribute("users",list);
+        req.setAttribute("masters",list);
         return "";
     }
 }

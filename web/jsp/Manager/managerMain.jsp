@@ -29,6 +29,42 @@
             </ul>
             <ul class="nav">
                 <li class="nav-item mx-3 my-2"><b class="text-white">${requestScope.bank} - count</b></li>
+                <li class="nav-item mx-2">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                            data-bs-target="#ReplenishmentModal">
+                        Replenishment
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="ReplenishmentModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ReplenishmentModalLabel">Replenishment</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="ManagerServlet" method="post">
+                                        <select name="login" class="form-select" aria-label="Default select example">
+                                            <c:forEach var="user" items="${requestScope.users}">
+                                                <option value="${user.login}">${user.login}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <label>money:
+                                            <input type="number" name="money"><br/>
+                                        </label>
+                                        <input type="hidden" name="command" value="replenishment">
+                                        <button type="submit" class="btn btn-outline-warning">Replenishment</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
@@ -156,7 +192,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <c:forEach var="user" items="${requestScope.users}">
+                                    <c:forEach var="user" items="${requestScope.masters}">
                                         <li class="mx-1">
                                             <input class="form-check-input"
                                                    onchange="filterMaster${user.userID}();"
@@ -229,11 +265,6 @@
                         sendFilter()
                     }
 
-
-                    function formSubmit() {
-                        document.getElementById("filterForm").submit();
-                    }
-
                     function setCheckboxes() {
                         if (sessionStorage.getItem("checkbox1") === "true") {
                             document.getElementById("done").checked = "true";
@@ -247,7 +278,7 @@
                         if (sessionStorage.getItem("sorted") != null) {
                             document.getElementById("sorted").value = sessionStorage.getItem("sorted");
                         }
-                        <c:forEach var="user"  items="${requestScope.users}">
+                        <c:forEach var="user"  items="${requestScope.masters}">
                         if (sessionStorage.getItem("master${user.userID}") === "true") {
                             document.getElementById("master${user.userID}").checked = "true"
                         }
@@ -267,7 +298,7 @@
                         if (sessionStorage.getItem("sorted") != null) {
                             reqAttribute += "&"+document.getElementById("sorted").name+"="+document.getElementById("sorted").value;
                         }
-                        <c:forEach var="user"  items="${requestScope.users}">
+                        <c:forEach var="user"  items="${requestScope.masters}">
                         if (sessionStorage.getItem("master${user.userID}") === "true") {
                             reqAttribute += "&"+document.getElementById("master${user.userID}").name + "=" + document.getElementById("master${user.userID}").value;
                         }
@@ -277,7 +308,6 @@
                             reqAttribute += "&offset="+document.getElementById("pagination${i}").value;
                         }
                         </c:forEach>
-                        reqAttribute += "&"+"sorted="+sessionStorage.getItem("sorted");
                         document.getElementById("sendFilterForm").href = "/ManagerServlet?" + reqAttribute.substring(1) + "&command=filter";
                         document.getElementById("sendFilterForm").click();
                     }
@@ -329,13 +359,13 @@
                             <td><c:out value="${request.date}"/></td>
                             <td>
                                 <div>
-                                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                                    <button  type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
                                             data-bs-target="#editModal">
                                         Edit
                                     </button>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                                    <button onclick="setReq(${request.requestID});" type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
                                             data-bs-target="#setModal">
                                         Edit
                                     </button>
@@ -360,8 +390,13 @@
                                                     </select>
                                                     <input type="submit" class="btn btn-outline-warning" value="Set">
                                                     <input type="hidden" name="command" value="setMaster">
-                                                    <input type="hidden" name="ReqID" value="${request.requestID}">
+                                                    <input id="req" type="hidden" name="ReqID" value="${request.requestID}">
                                                 </form>
+                                                <script>
+                                                    function setReq(req){
+                                                        document.getElementById("req").value = req;
+                                                    }
+                                                </script>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

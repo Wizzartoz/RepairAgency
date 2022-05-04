@@ -11,7 +11,15 @@ public class Request {
     private String complicationStatus;
     private String paymentStatus;
     private Float price;
+    private String masterLogin;
 
+    public String getMasterLogin() {
+        return masterLogin;
+    }
+
+    public void setMasterLogin(String masterLogin) {
+        this.masterLogin = masterLogin;
+    }
 
     public Integer getRequestID() {
         return requestID;

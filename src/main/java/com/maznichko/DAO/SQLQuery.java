@@ -11,7 +11,7 @@ public class SQLQuery {
     }
     static class RequestQuery{
         static final String INSERT_REQUEST = "INSERT INTO request VALUES(DEFAULT,?,DEFAULT,?,?,?)";
-        static final String UPDATE_REQUEST = "UPDATE request SET description=?,complication_status=?,payment_status=?,price=? WHERE id_request=?";
+        static final String UPDATE_REQUEST = "UPDATE request SET description=?,complication_status=?,payment_status=?,price=?,master_login=? WHERE id_request=?";
         static final String SELECT_ALL_FROM_REQUEST_WHERE = "SELECT * FROM request WHERE id_request=?";
         static final String SELECT_ALL_FROM_REQUEST = "SELECT * FROM request";
         static final String SELECT_ALL_FROM_USER_REQUEST = "SELECT * FROM user_request WHERE login=?";

@@ -14,7 +14,14 @@ public class Replenishment implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession httpSession = req.getSession();
-        String login = (String) httpSession.getAttribute("login");
+        String login;
+        if (req.getParameter("login") == null){
+            login = (String) httpSession.getAttribute("login");
+            req.setAttribute("path","/GeneralCustomerServlet");
+        }else {
+            login = req.getParameter("login");
+            req.setAttribute("path","/ManagerServlet");
+        }
         int money;
         try {
             money = Integer.parseInt(req.getParameter("money"));

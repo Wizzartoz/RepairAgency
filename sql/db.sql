@@ -25,7 +25,8 @@ CREATE TABLE IF NOT EXISTS public."request"
     date                timestamp DEFAULT current_timestamp,
     complication_status VARCHAR(50)    NOT NULL DEFAULT 'under consideration',
     payment_status      VARCHAR(50)    NOT NULL DEFAULT 'unpaid',
-    price               float4         NOT NULL DEFAULT 0
+    price               float4         NOT NULL DEFAULT 0,
+    master_login VARCHAR(50)
 
 
 );

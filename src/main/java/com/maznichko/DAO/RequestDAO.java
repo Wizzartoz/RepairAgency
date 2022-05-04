@@ -18,6 +18,7 @@ public class RequestDAO {
             request.setComplicationStatus(resultSet.getString("complication_status"));
             request.setPaymentStatus(resultSet.getString("payment_status"));
             request.setPrice(resultSet.getFloat("price"));
+            request.setMasterLogin(resultSet.getString("master_login"));
         } catch (SQLException e) {
             throw new DBException("Create user was failed!", e);
         }
@@ -142,7 +143,8 @@ public class RequestDAO {
             pstmt.setString(2, request.getComplicationStatus());
             pstmt.setString(3, request.getPaymentStatus());
             pstmt.setFloat(4, request.getPrice());
-            pstmt.setLong(5, request.getRequestID());
+            pstmt.setString(5,request.getMasterLogin());
+            pstmt.setLong(6, request.getRequestID());
             int updateResult = pstmt.executeUpdate();
             if (updateResult == 0) {
                 DBManager.getInstance().rollback(con);

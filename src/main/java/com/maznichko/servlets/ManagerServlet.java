@@ -29,11 +29,14 @@ public class ManagerServlet extends HttpServlet {
         String result = "/jsp/Manager/managerMain.jsp";
         GetBank.execute(request,response);
         GetMasters.execute(request,response);
+        GetUsers.execute(request,response);
         if (command != null) {
             result = command.execute(request, response);
         }
         HttpSession httpSession = request.getSession();
         request.setAttribute("bank",httpSession.getAttribute("bank"));
+        System.out.println(result);
+        System.out.println(1);
         RequestDispatcher dispatcher = request.getRequestDispatcher(result);
         dispatcher.forward(request, response);
     }
