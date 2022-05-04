@@ -120,8 +120,7 @@
                 <div>
                     <b class="text-center text-danger ali">${requestScope.result}</b>
                 </div>
-                <form id="filterForm" method="get" action="ManagerServlet">
-                    <div class="my-2">
+                <div class="my-2">
                         <div class="mx-1">
                             <div class="form-check">
                                 <input onchange="filterContent1();" class="form-check-input" type="checkbox"
@@ -173,7 +172,7 @@
                                                 } else {
                                                     sessionStorage.setItem('master${user.userID}', 'false');
                                                 }
-                                                formSubmit();
+                                                sendFilter();
                                             }
                                         </script>
                                     </c:forEach>
@@ -181,82 +180,109 @@
                             </div>
                         </div>
                         <input type="hidden" name="command" value="filter">
-                    </div>
-                    <script>
-                        function filterContent1() {
-                            var checkbox1 = document.getElementById("done");
-                            if (checkbox1.checked) {
-                                sessionStorage.setItem('checkbox1', 'true');
-                            } else {
-                                sessionStorage.setItem('checkbox1', 'false');
-                            }
-                            formSubmit();
+                    </form>
+                </div>
+                <script>
+                    function filterContent1() {
+                        var checkbox1 = document.getElementById("done");
+                        if (checkbox1.checked) {
+                            sessionStorage.setItem('checkbox1', 'true');
+                        } else {
+                            sessionStorage.setItem('checkbox1', 'false');
                         }
+                        sendFilter();
+                    }
 
-                        function filterContent2() {
-                            var checkbox1 = document.getElementById("progress");
-                            if (checkbox1.checked) {
-                                sessionStorage.setItem('checkbox2', 'true');
-                            } else {
-                                sessionStorage.setItem('checkbox2', 'false');
-                            }
-                            formSubmit();
+                    function filterContent2() {
+                        var checkbox1 = document.getElementById("progress");
+                        if (checkbox1.checked) {
+                            sessionStorage.setItem('checkbox2', 'true');
+                        } else {
+                            sessionStorage.setItem('checkbox2', 'false');
                         }
+                        sendFilter();
+                    }
 
-                        function filterContent3() {
-                            var checkbox1 = document.getElementById("consideration");
-                            if (checkbox1.checked) {
-                                sessionStorage.setItem('checkbox3', 'true');
-                            } else {
-                                sessionStorage.setItem('checkbox3', 'false');
-                            }
-                            formSubmit();
+                    function filterContent3() {
+                        var checkbox1 = document.getElementById("consideration");
+                        if (checkbox1.checked) {
+                            sessionStorage.setItem('checkbox3', 'true');
+                        } else {
+                            sessionStorage.setItem('checkbox3', 'false');
                         }
+                        sendFilter();
+                    }
 
-                        function SortingContent1() {
-                            var checkbox1 = document.getElementById("sorted").value;
-                            if (checkbox1 === "date") {
-                                sessionStorage.setItem('sorted', 'date');
-                            } else if (checkbox1 === "status") {
-                                sessionStorage.setItem('sorted', 'status');
-                            } else if (checkbox1 === "payStatus") {
-                                sessionStorage.setItem('sorted', 'payStatus');
-                            } else if (checkbox1 === "ascending") {
-                                sessionStorage.setItem('sorted', 'ascending');
-                            } else if (checkbox1 === "descending") {
-                                sessionStorage.setItem('sorted', 'descending');
-                            }
-                            formSubmit();
+                    function SortingContent1() {
+                        var checkbox1 = document.getElementById("sorted").value;
+                        if (checkbox1 === "date") {
+                            sessionStorage.setItem('sorted', 'date');
+                        } else if (checkbox1 === "status") {
+                            sessionStorage.setItem('sorted', 'status');
+                        } else if (checkbox1 === "payStatus") {
+                            sessionStorage.setItem('sorted', 'payStatus');
+                        } else if (checkbox1 === "ascending") {
+                            sessionStorage.setItem('sorted', 'ascending');
+                        } else if (checkbox1 === "descending") {
+                            sessionStorage.setItem('sorted', 'descending');
                         }
+                        sendFilter()
+                    }
 
 
-                        function formSubmit() {
-                            document.getElementById("filterForm").submit();
+                    function formSubmit() {
+                        document.getElementById("filterForm").submit();
+                    }
+
+                    function setCheckboxes() {
+                        if (sessionStorage.getItem("checkbox1") === "true") {
+                            document.getElementById("done").checked = "true";
                         }
-
-                        function setCheckboxes() {
-                            if (sessionStorage.getItem("checkbox1") === "true") {
-                                document.getElementById("done").checked = "true";
-                            }
-                            if (sessionStorage.getItem("checkbox2") === "true") {
-                                document.getElementById("progress").checked = "true";
-                            }
-                            if (sessionStorage.getItem("checkbox3") === "true") {
-                                document.getElementById("consideration").checked = "true";
-                            }
-                            if (sessionStorage.getItem("sorted") != null) {
-                                document.getElementById("sorted").value = sessionStorage.getItem("sorted");
-                            }
-                            <c:forEach var="user"  items="${requestScope.users}">
-                            if (sessionStorage.getItem("master${user.userID}") === "true") {
-                                document.getElementById("master${user.userID}").checked = "true"
-                            }
-                            </c:forEach>
+                        if (sessionStorage.getItem("checkbox2") === "true") {
+                            document.getElementById("progress").checked = "true";
                         }
-
-
-                    </script>
-                </form>
+                        if (sessionStorage.getItem("checkbox3") === "true") {
+                            document.getElementById("consideration").checked = "true";
+                        }
+                        if (sessionStorage.getItem("sorted") != null) {
+                            document.getElementById("sorted").value = sessionStorage.getItem("sorted");
+                        }
+                        <c:forEach var="user"  items="${requestScope.users}">
+                        if (sessionStorage.getItem("master${user.userID}") === "true") {
+                            document.getElementById("master${user.userID}").checked = "true"
+                        }
+                        </c:forEach>
+                    }
+                    function sendFilter(){
+                        var reqAttribute = "";
+                        if (sessionStorage.getItem("checkbox1") === "true") {
+                            reqAttribute += "&"+document.getElementById("done").name+"="+document.getElementById("done").value;
+                        }
+                        if (sessionStorage.getItem("checkbox2") === "true") {
+                            reqAttribute += "&"+document.getElementById("progress").name+"="+document.getElementById("progress").value;
+                        }
+                        if (sessionStorage.getItem("checkbox3") === "true") {
+                            reqAttribute += "&"+document.getElementById("consideration").name+"="+document.getElementById("consideration").value;
+                        }
+                        if (sessionStorage.getItem("sorted") != null) {
+                            reqAttribute += "&"+document.getElementById("sorted").name+"="+document.getElementById("sorted").value;
+                        }
+                        <c:forEach var="user"  items="${requestScope.users}">
+                        if (sessionStorage.getItem("master${user.userID}") === "true") {
+                            reqAttribute += "&"+document.getElementById("master${user.userID}").name + "=" + document.getElementById("master${user.userID}").value;
+                        }
+                        </c:forEach>
+                        <c:forEach var="i" begin="0" end="${requestScope.pages}">
+                        if(document.getElementById("pagination${i}").checked){
+                            reqAttribute += "&offset="+document.getElementById("pagination${i}").value;
+                        }
+                        </c:forEach>
+                        reqAttribute += "&"+"sorted="+sessionStorage.getItem("sorted");
+                        document.getElementById("sendFilterForm").href = "/ManagerServlet?" + reqAttribute.substring(1) + "&command=filter";
+                        document.getElementById("sendFilterForm").click();
+                    }
+                </script>
+                <a id="sendFilterForm" href="" ></a>
             </div>
             <div class="col-6">
                 <select id="sorted" name="sort" onchange="SortingContent1();" class="form-select"
@@ -271,9 +297,9 @@
                     <c:forEach var="i" begin="0" end="${requestScope.pages}">
                         <li class="page-item">
                             <div class="form-check form-check-inline">
-                                <input onclick="formSubmit();" class="form-check-input" type="radio"
-                                       name="offset" id="inlineRadio1" value="${i*8}">
-                                <label class="form-check-label" for="inlineRadio1">${i+1}</label>
+                                <input onclick="sendFilter()" class="form-check-input" type="radio"
+                                       name="offset" id="pagination${i}" value="${i*8}">
+                                <label class="form-check-label" for="pagination${i}">${i+1}</label>
                             </div>
                         </li>
                     </c:forEach>
