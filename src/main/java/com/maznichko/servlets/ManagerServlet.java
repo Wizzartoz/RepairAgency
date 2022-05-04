@@ -1,13 +1,13 @@
 package com.maznichko.servlets;
 
 import com.maznichko.services.*;
-import com.maznichko.services.Filter;
+import com.maznichko.services.commands.Command;
+import com.maznichko.services.commands.CommandContainer;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.Arrays;
 
 @WebServlet(name = "ManagerServlet", value = "/ManagerServlet")
 //НАЗНАЧАЕТ МАСТЕРА

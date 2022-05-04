@@ -1,13 +1,12 @@
 package com.maznichko.servlets;
 
-import com.maznichko.services.Command;
-import com.maznichko.services.CommandContainer;
+import com.maznichko.services.commands.Command;
+import com.maznichko.services.commands.CommandContainer;
 import com.maznichko.services.GenerateTable;
 import com.maznichko.services.GetBank;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 import java.io.IOException;
 
 public class GeneralCustomerServlet extends HttpServlet {

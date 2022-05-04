@@ -1,6 +1,8 @@
 package com.maznichko.servlets;
 
 import com.maznichko.services.*;
+import com.maznichko.services.commands.Command;
+import com.maznichko.services.commands.CommandContainer;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,7 +24,7 @@ public class MasterServlet extends HttpServlet {
         if (command != null) {
             result = command.execute(request, response);
         }
-        GenerateMasterTable.execute(request,response);
+        GenerateTable.execute(request,response);
         GetBank.execute(request,response);
         HttpSession httpSession = request.getSession();
         request.setAttribute("bank",httpSession.getAttribute("bank"));

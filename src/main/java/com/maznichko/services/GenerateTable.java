@@ -22,18 +22,8 @@ public class GenerateTable {
             req.setAttribute("result", e.getMessage());
             return "/jsp/Error.jsp";
         }
-        double size = requests.size();
-        int countPage = 8;
-        int pages = (int) Math.ceil(size / countPage);
-        int offset;
-        if (req.getParameter("offset") == null) {
-            offset = 0;
-        } else {
-            offset = Integer.parseInt(req.getParameter("offset"));
-        }
-        req.setAttribute("pages", pages);
-        List<Request> table = requests.stream().sorted((x, y) -> x.getDate().compareTo(y.getDate())).skip(offset).limit(countPage).collect(Collectors.toList());
+        List<Request> table = Pagination.pagination(req,requests);
         req.setAttribute("table", table);
-        return "/jsp/Customer/customerRequests.jsp";
+        return "/jsp/Customer/";
     }
 }

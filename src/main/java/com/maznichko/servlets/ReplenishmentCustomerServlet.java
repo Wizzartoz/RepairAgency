@@ -1,10 +1,5 @@
 package com.maznichko.servlets;
 
-import com.maznichko.services.Command;
-import com.maznichko.services.GetBank;
-import com.maznichko.services.Replenishment;
-import com.maznichko.services.SendRequest;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

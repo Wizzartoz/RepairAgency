@@ -1,12 +1,12 @@
-package com.maznichko.services;
+package com.maznichko.services.commands;
 
 import com.maznichko.DAO.DBException;
 import com.maznichko.DAO.FeedbackDAO;
 import com.maznichko.DAO.entity.Feedback;
+import com.maznichko.services.commands.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class LeaveFeedback implements Command {
     @Override

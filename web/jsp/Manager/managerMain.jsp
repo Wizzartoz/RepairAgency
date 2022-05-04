@@ -12,7 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>main-page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
@@ -41,87 +41,87 @@
     </nav>
 </header>
 <section>
-    <form id="filterForm" method="get" action="ManagerServlet">
-        <div class="container-xxl">
-            <div class="row my-5">
-                <div class="col-6">
-                    <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                       aria-expanded="false" aria-controls="collapseExample">
-                        How to
-                    </a>
-                    <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample2" role="button"
-                       aria-expanded="false" aria-controls="collapseExample">
-                        Send request
-                    </a>
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body">
-                            <div class="accordion accordion-flush" id="accordionFlushExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingOne">
-                                        <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                                aria-controls="flush-collapseOne">
-                                            Step 1
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                         aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body">First you need to leave a request in the form on the
-                                            left,
-                                            describe in detail what you need to fix
-                                        </div>
+    <div class="container-xxl">
+        <div class="row my-5">
+            <div class="col-6">
+                <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    How to
+                </a>
+                <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample2" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    Send request
+                </a>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                            aria-controls="flush-collapseOne">
+                                        Step 1
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                     aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">First you need to leave a request in the form on the
+                                        left,
+                                        describe in detail what you need to fix
                                     </div>
                                 </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingTwo">
-                                        <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                                aria-controls="flush-collapseTwo">
-                                            Step 2
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                         aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body">After sending the application, the manager will view
-                                            it,
-                                            assign
-                                            a price and a master to it, you can see all applications in the "Request"
-                                            tab
-                                        </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                            aria-controls="flush-collapseTwo">
+                                        Step 2
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                     aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">After sending the application, the manager will view
+                                        it,
+                                        assign
+                                        a price and a master to it, you can see all applications in the "Request"
+                                        tab
                                     </div>
                                 </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingThree">
-                                        <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                                aria-controls="flush-collapseThree">
-                                            Step 3
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body">Next, you need to pay for the application, at the
-                                            top
-                                            left you
-                                            can see your invoice, after paying for it, the master will take
-                                        </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingThree">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                            aria-controls="flush-collapseThree">
+                                        Step 3
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                     aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">Next, you need to pay for the application, at the
+                                        top
+                                        left you
+                                        can see your invoice, after paying for it, the master will take
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="collapse" id="collapseExample2">
-                        <div class="card card-body">
-                            Some
-                        </div>
+                </div>
+                <div class="collapse" id="collapseExample2">
+                    <div class="card card-body">
+                        Some
                     </div>
-                    <div>
-                        <b class="text-center text-danger ali">${requestScope.result}</b>
-                    </div>
-                    <div class="my-2" style="border:1px solid black">
+                </div>
+                <div>
+                    <b class="text-center text-danger ali">${requestScope.result}</b>
+                </div>
+                <form id="filterForm" method="get" action="ManagerServlet">
+                    <div class="my-2">
                         <div class="mx-1">
                             <div class="form-check">
                                 <input onchange="filterContent1();" class="form-check-input" type="checkbox"
@@ -148,10 +148,7 @@
                                     consideration
                                 </label>
                             </div>
-                            <button type="submit"
-                                    style="visibility: hidden; visibility: visible; visibility: collapse;"
-                                    onClick="formSubmit()">
-                            </button>
+
                             <div class="dropdown">
                                 <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button"
                                    id="dropdownMenuLink"
@@ -161,11 +158,13 @@
 
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <c:forEach var="user" items="${requestScope.users}">
-                                        <li class="mx-1"><input class="form-check-input"
-                                                                onchange="filterMaster${user.userID}();"
-                                                                id="master${user.userID}" type="checkbox"
-                                                                name="masterLogin"
-                                                                value="${user.login}"/> ${user.login}</li>
+                                        <li class="mx-1">
+                                            <input class="form-check-input"
+                                                   onchange="filterMaster${user.userID}();"
+                                                   id="master${user.userID}" type="checkbox"
+                                                   name="masterLogin"
+                                                   value="${user.login}"/> ${user.login}
+                                        </li>
                                         <script>
                                             function filterMaster${user.userID}() {
                                                 var checkbox1 = document.getElementById("master${user.userID}");
@@ -222,11 +221,9 @@
                                 sessionStorage.setItem('sorted', 'status');
                             } else if (checkbox1 === "payStatus") {
                                 sessionStorage.setItem('sorted', 'payStatus');
-                            }
-                            else if (checkbox1 === "ascending") {
+                            } else if (checkbox1 === "ascending") {
                                 sessionStorage.setItem('sorted', 'ascending');
-                            }
-                            else if (checkbox1 === "descending") {
+                            } else if (checkbox1 === "descending") {
                                 sessionStorage.setItem('sorted', 'descending');
                             }
                             formSubmit();
@@ -259,67 +256,177 @@
 
 
                     </script>
-                </div>
-                <div class="col-6">
-                    <select id="sorted" name="sort" onchange="SortingContent1();" class="form-select"
-                            aria-label="Default select example">
-                        <option value="date">sorting by date</option>
-                        <option value="status">sorting by complication</option>
-                        <option value="payStatus">sorting by payment</option>
-                        <option value="ascending">price sorting in ascending order</option>
-                        <option value="descending">price sorting in descending order</option>
-
-                    </select>
-                    <ul class="pagination my-2">
-                        <c:forEach var="i" begin="0" end="${requestScope.pages}">
-                            <li class="page-item">
-                                <div class="form-check form-check-inline">
-                                    <input onclick="formSubmit();" class="form-check-input" type="radio"
-                                           name="offset" id="inlineRadio1" value="${i*8}">
-                                    <label class="form-check-label" for="inlineRadio1">${i+1}</label>
-                                </div>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                    <table class="table table-hover">
-                        <thead>
+                </form>
+            </div>
+            <div class="col-6">
+                <select id="sorted" name="sort" onchange="SortingContent1();" class="form-select"
+                        aria-label="Default select example">
+                    <option value="date">sorting by date</option>
+                    <option value="status">sorting by complication</option>
+                    <option value="payStatus">sorting by payment</option>
+                    <option value="ascending">price sorting in ascending order</option>
+                    <option value="descending">price sorting in descending order</option>
+                </select>
+                <ul class="pagination my-2">
+                    <c:forEach var="i" begin="0" end="${requestScope.pages}">
+                        <li class="page-item">
+                            <div class="form-check form-check-inline">
+                                <input onclick="formSubmit();" class="form-check-input" type="radio"
+                                       name="offset" id="inlineRadio1" value="${i*8}">
+                                <label class="form-check-label" for="inlineRadio1">${i+1}</label>
+                            </div>
+                        </li>
+                    </c:forEach>
+                </ul>
+                <table class="table table-hover">
+                    <thead>
+                    <tr class="border-dark">
+                        <th>id</th>
+                        <th>description</th>
+                        <th>price</th>
+                        <th>payment status</th>
+                        <th>complication status</th>
+                        <th>date</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="request" items="${requestScope.table}">
                         <tr class="border-dark">
-                            <th>id</th>
-                            <th>description</th>
-                            <th>price</th>
-                            <th>payment status</th>
-                            <th>complication status</th>
-                            <th>date</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <td><c:out value="${request.requestID}"/></td>
+                            <td><c:out value="${request.description}"/></td>
+                            <td><c:out value="${request.price}"/></td>
+                            <td><c:out value="${request.paymentStatus}"/></td>
+                            <td><c:out value="${request.complicationStatus}"/></td>
+                            <td><c:out value="${request.date}"/></td>
+                            <td>
+                                <div>
+                                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                                            data-bs-target="#editModal">
+                                        Edit
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                                            data-bs-target="#setModal">
+                                        Edit
+                                    </button>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="setModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="setModalLabel">Set master</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="ManagerServlet" method="get">
+                                                    <select name="usr" class="form-select"
+                                                            aria-label="Default select example">
+                                                        <c:forEach var="user" items="${requestScope.users}">
+                                                            <option value="${user.login}">${user.login}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                    <input type="submit" class="btn btn-outline-warning" value="Set">
+                                                    <input type="hidden" name="command" value="setMaster">
+                                                    <input type="hidden" name="ReqID" value="${request.requestID}">
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="editModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body" style="padding: 6rem">
+                                                <table class="table table-hover">
+                                                    <tr>
+                                                        <th>id</th>
+                                                        <th>description</th>
+                                                        <th>price</th>
+                                                        <th>payment status</th>
+                                                        <th>complication status</th>
+                                                        <th>date</th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                    <form action="ManagerServlet" method="get">
+                                                        <tr>
+                                                            <td><c:out value="${request.requestID}"/></td>
+                                                            <td><c:out value="${request.description}"/></td>
+                                                            <td><input type="number" name="price"></td>
+                                                            <c:if test="${request.paymentStatus.equals('unpaid')}">
+                                                                <td>
+                                                                    <select onchange="changeStatus();"
+                                                                            class="form-select"
+                                                                            aria-label="Default select example">
+                                                                        <option value="1">unpaid</option>
+                                                                        <option value="2">waiting for payment</option>
+                                                                    </select>
+                                                                </td>
+                                                            </c:if>
+                                                            <c:if test="${request.paymentStatus.equals('waiting for payment') ||
+                                                                request.paymentStatus.equals('paid')}">
+                                                                <td>
+                                                                    <select class="form-select"
+                                                                            aria-label="Default select example">
+                                                                        <option value="1">${request.paymentStatus}</option>
+                                                                    </select>
+                                                                </td>
+                                                            </c:if>
+                                                            <td>
+                                                                <select id="statusf" class="form-select"
+                                                                        aria-label="Default select example">
+                                                                    <option value="unconsideration">under
+                                                                        consideration
+                                                                    </option>
+                                                                    <option value="ref">refuse</option>
+                                                                </select>
+
+                                                            </td>
+                                                            <td><c:out value="${request.date}"/></td>
+                                                        </tr>
+                                                    </form>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-warning"
+                                                        data-bs-dismiss="modal">Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="request" items="${requestScope.table}">
-                            <tr class="border-dark">
-                                <td><c:out value="${request.requestID}"/></td>
-                                <td><c:out value="${request.description}"/></td>
-                                <td><c:out value="${request.price}"/></td>
-                                <td><c:out value="${request.paymentStatus}"/></td>
-                                <td><c:out value="${request.complicationStatus}"/></td>
-                                <td><c:out value="${request.date}"/></td>
-                                <td>
-                                    <form method="post"
-                                          action=${pageContext.request.contextPath}/ManagerEditServlet?req=${request}>
-                                        <input class="btn btn-outline-warning" type="submit" value="Edit"/></form>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                    <div>
-                        <b>${requestScope.result}</b>
-                    </div>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <div>
+                    <b>${requestScope.result}</b>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </section>
 <footer class="bg-dark text-center text-white fixed-bottom">
     <!-- Copyright -->

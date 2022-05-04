@@ -1,8 +1,11 @@
-package com.maznichko.services;
+package com.maznichko.services.commands;
 
 import com.maznichko.DAO.DBException;
 import com.maznichko.DAO.RequestDAO;
 import com.maznichko.DAO.entity.Request;
+import com.maznichko.services.Pagination;
+import com.maznichko.services.Sort;
+import com.maznichko.services.commands.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,21 +54,11 @@ public class Filter implements Command {
             }
             resultRequest = masterRequest.stream().filter(resultRequest::contains).collect(Collectors.toList());
         }
-        double size = resultRequest.size();
-        int countPage = 8;
-        int pages = (int) Math.ceil(size / countPage);
-        int offset;
-        if (req.getParameter("offset") == null) {
-            offset = 0;
-        } else {
-            offset = Integer.parseInt(req.getParameter("offset"));
-        }
-        req.setAttribute("pages", pages);
         String sort = req.getParameter("sort");
         if (req.getParameter("sort") != null) {
             resultRequest = new Sort().sort(sort, resultRequest);
         }
-        List<Request> table = resultRequest.stream().skip(offset).limit(countPage).collect(Collectors.toList());
+        List<Request> table = Pagination.pagination(req,resultRequest);
         req.setAttribute("table", table);
         return "/jsp/Manager/managerMain.jsp";
     }

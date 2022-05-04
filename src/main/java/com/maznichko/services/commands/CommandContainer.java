@@ -1,4 +1,4 @@
-package com.maznichko.services;
+package com.maznichko.services.commands;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -18,6 +18,7 @@ public class CommandContainer {
         commands.put("replenishment", new Replenishment());
         commands.put("sendRequest", new SendRequest());
         commands.put("takeRequest", new TakeRequest());
+        commands.put("setMaster", new SetMaster());
     }
 
     public static Command get(String command)  {

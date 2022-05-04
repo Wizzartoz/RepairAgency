@@ -3,12 +3,13 @@ package com.maznichko.services;
 import com.maznichko.DAO.DBException;
 import com.maznichko.DAO.RequestDAO;
 import com.maznichko.DAO.entity.Request;
+import com.maznichko.services.commands.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class MasterRequest  implements Command{
+public class MasterRequest  implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String login = req.getParameter("master");

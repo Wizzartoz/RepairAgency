@@ -1,10 +1,11 @@
-package com.maznichko.services;
+package com.maznichko.services.commands;
 
 import com.maznichko.DAO.DBException;
 import com.maznichko.DAO.RequestDAO;
 import com.maznichko.DAO.UserDAO;
 import com.maznichko.DAO.entity.Request;
 import com.maznichko.DAO.entity.User;
+import com.maznichko.services.commands.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpSession;
 public class Paid implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        //PAYMENT STATUS : unpaid waiting for payment,paid,refused COMPLICATION STATUS : under consideration,consideration ,in progress , done
+        //PAYMENT STATUS : unpaid waiting for payment,paid COMPLICATION STATUS : under consideration,consideration,refuse,,in progress , done
         HttpSession httpSession = req.getSession();
         String login = (String) httpSession.getAttribute("login");
         float price = Float.parseFloat(req.getParameter("price"));
