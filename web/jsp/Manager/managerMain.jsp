@@ -297,6 +297,8 @@
                         }
                         if (sessionStorage.getItem("sorted") != null) {
                             reqAttribute += "&"+document.getElementById("sorted").name+"="+document.getElementById("sorted").value;
+                        }else{
+                            reqAttribute += "&sort=date";
                         }
                         <c:forEach var="user"  items="${requestScope.masters}">
                         if (sessionStorage.getItem("master${user.userID}") === "true") {
@@ -359,7 +361,7 @@
                             <td><c:out value="${request.date}"/></td>
                             <td>
                                 <div>
-                                    <button  type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                                    <button onclick="setReqID(${request.requestID});" type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
                                             data-bs-target="#editModal">
                                         Edit
                                     </button>
@@ -395,6 +397,9 @@
                                                 <script>
                                                     function setReq(req){
                                                         document.getElementById("req").value = req;
+                                                    }
+                                                    function setReqID(req){
+                                                        document.getElementById("reqID").value = req;
                                                     }
                                                 </script>
                                             </div>
@@ -437,34 +442,47 @@
                                                             <td><input type="number" name="price"></td>
                                                             <c:if test="${request.paymentStatus.equals('unpaid')}">
                                                                 <td>
-                                                                    <select onchange="changeStatus();"
+                                                                    <select name="pStatus" onchange="changeStatus();"
                                                                             class="form-select"
                                                                             aria-label="Default select example">
-                                                                        <option value="1">unpaid</option>
-                                                                        <option value="2">waiting for payment</option>
+                                                                        <option value="unpaid">unpaid</option>
+                                                                        <option value="waiting for payment">waiting for payment</option>
                                                                     </select>
                                                                 </td>
                                                             </c:if>
-                                                            <c:if test="${request.paymentStatus.equals('waiting for payment') ||
-                                                                request.paymentStatus.equals('paid')}">
+                                                            <c:if test="${request.paymentStatus.equals('waiting for payment')
+                                                             }">
                                                                 <td>
-                                                                    <select class="form-select"
+                                                                    <select name="pStatus" class="form-select"
                                                                             aria-label="Default select example">
-                                                                        <option value="1">${request.paymentStatus}</option>
+                                                                        <option value="${request.paymentStatus}">${request.paymentStatus}</option>
                                                                     </select>
                                                                 </td>
                                                             </c:if>
+                                                            <c:if test="${request.complicationStatus.equals('under consideration')}">
                                                             <td>
-                                                                <select id="statusf" class="form-select"
+                                                                <select name="cStatus" id="statusf" class="form-select"
                                                                         aria-label="Default select example">
-                                                                    <option value="unconsideration">under
+                                                                    <option value="consideration">
                                                                         consideration
                                                                     </option>
-                                                                    <option value="ref">refuse</option>
+                                                                    <option value="refuse">refuse</option>
                                                                 </select>
-
                                                             </td>
+                                                            </c:if>
+                                                            <c:if test="${request.complicationStatus.equals('consideration') ||
+                                                            request.complicationStatus.equals('refuse')}">
+                                                                <td>
+                                                                    <select name="cStatus" class="form-select"
+                                                                            aria-label="Default select example">
+                                                                        <option value="${request.complicationStatus}">${request.complicationStatus}</option>
+                                                                    </select>
+                                                                </td>
+                                                            </c:if>
                                                             <td><c:out value="${request.date}"/></td>
+                                                            <input type="hidden" name="command" value="editRequest"/>
+                                                            <input id="reqID" type="hidden" name="reqID" value="${request.requestID}"/>
+                                                            <td><input type="submit" class="btn btn-outline-warning"></td>
                                                         </tr>
                                                     </form>
                                                 </table>

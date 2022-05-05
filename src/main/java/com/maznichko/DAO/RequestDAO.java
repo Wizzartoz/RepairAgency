@@ -1,7 +1,7 @@
 package com.maznichko.DAO;
 
 import com.maznichko.DAO.entity.Request;
-import com.maznichko.DAO.entity.User;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -59,8 +59,8 @@ public class RequestDAO {
             connection = DBManager.getInstance().connect();
             prGet = connection.prepareStatement(SQLQuery.RequestQuery.SELECT_ALL_FROM_REQUEST_WHERE_LIMIT);
             prGet.setString(1, login);
-            prGet.setInt(2,limit);
-            prGet.setInt(3,offset);
+            prGet.setInt(2, limit);
+            prGet.setInt(3, offset);
             ResultSet rs = prGet.executeQuery();
             while (rs.next()) {
                 Request request = getRequestByID(rs.getInt("id_request"));
@@ -143,7 +143,7 @@ public class RequestDAO {
             pstmt.setString(2, request.getComplicationStatus());
             pstmt.setString(3, request.getPaymentStatus());
             pstmt.setFloat(4, request.getPrice());
-            pstmt.setString(5,request.getMasterLogin());
+            pstmt.setString(5, request.getMasterLogin());
             pstmt.setLong(6, request.getRequestID());
             int updateResult = pstmt.executeUpdate();
             if (updateResult == 0) {

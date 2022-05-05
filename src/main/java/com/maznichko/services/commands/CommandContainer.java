@@ -19,6 +19,7 @@ public class CommandContainer {
         commands.put("sendRequest", new SendRequest());
         commands.put("takeRequest", new TakeRequest());
         commands.put("setMaster", new SetMaster());
+        commands.put("editRequest", new EditRequest());
     }
 
     public static Command get(String command)  {
