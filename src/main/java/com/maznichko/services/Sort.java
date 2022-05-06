@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Sort {
-    public List<Request> sort(String sort, List<Request> request) {
+    public static List<Request> sort(String sort, List<Request> request) {
         List<Request> list = null;
         switch (sort) {
             case "date": {

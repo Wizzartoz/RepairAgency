@@ -35,8 +35,6 @@ public class ManagerServlet extends HttpServlet {
         }
         HttpSession httpSession = request.getSession();
         request.setAttribute("bank",httpSession.getAttribute("bank"));
-        System.out.println(result);
-        System.out.println(1);
         RequestDispatcher dispatcher = request.getRequestDispatcher(result);
         dispatcher.forward(request, response);
     }

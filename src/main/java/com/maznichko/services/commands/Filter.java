@@ -16,49 +16,57 @@ import java.util.stream.Collectors;
 public class Filter implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String status1 = req.getParameter("done");
-        String status2 = req.getParameter("progress");
-        String status3 = req.getParameter("consideration");
-        List<Request> resultRequest = new ArrayList<>();
-        List<Request> masterRequest = new ArrayList<>();
         List<Request> statusRequests;
         try {
             statusRequests = new RequestDAO().findAllRequest();
         } catch (DBException e) {
             return "/jsp/Error.jsp";
         }
-        if (status1 != null) {
-            resultRequest.addAll(statusRequests.stream()
-                    .filter(x -> x.getComplicationStatus().equals("done"))
-                    .collect(Collectors.toList()));
-        }
-        if (status2 != null) {
-            resultRequest.addAll(statusRequests.stream()
-                    .filter(x -> x.getComplicationStatus().equals("in progress"))
-                    .collect(Collectors.toList()));
-        }
-        if (status3 != null) {
-            resultRequest.addAll(statusRequests.stream()
-                    .filter(x -> x.getComplicationStatus().equals("under consideration"))
-                    .collect(Collectors.toList()));
-        }
-        if (req.getParameterValues("masterLogin") != null) {
-            for (String request : req.getParameterValues("masterLogin")) {
-                List<Request> requests;
-                try {
-                    requests = new RequestDAO().getRequestByLogin(request);
-                } catch (DBException e) {
-                    throw new RuntimeException(e);
-                }
-                masterRequest.addAll(requests);
+        String[] compStatuses = req.getParameterValues("compStatus");
+        List<Request> compRequests = new ArrayList<>();
+        if (compStatuses != null) {
+            for (String status : compStatuses) {
+                compRequests.addAll(statusRequests
+                        .stream()
+                        .filter(x -> x.getComplicationStatus().equals(status))
+                        .collect(Collectors.toList()));
             }
-            resultRequest = masterRequest.stream().filter(resultRequest::contains).collect(Collectors.toList());
         }
+        List<Request> masterRequests = new ArrayList<>();
+        String[] setMasterLogins = req.getParameterValues("masterLogin");
+        if (setMasterLogins != null) {
+            for (String login : setMasterLogins) {
+                masterRequests.addAll(statusRequests
+                        .stream()
+                        .filter(x -> x.getMasterLogin() != null)
+                        .filter(x -> x.getMasterLogin().equals(login))
+                        .collect(Collectors.toList()));
+            }
+        }
+        List<Request> payRequests = new ArrayList<>();
+        String[] payStatuses = req.getParameterValues("payStatus");
+        if (payStatuses != null) {
+            for (String status : payStatuses) {
+                System.out.println(status);
+                payRequests.addAll(statusRequests
+                        .stream()
+                        .filter(x -> x.getPaymentStatus().equals(status))
+                        .collect(Collectors.toList()));
+            }
+        }
+        Set<Request> resultRequest = new HashSet<>(compRequests);
+        if (!masterRequests.isEmpty()){
+            resultRequest.retainAll(masterRequests);
+        }
+        if(!payRequests.isEmpty()){
+            resultRequest.retainAll(payRequests);
+        }
+        List<Request> result = new ArrayList<>(resultRequest);
         String sort = req.getParameter("sort");
         if (req.getParameter("sort") != null) {
-            resultRequest = new Sort().sort(sort, resultRequest);
+            result = Sort.sort(sort,result);
         }
-        List<Request> table = Pagination.pagination(req,resultRequest);
+        List<Request> table = Pagination.pagination(req, result);
         req.setAttribute("table", table);
         return "/jsp/Manager/managerMain.jsp";
     }
