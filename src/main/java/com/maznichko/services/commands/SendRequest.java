@@ -1,9 +1,8 @@
 package com.maznichko.services.commands;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.RequestDAO;
-import com.maznichko.DAO.entity.Request;
-import com.maznichko.services.commands.Command;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.Request;
+import com.maznichko.dao.impl.RequestDAOimpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,13 +24,13 @@ public class SendRequest implements Command {
         request.setPaymentStatus("unpaid");
         request.setComplicationStatus("under consideration");
         try {
-            new RequestDAO().insertRequest(request);
+            new RequestDAOimpl().insert(request);
         } catch (DBException e) {
             req.setAttribute("result",e.getMessage());
             return "/jsp/Error.jsp";
         }
         try {
-            new RequestDAO().insertRequestInUserRequest(login, request.getRequestID());
+            new RequestDAOimpl().insertRequestInUserRequest(login, request.getRequestID());
         } catch (DBException e) {
             req.setAttribute("result",e.getMessage());
             return "/jsp/Error.jsp";

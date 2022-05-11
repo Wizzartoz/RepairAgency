@@ -1,8 +1,8 @@
 package com.maznichko.services;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.RequestDAO;
-import com.maznichko.DAO.entity.Request;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.Request;
+import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.services.commands.Command;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ public class MasterRequest  implements Command {
         String login = req.getParameter("master");
         List<Request>requests;
         try {
-            requests = new RequestDAO().getRequestByLogin(login);
+            requests = new RequestDAOimpl().getRequestByLogin(login);
         } catch (DBException e) {
             throw new RuntimeException(e);
         }

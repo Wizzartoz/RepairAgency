@@ -1,11 +1,10 @@
-package com.maznichko.DAO.entity;
+package com.maznichko.dao.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Objects;
 
-public class Request {
-    private Integer requestID;
+public class Request implements Entity {
+    private long requestID;
     private String description;
     private Timestamp date;
     private String complicationStatus;
@@ -21,7 +20,7 @@ public class Request {
         this.masterLogin = masterLogin;
     }
 
-    public Integer getRequestID() {
+    public long getRequestID() {
         return requestID;
     }
 
@@ -74,16 +73,16 @@ public class Request {
         if (obj == null) return false;
         if (!(obj instanceof Request)) return false;
         Request request = (Request) obj;
-        return Objects.equals(request.getRequestID(),this.requestID);
+        return Objects.equals(request.getRequestID(), this.requestID);
     }
 
     @Override
     public int hashCode() {
-        return this.requestID.hashCode();
+        return (int) this.requestID;
     }
 
     @Override
     public String toString() {
-        return requestID.toString();
+        return String.valueOf(requestID);
     }
 }

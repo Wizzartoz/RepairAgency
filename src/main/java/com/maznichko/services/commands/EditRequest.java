@@ -1,8 +1,8 @@
 package com.maznichko.services.commands;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.RequestDAO;
-import com.maznichko.DAO.entity.Request;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.Request;
+import com.maznichko.dao.impl.RequestDAOimpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 public class EditRequest implements Command{
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        int id = Integer.parseInt(req.getParameter("reqID"));
+        long id = Long.parseLong(req.getParameter("reqID"));
         Request request;
         try {
-            request = new RequestDAO().getRequestByID(id);
+            request = new RequestDAOimpl().getData(id);
         } catch (DBException e) {
             throw new RuntimeException(e);
         }
@@ -24,7 +24,7 @@ public class EditRequest implements Command{
         request.setComplicationStatus(compStatus);
         request.setPaymentStatus(payStatus);
         try {
-            new RequestDAO().updateRequest(request);
+            new RequestDAOimpl().update(request);
         } catch (DBException e) {
             throw new RuntimeException(e);
         }

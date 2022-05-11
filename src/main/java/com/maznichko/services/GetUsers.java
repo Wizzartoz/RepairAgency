@@ -1,9 +1,8 @@
 package com.maznichko.services;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.UserDAO;
-import com.maznichko.DAO.entity.User;
-import com.maznichko.services.commands.Command;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.User;
+import com.maznichko.dao.impl.UserDAOimpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +13,7 @@ public class GetUsers  {
     public static String execute(HttpServletRequest req, HttpServletResponse resp) {
         List<User> users;
         try {
-            users = new UserDAO().findAllUsers();
+            users = new UserDAOimpl().findAll();
         } catch (DBException e) {
             throw new RuntimeException(e);
         }

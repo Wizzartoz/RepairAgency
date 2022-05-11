@@ -1,9 +1,9 @@
-package com.maznichko.DAO.entity;
+package com.maznichko.dao.entity;
 
 import java.util.Objects;
 
-public class User {
-    private Integer userID;
+public class User implements Entity{
+    private long userID;
     private String login;
     private String password;
     private String email;
@@ -17,7 +17,7 @@ public class User {
         return userID;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(long userID) {
         this.userID = userID;
     }
 

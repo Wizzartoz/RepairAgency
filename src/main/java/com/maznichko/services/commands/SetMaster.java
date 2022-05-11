@@ -1,8 +1,8 @@
 package com.maznichko.services.commands;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.RequestDAO;
-import com.maznichko.DAO.entity.Request;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.Request;
+import com.maznichko.dao.impl.RequestDAOimpl;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 public class SetMaster implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        int reqID = Integer.parseInt(req.getParameter("ReqID"));
+        long reqID = Long.parseLong(req.getParameter("ReqID"));
         String login = req.getParameter("usr");
         Request request;
         try {
-           request = new RequestDAO().getRequestByID(reqID);
+           request = new RequestDAOimpl().getData(reqID);
         } catch (DBException e) {
             req.setAttribute("error",e.getMessage());
             return "/jsp/Error.jsp";
@@ -26,13 +26,13 @@ public class SetMaster implements Command {
         }
         request.setMasterLogin(login);
         try {
-            new RequestDAO().updateRequest(request);
+            new RequestDAOimpl().update(request);
         } catch (DBException e) {
             req.setAttribute("error",e.getMessage());
             return "/jsp/Error.jsp";
         }
         try {
-            new RequestDAO().insertRequestInUserRequest(login, reqID);
+            new RequestDAOimpl().insertRequestInUserRequest(login, reqID);
         } catch (DBException e) {
             req.setAttribute("result", "request already assigned");
             return "/jsp/Manager/managerMain.jsp";

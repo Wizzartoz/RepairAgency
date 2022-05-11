@@ -1,8 +1,8 @@
 package com.maznichko.services;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.UserDAO;
-import com.maznichko.DAO.entity.User;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.User;
+import com.maznichko.dao.impl.UserDAOimpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ public class GetBank {
         String login = (String) httpSession.getAttribute("login");
         User user;
         try {
-            user = new UserDAO().getUser(login);
+            user = new UserDAOimpl().getUserByLogin(login);
         } catch (DBException e) {
             return "/jsp/Error.jsp";
         }

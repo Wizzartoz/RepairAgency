@@ -1,9 +1,8 @@
 package com.maznichko.services.commands;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.UserDAO;
-import com.maznichko.DAO.entity.User;
-import com.maznichko.services.commands.Command;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.User;
+import com.maznichko.dao.impl.UserDAOimpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,10 +33,10 @@ public class Replenishment implements Command {
             req.setAttribute("result", "Enter a positive number");
             return "/ReplenishmentCustomerServlet";
         }
-        UserDAO userDAO = new UserDAO();
+        UserDAOimpl userDAOimpl = new UserDAOimpl();
         User user;
         try {
-            user = userDAO.getUser(login);
+            user = userDAOimpl.getUserByLogin(login);
         } catch (DBException e) {
             req.setAttribute("result", e.getMessage());
             return "/jsp/Error.jsp";
@@ -46,7 +45,7 @@ public class Replenishment implements Command {
             int wallet = user.getBank();
             user.setBank(money + wallet);
             try {
-                userDAO.updateUser(user);
+                userDAOimpl.update(user);
                 req.setAttribute("result", "payment was successful");
                 return "/ReplenishmentCustomerServlet";
             } catch (DBException e) {

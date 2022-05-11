@@ -1,10 +1,19 @@
 package com.maznichko.services.commands;
 
+import com.maznichko.dao.FeedbackDAO;
+import com.maznichko.dao.RequestDAO;
+import com.maznichko.dao.UserDAO;
+import com.maznichko.dao.entity.Request;
+import com.maznichko.dao.impl.FeedbackDAOimpl;
+import com.maznichko.dao.impl.RequestDAOimpl;
+import com.maznichko.dao.impl.UserDAOimpl;
+
 import java.util.Map;
 import java.util.TreeMap;
 
 public class CommandContainer {
     private static final Map<String, Command> commands = new TreeMap<>();
+
 
     static {
         commands.put("login", new Login());
@@ -22,7 +31,7 @@ public class CommandContainer {
         commands.put("editRequest", new EditRequest());
     }
 
-    public static Command get(String command)  {
+    public static Command get(String command) {
         if (command == null || !commands.containsKey(command)) {
             return null;
         }

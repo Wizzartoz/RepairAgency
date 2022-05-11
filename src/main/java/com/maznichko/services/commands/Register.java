@@ -1,9 +1,8 @@
 package com.maznichko.services.commands;
 
-import com.maznichko.DAO.DBException;;
-import com.maznichko.DAO.UserDAO;
-import com.maznichko.DAO.entity.User;
-import com.maznichko.services.commands.Command;
+import com.maznichko.dao.DBException;;
+import com.maznichko.dao.entity.User;
+import com.maznichko.dao.impl.UserDAOimpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +41,7 @@ public class Register implements Command {
         user.setPhone(phone);
         user.setEmail(email);
         try {
-            new UserDAO().insertUser(user);
+            new UserDAOimpl().insert(user);
         } catch (DBException e) {
             req.setAttribute("result", "user already exists");
             return "/LoginServlet";

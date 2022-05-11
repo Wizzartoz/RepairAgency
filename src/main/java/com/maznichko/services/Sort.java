@@ -1,12 +1,7 @@
 package com.maznichko.services;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.RequestDAO;
-import com.maznichko.DAO.entity.Request;
+import com.maznichko.dao.entity.Request;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

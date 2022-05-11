@@ -1,9 +1,8 @@
 package com.maznichko.services.commands;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.FeedbackDAO;
-import com.maznichko.DAO.entity.Feedback;
-import com.maznichko.services.commands.Command;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.Feedback;
+import com.maznichko.dao.impl.FeedbackDAOimpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LeaveFeedback implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        FeedbackDAOimpl feedbackDAOimpl = new FeedbackDAOimpl();
         String feedbackText = req.getParameter("feedback");
         String status = req.getParameter("comp");
         int rating;
@@ -22,7 +21,7 @@ public class LeaveFeedback implements Command {
             return "/jsp/Customer/customerMain.jsp";
         }
 
-        int id = Integer.parseInt(req.getParameter("feedbackID"));
+        long id = Long.parseLong(req.getParameter("feedbackID"));
         Feedback feedback = new Feedback();
         feedback.setFeedbackText(feedbackText);
         feedback.setRating(rating);
@@ -37,7 +36,7 @@ public class LeaveFeedback implements Command {
         }
         Feedback feedback1;
         try {
-            feedback1 = feedbackDAO.getFeedback(id);
+            feedback1 = feedbackDAOimpl.getData(id);
         } catch (DBException e) {
             req.setAttribute("result", e.getMessage());
             return "/jsp/Error.jsp";
@@ -47,7 +46,7 @@ public class LeaveFeedback implements Command {
             return "/jsp/Customer/customerMain.jsp";
         }
         try {
-            feedbackDAO.insertFeedback(feedback);
+            feedbackDAOimpl.insert(feedback);
         } catch (DBException e) {
             req.setAttribute("result", "Can't leave a comment");
             return "/jsp/Error.jsp";

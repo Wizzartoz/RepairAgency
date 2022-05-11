@@ -1,9 +1,8 @@
 package com.maznichko.services.commands;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.RequestDAO;
-import com.maznichko.DAO.entity.Request;
-import com.maznichko.services.commands.Command;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.Request;
+import com.maznichko.dao.impl.RequestDAOimpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 public class GetRequest implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        int id = Integer.parseInt(req.getParameter("req"));
+        long id = Long.parseLong(req.getParameter("req"));
         Request request;
         try {
-            request = new RequestDAO().getRequestByID(id);
+            request = new RequestDAOimpl().getData(id);
         } catch (DBException e) {
             throw new RuntimeException(e);
         }

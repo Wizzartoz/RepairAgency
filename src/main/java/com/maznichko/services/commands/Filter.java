@@ -1,8 +1,8 @@
 package com.maznichko.services.commands;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.RequestDAO;
-import com.maznichko.DAO.entity.Request;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.Request;
+import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.services.Pagination;
 import com.maznichko.services.Sort;
 
@@ -18,7 +18,7 @@ public class Filter implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         List<Request> statusRequests;
         try {
-            statusRequests = new RequestDAO().findAllRequest();
+            statusRequests = new RequestDAOimpl().findAll();
         } catch (DBException e) {
             return "/jsp/Error.jsp";
         }

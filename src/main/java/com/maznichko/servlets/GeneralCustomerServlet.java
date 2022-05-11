@@ -18,6 +18,7 @@ public class GeneralCustomerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
         HttpSession httpSession = request.getSession();
         Command command = CommandContainer.get(request.getParameter("command"));

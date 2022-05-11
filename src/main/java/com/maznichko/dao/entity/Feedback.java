@@ -1,21 +1,21 @@
-package com.maznichko.DAO.entity;
+package com.maznichko.dao.entity;
 
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class Feedback {
-    Integer feedbackID;
+public class Feedback implements Entity{
+    long feedbackID;
     String feedbackText;
     Integer rating;
     Timestamp date;
-    Integer requestID;
+    long requestID;
     String masterLogin;
 
-    public Integer getFeedbackID() {
+    public long getFeedbackID() {
         return feedbackID;
     }
 
-    public void setFeedbackID(Integer feedbackID) {
+    public void setFeedbackID(long feedbackID) {
         this.feedbackID = feedbackID;
     }
 
@@ -43,11 +43,11 @@ public class Feedback {
         this.date = date;
     }
 
-    public Integer getRequestID() {
+    public long getRequestID() {
         return requestID;
     }
 
-    public void setRequestID(Integer requestID) {
+    public void setRequestID(long requestID) {
         this.requestID = requestID;
     }
 
@@ -64,12 +64,12 @@ public class Feedback {
         if (obj == null) return false;
         if (!(obj instanceof Feedback)) return false;
         Feedback feedback = (Feedback) obj;
-        return Objects.equals(feedback.getRequestID(),this.requestID);
+        return Objects.equals(feedback.getRequestID(),this.feedbackID);
     }
-
+//Гарантированная колизия , нужно это как то исправить
     @Override
     public int hashCode() {
-        return this.requestID.hashCode();
+        return (int) this.feedbackID;
     }
 
     @Override

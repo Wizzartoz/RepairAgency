@@ -17,6 +17,9 @@ import java.io.IOException;
 
 
 public class ManagerServlet extends HttpServlet {
+    //TODO исправить ду гет и ду пост
+    //TODO
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);

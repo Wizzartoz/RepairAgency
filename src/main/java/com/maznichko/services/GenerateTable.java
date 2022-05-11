@@ -1,14 +1,13 @@
 package com.maznichko.services;
 
-import com.maznichko.DAO.DBException;
-import com.maznichko.DAO.RequestDAO;
-import com.maznichko.DAO.entity.Request;
+import com.maznichko.dao.DBException;
+import com.maznichko.dao.entity.Request;
+import com.maznichko.dao.impl.RequestDAOimpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GenerateTable {
 
@@ -17,7 +16,7 @@ public class GenerateTable {
         String login = (String) httpSession.getAttribute("login");
         List<Request> requests;
         try {
-            requests = new RequestDAO().getRequestByLogin(login);
+            requests = new RequestDAOimpl().getRequestByLogin(login);
         } catch (DBException e) {
             req.setAttribute("result", e.getMessage());
             return "/jsp/Error.jsp";

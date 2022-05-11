@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.maznichko.DAO.entity.Request" %>
+<%@ page import="com.maznichko.dao.entity.Request" %>
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.stream.Collectors" %><%--
   Created by IntelliJ IDEA.
