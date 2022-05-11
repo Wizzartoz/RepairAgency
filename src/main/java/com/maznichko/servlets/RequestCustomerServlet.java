@@ -1,7 +1,5 @@
 package com.maznichko.servlets;
 
-;
-
 import com.maznichko.services.Path;
 
 import javax.servlet.*;
@@ -22,6 +20,6 @@ public class RequestCustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String result = (String) request.getAttribute("result");
-        response.sendRedirect(String.format("RequestCustomerServlet?result=%s", result));
+        response.sendRedirect(String.format(Path.CUSTOMER_SERVLET+"?result=%s", result));
     }
 }

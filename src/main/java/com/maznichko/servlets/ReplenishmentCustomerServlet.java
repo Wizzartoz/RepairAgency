@@ -1,5 +1,7 @@
 package com.maznichko.servlets;
 
+import com.maznichko.services.Path;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -19,6 +21,6 @@ public class ReplenishmentCustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String result = (String) request.getAttribute("result");
         String path = (String) request.getAttribute("path");
-        response.sendRedirect(String.format("ReplenishmentCustomerServlet?result=%s&path=%s", result,path));
+        response.sendRedirect(String.format(Path.REPLENISHMENT_SERVLET+"?result=%s&path=%s", result,path));
     }
 }

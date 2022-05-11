@@ -9,15 +9,13 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "LoginServlet", value = "/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "RegisterServlet", value = "/RegisterServlet")
+public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("result", request.getParameter("result"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher(Path.LOGIN_JSP);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(Path.REGISTER_JSP);
         dispatcher.forward(request, response);
-
-
     }
 
     @Override
@@ -30,4 +28,3 @@ public class LoginServlet extends HttpServlet {
         response.sendRedirect(result + "?result=" + request.getAttribute("result"));
     }
 }
-
