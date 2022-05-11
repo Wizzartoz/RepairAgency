@@ -42,6 +42,16 @@ public abstract class ManagerDB {
         } catch (SQLException e) {
             throw new DBException("SQL Exception", e);
         }
+
+    }
+    public void autocommit(Connection connection,boolean flag) throws DBException {
+        try {
+            if (connection != null) {
+                connection.setAutoCommit(flag);
+            }
+        } catch (SQLException e) {
+            throw new DBException("SQL Exception", e);
+        }
     }
 
 }

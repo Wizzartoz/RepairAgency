@@ -29,7 +29,7 @@ public class ManagerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandContainer.get(request.getParameter("command"));
-        String result = "/jsp/Manager/managerMain.jsp";
+        String result = Path.MANAGER_JSP;
         GetBank.execute(request,response);
         GetMasters.execute(request,response);
         GetUsers.execute(request,response);

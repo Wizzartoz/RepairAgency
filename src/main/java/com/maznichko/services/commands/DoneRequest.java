@@ -1,36 +1,41 @@
 package com.maznichko.services.commands;
 
 import com.maznichko.dao.DBException;
+import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
 import com.maznichko.dao.impl.RequestDAOimpl;
+import com.maznichko.services.Path;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class DoneRequest implements Command {
+    private final RequestDAO requestDAO;
+    public DoneRequest(RequestDAO requestDAO){
+        this.requestDAO = requestDAO;
+
+    }
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        int id = Integer.parseInt(req.getParameter("doneID"));
+        long id = Long.parseLong(req.getParameter("doneID"));
         Request request;
-        System.out.println(1);
         try {
-            request = new RequestDAOimpl().getData(id);
+            request = requestDAO.getData(id);
         } catch (DBException e) {
             req.setAttribute("result", e.getMessage());
-            return "/jsp/Error.jsp";
+            return Path.ERROR;
         }
         if (!request.getComplicationStatus().equals("in progress")) {
             req.setAttribute("result", "you cannot change the status");
-            return "/jsp/Master/masterRequests.jsp";
+            return Path.MASTER_JSP;
         }
         request.setComplicationStatus("done");
         try {
-            new RequestDAOimpl().update(request);
+            requestDAO.update(request);
         } catch (DBException e) {
-            System.out.println(2);
             throw new RuntimeException(e);
         }
         req.setAttribute("result", "status changed successfully");
-        return "/jsp/Master/masterRequests.jsp";
+        return Path.MASTER_JSP;
     }
 }

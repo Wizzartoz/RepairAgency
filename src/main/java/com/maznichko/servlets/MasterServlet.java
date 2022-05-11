@@ -20,7 +20,7 @@ public class MasterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandContainer.get(request.getParameter("command"));
-        String result = "/jsp/Master/masterRequests.jsp";
+        String result = Path.MASTER_JSP;
         if (command != null) {
             result = command.execute(request, response);
         }

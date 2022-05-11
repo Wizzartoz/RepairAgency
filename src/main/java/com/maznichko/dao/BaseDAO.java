@@ -1,10 +1,10 @@
 package com.maznichko.dao;
 
 import com.maznichko.dao.entity.Entity;
-
 import java.util.List;
 
-public abstract class BaseDAO<T extends Entity> extends DBConnection {
+public abstract class BaseDAO<T extends Entity> {
+    protected ManagerDB dao = PostgresDBManager.getInstance();
 
     public abstract List<T> findAll() throws DBException;
 
@@ -15,5 +15,4 @@ public abstract class BaseDAO<T extends Entity> extends DBConnection {
     public abstract boolean delete(T data) throws DBException;
 
     public abstract boolean insert(T data) throws DBException;
-
 }

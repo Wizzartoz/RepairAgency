@@ -1,14 +1,20 @@
 package com.maznichko.services.commands;
 
 import com.maznichko.dao.DBException;
+import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
 import com.maznichko.dao.impl.RequestDAOimpl;
+import com.maznichko.services.Path;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class SendRequest implements Command {
+    private final RequestDAO requestDAO;
+    public SendRequest(RequestDAO requestDAO){
+        this.requestDAO = requestDAO;
+    }
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession httpSession = req.getSession();
@@ -16,7 +22,7 @@ public class SendRequest implements Command {
         String message = req.getParameter("user_message");
         if (message.isEmpty()){
             req.setAttribute("result", "you sent an empty field");
-            return "/RequestCustomerServlet";
+            return Path.REQUEST_SERVLET;
         }
         Request request = new Request();
         request.setDescription(message);
@@ -24,18 +30,18 @@ public class SendRequest implements Command {
         request.setPaymentStatus("unpaid");
         request.setComplicationStatus("under consideration");
         try {
-            new RequestDAOimpl().insert(request);
+            requestDAO.insert(request);
         } catch (DBException e) {
             req.setAttribute("result",e.getMessage());
-            return "/jsp/Error.jsp";
+            return Path.ERROR;
         }
         try {
-            new RequestDAOimpl().insertRequestInUserRequest(login, request.getRequestID());
+            requestDAO.insertRequestInUserRequest(login, request.getRequestID());
         } catch (DBException e) {
             req.setAttribute("result",e.getMessage());
-            return "/jsp/Error.jsp";
+            return Path.ERROR;
         }
         req.setAttribute("result", "you have successfully submitted your request");
-        return "/RequestCustomerServlet";
+        return Path.REQUEST_SERVLET;
     }
 }

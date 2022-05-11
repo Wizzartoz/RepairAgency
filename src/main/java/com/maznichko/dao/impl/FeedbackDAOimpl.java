@@ -12,7 +12,6 @@ import java.util.List;
 
 public class FeedbackDAOimpl extends FeedbackDAO {
 
-
     private Feedback createFeedback(ResultSet resultSet) throws DBException {
         Feedback feedback = new Feedback();
         try {
@@ -87,7 +86,7 @@ public class FeedbackDAOimpl extends FeedbackDAO {
         PreparedStatement pstmt = null;
         try {
             connection = dao.connect();
-            connection.setAutoCommit(false);
+            dao.autocommit(connection, false);
             pstmt = connection.prepareStatement(SQLQuery.RequestFeedback.INSERT_FEEDBACK);
             pstmt.setString(1, data.getFeedbackText());
             pstmt.setInt(2, data.getRating());
@@ -103,9 +102,9 @@ public class FeedbackDAOimpl extends FeedbackDAO {
             dao.rollback(connection);
             throw new DBException("SQL Exception", e);
         } finally {
+            dao.autocommit(connection, true);
             dao.close(pstmt);
             dao.close(connection);
-
         }
         return true;
     }

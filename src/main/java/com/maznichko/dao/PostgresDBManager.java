@@ -22,15 +22,20 @@ public class PostgresDBManager extends ManagerDB {
     }
 
     @Override
-    public Connection connect() throws SQLException {
+    public Connection connect() {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Connection con = DriverManager.getConnection(
-                CONNECTION_URL);
-        con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+        Connection con;
+        try {
+            con = DriverManager.getConnection(
+                    CONNECTION_URL);
+            con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return con;
     }
 

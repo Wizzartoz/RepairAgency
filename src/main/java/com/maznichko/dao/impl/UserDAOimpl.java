@@ -53,8 +53,8 @@ public class UserDAOimpl extends UserDAO {
 
     @Override
     public User getData(long id) throws DBException {
-        Connection connection = null;
         User user;
+        Connection connection = null;
         PreparedStatement prGet = null;
         try {
             connection = dao.connect();
@@ -78,7 +78,7 @@ public class UserDAOimpl extends UserDAO {
         PreparedStatement pstmt = null;
         try {
             con = dao.connect();
-            con.setAutoCommit(false);
+            dao.autocommit(con, false);
             pstmt = con.prepareStatement(SQLQuery.UserQuery.UPDATE_USER);
             pstmt.setString(1, data.getLogin());
             pstmt.setString(2, data.getPassword());
@@ -99,6 +99,7 @@ public class UserDAOimpl extends UserDAO {
             dao.rollback(con);
             throw new DBException("SQl Exception", e);
         } finally {
+            dao.autocommit(con, true);
             dao.close(pstmt);
             dao.close(con);
         }
@@ -133,7 +134,7 @@ public class UserDAOimpl extends UserDAO {
         ResultSet rs;
         try {
             connection = dao.connect();
-            connection.setAutoCommit(false);
+            dao.autocommit(connection, false);
             prInsert = connection.prepareStatement(SQLQuery.UserQuery.INSERT_USER_INTO_USER, Statement.RETURN_GENERATED_KEYS);
             prInsert.setString(1, data.getLogin());
             prInsert.setString(2, data.getPassword());
@@ -158,6 +159,7 @@ public class UserDAOimpl extends UserDAO {
             dao.rollback(connection);
             throw new DBException("SQl Exception", e);
         } finally {
+            dao.autocommit(connection, true);
             dao.close(prInsert);
             dao.close(connection);
         }
@@ -166,8 +168,8 @@ public class UserDAOimpl extends UserDAO {
 
     @Override
     public User getUserByLogin(String login) throws DBException {
-        Connection connection = null;
         User user;
+        Connection connection = null;
         PreparedStatement prGet = null;
         try {
             connection = dao.connect();

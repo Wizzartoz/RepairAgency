@@ -43,7 +43,6 @@ public class RequestDAOimpl extends RequestDAO {
             throw new DBException("SQL Exception", e);
         } finally {
             dao.close(connection);
-
         }
         return requests;
     }
@@ -51,8 +50,8 @@ public class RequestDAOimpl extends RequestDAO {
 
     @Override
     public Request getData(long id) throws DBException {
-        Connection connection = null;
         Request request;
+        Connection connection = null;
         PreparedStatement prGet = null;
         try {
             connection = dao.connect();
@@ -76,7 +75,7 @@ public class RequestDAOimpl extends RequestDAO {
         PreparedStatement pstmt = null;
         try {
             con = dao.connect();
-            con.setAutoCommit(false);
+            dao.autocommit(con, false);
             pstmt = con.prepareStatement(SQLQuery.RequestQuery.UPDATE_REQUEST);
             pstmt.setString(1, data.getDescription());
             pstmt.setString(2, data.getComplicationStatus());
@@ -95,6 +94,7 @@ public class RequestDAOimpl extends RequestDAO {
             dao.rollback(con);
             throw new DBException("SQL Exception", e);
         } finally {
+            dao.autocommit(con, true);
             dao.close(pstmt);
             dao.close(con);
         }
@@ -128,7 +128,7 @@ public class RequestDAOimpl extends RequestDAO {
         PreparedStatement pstmt = null;
         try {
             connection = dao.connect();
-            connection.setAutoCommit(false);
+            dao.autocommit(connection, false);
             pstmt = connection.prepareStatement(SQLQuery.RequestQuery.INSERT_REQUEST, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, data.getDescription());
             pstmt.setString(2, data.getComplicationStatus());
@@ -151,6 +151,7 @@ public class RequestDAOimpl extends RequestDAO {
             dao.rollback(connection);
             throw new DBException("SQL Exception", e);
         } finally {
+            dao.autocommit(connection, true);
             dao.close(pstmt);
             dao.close(connection);
         }
@@ -169,7 +170,6 @@ public class RequestDAOimpl extends RequestDAO {
             while (rs.next()) {
                 Request request = getData(rs.getInt("id_request"));
                 requests.add(request);
-
             }
         } catch (SQLException e) {
             throw new DBException("SQL Exception", e);
@@ -198,7 +198,6 @@ public class RequestDAOimpl extends RequestDAO {
         } finally {
             dao.close(pstmt);
             dao.close(connection);
-
         }
         return true;
     }

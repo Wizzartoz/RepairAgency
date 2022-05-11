@@ -1,5 +1,6 @@
 package com.maznichko.servlets;
 
+import com.maznichko.services.Path;
 import com.maznichko.services.commands.Command;
 import com.maznichko.services.commands.CommandContainer;
 import com.maznichko.services.GenerateTable;
@@ -22,7 +23,7 @@ public class GeneralCustomerServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession httpSession = request.getSession();
         Command command = CommandContainer.get(request.getParameter("command"));
-        String result = "/jsp/Customer/customerMain.jsp";
+        String result = Path.CUSTOMER_JSP;
         if (command != null) {
             result = command.execute(request, response);
         }

@@ -1,9 +1,10 @@
 package com.maznichko.services.commands;
 
 import com.maznichko.dao.DBException;
+import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
-import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.services.Pagination;
+import com.maznichko.services.Path;
 import com.maznichko.services.Sort;
 
 
@@ -14,13 +15,19 @@ import java.util.stream.Collectors;
 
 
 public class Filter implements Command {
+    private final RequestDAO requestDAO;
+
+    public Filter(RequestDAO requestDAO) {
+        this.requestDAO = requestDAO;
+    }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         List<Request> statusRequests;
         try {
-            statusRequests = new RequestDAOimpl().findAll();
+            statusRequests = requestDAO.findAll();
         } catch (DBException e) {
-            return "/jsp/Error.jsp";
+            return Path.ERROR;
         }
         String[] compStatuses = req.getParameterValues("compStatus");
         List<Request> compRequests = new ArrayList<>();
@@ -47,7 +54,6 @@ public class Filter implements Command {
         String[] payStatuses = req.getParameterValues("payStatus");
         if (payStatuses != null) {
             for (String status : payStatuses) {
-                System.out.println(status);
                 payRequests.addAll(statusRequests
                         .stream()
                         .filter(x -> x.getPaymentStatus().equals(status))
@@ -55,19 +61,19 @@ public class Filter implements Command {
             }
         }
         Set<Request> resultRequest = new HashSet<>(compRequests);
-        if (!masterRequests.isEmpty()){
+        if (!masterRequests.isEmpty()) {
             resultRequest.retainAll(masterRequests);
         }
-        if(!payRequests.isEmpty()){
+        if (!payRequests.isEmpty()) {
             resultRequest.retainAll(payRequests);
         }
         List<Request> result = new ArrayList<>(resultRequest);
         String sort = req.getParameter("sort");
         if (req.getParameter("sort") != null) {
-            result = Sort.sort(sort,result);
+            result = Sort.sort(sort, result);
         }
         List<Request> table = Pagination.pagination(req, result);
         req.setAttribute("table", table);
-        return "/jsp/Manager/managerMain.jsp";
+        return Path.MANAGER_JSP;
     }
 }

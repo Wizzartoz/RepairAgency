@@ -1,5 +1,6 @@
 package com.maznichko.servlets;
 
+import com.maznichko.services.Path;
 import com.maznichko.services.commands.Command;
 import com.maznichko.services.commands.CommandContainer;
 
@@ -15,7 +16,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("result", request.getParameter("result"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+        RequestDispatcher dispatcher = request.getRequestDispatcher(Path.LOGIN_JSP);
         dispatcher.forward(request, response);
 
 
@@ -24,7 +25,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandContainer.get(request.getParameter("command"));
-        String result = "/jsp/Error.jsp";
+        String result = Path.ERROR;
         if (command != null) {
             result = CommandContainer.get(request.getParameter("command")).execute(request, response);
         }
