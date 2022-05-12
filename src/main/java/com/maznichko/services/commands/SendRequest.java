@@ -22,7 +22,7 @@ public class SendRequest implements Command {
         String message = req.getParameter("user_message");
         if (message.isEmpty()){
             req.setAttribute("result", "you sent an empty field");
-            return Path.REQUEST_SERVLET;
+            return Path.CUSTOMER_SERVLET;
         }
         Request request = new Request();
         request.setDescription(message);
@@ -42,6 +42,6 @@ public class SendRequest implements Command {
             return Path.ERROR;
         }
         req.setAttribute("result", "you have successfully submitted your request");
-        return Path.REQUEST_SERVLET;
+        return Path.CUSTOMER_SERVLET;
     }
 }

@@ -24,7 +24,7 @@ public class MasterServlet extends HttpServlet {
         if (command != null) {
             result = command.execute(request, response);
         }
-        GenerateTable.execute(request,response);
+        Table.generateTable(request,response);
         GetBank.execute(request,response);
         HttpSession httpSession = request.getSession();
         request.setAttribute("bank",httpSession.getAttribute("bank"));

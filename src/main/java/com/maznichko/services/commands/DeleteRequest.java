@@ -16,10 +16,10 @@ public class DeleteRequest implements Command {
     }
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        long id = Long.parseLong(req.getParameter("id"));
         try {
-            Request request = requestDAO.getData(Long.parseLong(req.getParameter("id")));
-            if (!request.getComplicationStatus().equals("under consideration")
-                    || request.getPaymentStatus().equals("paid")){
+            Request request = requestDAO.getData(id);
+            if (!request.getComplicationStatus().equals("under consideration") || request.getPaymentStatus().equals("paid")){
                 req.setAttribute("result","you cannot delete request");
                 return Path.CUSTOMER_JSP;
             }

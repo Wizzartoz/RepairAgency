@@ -32,12 +32,12 @@ public class Replenishment implements Command {
             money = Integer.parseInt(req.getParameter("money"));
         } catch (NumberFormatException e) {
             req.setAttribute("result", "you didn't enter anything");
-            return Path.REPLENISHMENT_SERVLET;
+            return Path.CUSTOMER_SERVLET;
         }
 
         if (money <= 0) {
             req.setAttribute("result", "Enter a positive number");
-            return Path.REPLENISHMENT_SERVLET;
+            return Path.CUSTOMER_SERVLET;
         }
         User user;
         try {
@@ -52,7 +52,7 @@ public class Replenishment implements Command {
             try {
                 userDAO.update(user);
                 req.setAttribute("result", "payment was successful");
-                return Path.REPLENISHMENT_SERVLET;
+                return Path.CUSTOMER_SERVLET;
             } catch (DBException e) {
                 req.setAttribute("result", e.getMessage());
                 return Path.ERROR;

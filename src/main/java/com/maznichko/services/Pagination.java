@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pagination {
-    public static List<Request> pagination(HttpServletRequest req, List<Request> requests){
+    public static List<Request> pagination(HttpServletRequest req, List<Request> requests) {
         double size = requests.size();
         int countPage = 8;
         int pages = (int) Math.ceil(size / countPage);

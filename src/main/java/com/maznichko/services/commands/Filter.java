@@ -27,6 +27,7 @@ public class Filter implements Command {
         try {
             statusRequests = requestDAO.findAll();
         } catch (DBException e) {
+            req.setAttribute("result",e.getMessage());
             return Path.ERROR;
         }
         String[] compStatuses = req.getParameterValues("compStatus");

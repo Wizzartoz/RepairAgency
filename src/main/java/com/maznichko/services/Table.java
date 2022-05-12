@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class GenerateTable {
+public class Table {
 
-    public static String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public static String generateTable(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession httpSession = req.getSession();
         String login = (String) httpSession.getAttribute("login");
         List<Request> requests;

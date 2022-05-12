@@ -21,7 +21,8 @@ public class EditRequest implements Command{
         try {
             request = requestDAO.getData(id);
         } catch (DBException e) {
-            throw new RuntimeException(e);
+            req.setAttribute("result", e.getMessage());
+            return Path.ERROR;
         }
         float price = Float.parseFloat(req.getParameter("price"));
         String compStatus = req.getParameter("cStatus");
@@ -32,7 +33,8 @@ public class EditRequest implements Command{
         try {
             requestDAO.update(request);
         } catch (DBException e) {
-            throw new RuntimeException(e);
+            req.setAttribute("result", e.getMessage());
+            return Path.ERROR;
         }
         return Path.MANAGER_JSP;
     }

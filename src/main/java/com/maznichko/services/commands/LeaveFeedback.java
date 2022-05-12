@@ -25,7 +25,6 @@ public class LeaveFeedback implements Command {
             req.setAttribute("result", "data in evaluation field is incorrect");
             return Path.CUSTOMER_JSP;
         }
-
         long id = Long.parseLong(req.getParameter("feedbackID"));
         Feedback feedback = new Feedback();
         feedback.setFeedbackText(feedbackText);

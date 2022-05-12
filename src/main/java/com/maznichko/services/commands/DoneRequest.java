@@ -3,9 +3,7 @@ package com.maznichko.services.commands;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
-import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.services.Path;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,7 +31,8 @@ public class DoneRequest implements Command {
         try {
             requestDAO.update(request);
         } catch (DBException e) {
-            throw new RuntimeException(e);
+            req.setAttribute("result", e.getMessage());
+            return Path.ERROR;
         }
         req.setAttribute("result", "status changed successfully");
         return Path.MASTER_JSP;

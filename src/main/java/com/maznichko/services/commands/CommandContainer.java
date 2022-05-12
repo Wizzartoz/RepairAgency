@@ -22,7 +22,6 @@ public class CommandContainer {
         commands.put("login", new Login(USER_DAO));
         commands.put("deleteRequest", new DeleteRequest(REQUEST_DAO));
         commands.put("doneRequest", new DoneRequest(REQUEST_DAO));
-        commands.put("getRequest", new GetRequest(REQUEST_DAO));
         commands.put("leaveFeedback", new LeaveFeedback(FEEDBACK_DAO));
         commands.put("register", new Register(USER_DAO));
         commands.put("paid", new Paid(USER_DAO,REQUEST_DAO));

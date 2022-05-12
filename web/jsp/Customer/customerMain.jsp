@@ -152,7 +152,9 @@
                         <button class="btn btn-warning" type="submit">Send request</button>
                     </div>
                 </form>
-                <b class="text-center text-danger ali">${requestScope.result}</b>
+                <b class="text-center text-danger ali"><c:if test="${not empty requestScope.result}">
+                    ${requestScope.result}
+                </c:if></b>
             </div>
             <div class="col-6">
                 <ul class="pagination">
