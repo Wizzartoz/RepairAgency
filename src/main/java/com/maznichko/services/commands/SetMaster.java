@@ -28,7 +28,7 @@ public class SetMaster implements Command {
         }
         if (request.getMasterLogin() != null){
             req.setAttribute("result", "request already assigned");
-            return Path.MANAGER_JSP;
+            return Path.MANAGER_SERVLET;
         }
         request.setMasterLogin(login);
         try {
@@ -41,9 +41,9 @@ public class SetMaster implements Command {
             requestDAO.insertRequestInUserRequest(login, reqID);
         } catch (DBException e) {
             req.setAttribute("result", "request already assigned");
-            return Path.MANAGER_JSP;
+            return Path.MANAGER_SERVLET;
         }
-        return Path.MANAGER_JSP;
+        return Path.MANAGER_SERVLET;
 
     }
 }

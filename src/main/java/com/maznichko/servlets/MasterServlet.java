@@ -13,7 +13,15 @@ import java.io.IOException;
 public class MasterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        Table.generateTable(request,response);
+        GetBank.execute(request,response);
+        if (request.getParameter("result") != null) {
+            String res = request.getParameter("result");
+            request.setAttribute("result", res);
+        }
+        request.setAttribute("bank",request.getSession().getAttribute("bank"));
+        RequestDispatcher dispatcher = request.getRequestDispatcher(Path.MASTER_JSP);
+        dispatcher.forward(request, response);
 
     }
 
@@ -24,12 +32,7 @@ public class MasterServlet extends HttpServlet {
         if (command != null) {
             result = command.execute(request, response);
         }
-        Table.generateTable(request,response);
-        GetBank.execute(request,response);
-        HttpSession httpSession = request.getSession();
-        request.setAttribute("bank",httpSession.getAttribute("bank"));
-        System.out.println(request.getAttribute("result"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher(result);
-        dispatcher.forward(request, response);
+        String res = (String) request.getAttribute("result");
+        response.sendRedirect(result + "?result=" + res);
     }
 }

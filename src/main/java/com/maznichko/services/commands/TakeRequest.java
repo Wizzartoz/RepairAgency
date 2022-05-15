@@ -26,15 +26,15 @@ public class TakeRequest implements Command {
         }
         if (!request.getPaymentStatus().equals("paid")) {
             req.setAttribute("result", "request must be paid");
-            return Path.MASTER_JSP;
+            return Path.MASTER_SERVLET;
         }
         if (request.getComplicationStatus().equals("done")) {
             req.setAttribute("result", "order already placed");
-            return Path.MASTER_JSP;
+            return Path.MASTER_SERVLET;
         }
         if (request.getComplicationStatus().equals("under consideration")) {
             req.setAttribute("result", "request must be considered");
-            return Path.MASTER_JSP;
+            return Path.MASTER_SERVLET;
         }
         request.setComplicationStatus("in progress");
         try {
@@ -44,6 +44,6 @@ public class TakeRequest implements Command {
             return Path.ERROR;
         }
         req.setAttribute("result", "status changed successfully");
-        return Path.MASTER_JSP;
+        return Path.MASTER_SERVLET;
     }
 }

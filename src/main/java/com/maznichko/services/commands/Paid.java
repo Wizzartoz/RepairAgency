@@ -42,7 +42,7 @@ public class Paid implements Command {
                     userDAO.update(user);
                 } catch (DBException e) {
                     req.setAttribute("result", e.getMessage());
-                    return Path.CUSTOMER_JSP;
+                    return Path.CUSTOMER_SERVLET;
                 }
             } else {
                 req.setAttribute("result", "not enough money");
@@ -60,12 +60,12 @@ public class Paid implements Command {
                 requestDAO.update(request);
             } catch (DBException e) {
                 req.setAttribute("result", null);
-                return Path.CUSTOMER_JSP;
+                return Path.CUSTOMER_SERVLET;
             }
             req.setAttribute("result", "payment was successful");
-            return Path.CUSTOMER_JSP;
+            return Path.CUSTOMER_SERVLET;
         }
         req.setAttribute("result", "payment failed");
-        return Path.CUSTOMER_JSP;
+        return Path.CUSTOMER_SERVLET;
     }
 }

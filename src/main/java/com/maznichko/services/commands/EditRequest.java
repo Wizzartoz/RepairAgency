@@ -36,6 +36,6 @@ public class EditRequest implements Command{
             req.setAttribute("result", e.getMessage());
             return Path.ERROR;
         }
-        return Path.MANAGER_JSP;
+        return Path.MANAGER_SERVLET;
     }
 }

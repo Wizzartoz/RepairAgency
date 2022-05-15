@@ -25,7 +25,7 @@ public class DoneRequest implements Command {
         }
         if (!request.getComplicationStatus().equals("in progress")) {
             req.setAttribute("result", "you cannot change the status");
-            return Path.MASTER_JSP;
+            return Path.MASTER_SERVLET;
         }
         request.setComplicationStatus("done");
         try {
@@ -35,6 +35,6 @@ public class DoneRequest implements Command {
             return Path.ERROR;
         }
         req.setAttribute("result", "status changed successfully");
-        return Path.MASTER_JSP;
+        return Path.MASTER_SERVLET;
     }
 }

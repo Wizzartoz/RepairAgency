@@ -10,19 +10,26 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(name = "ManagerServlet", value = "/ManagerServlet")
-//НАЗНАЧАЕТ МАСТЕРА
-//Определяет стоимость работы
-//Меняет статус заявки : ждет оплаты , отклонено
-//Пополняет баланс клиента *
-
 
 public class ManagerServlet extends HttpServlet {
-    //TODO исправить ду гет и ду пост
-    //TODO
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+        Command command = CommandContainer.get(request.getParameter("command"));
+        GetBank.execute(request, response);
+        GetMasters.execute(request, response);
+        GetUsers.execute(request, response);
+        String result = Path.MANAGER_JSP;
+        if (command != null) {
+            result = command.execute(request, response);
+        }
+        if (request.getParameter("result") != null) {
+            String res = request.getParameter("result");
+            request.setAttribute("result", res);
+        }
+        request.setAttribute("bank", request.getSession().getAttribute("bank"));
+        RequestDispatcher dispatcher = request.getRequestDispatcher(result);
+        dispatcher.forward(request, response);
+
 
     }
 
@@ -30,15 +37,10 @@ public class ManagerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandContainer.get(request.getParameter("command"));
         String result = Path.MANAGER_JSP;
-        GetBank.execute(request,response);
-        GetMasters.execute(request,response);
-        GetUsers.execute(request,response);
         if (command != null) {
             result = command.execute(request, response);
         }
-        HttpSession httpSession = request.getSession();
-        request.setAttribute("bank",httpSession.getAttribute("bank"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher(result);
-        dispatcher.forward(request, response);
+        String res = (String) request.getAttribute("result");
+        response.sendRedirect(result + "?result=" + res);
     }
 }

@@ -3,7 +3,6 @@ package com.maznichko.services.commands;
 import com.maznichko.dao.DBException;;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
-import com.maznichko.dao.impl.UserDAOimpl;
 import com.maznichko.services.Path;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ public class Register implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        HttpSession httpSession = req.getSession();
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String login = req.getParameter("login");
@@ -49,9 +47,10 @@ public class Register implements Command {
         try {
             userDAO.insert(user);
         } catch (DBException e) {
-            req.setAttribute("result", "user already exists");
+            req.setAttribute("result", "what's wrong");
             return Path.REGISTER_SERVLET;
         }
+        HttpSession httpSession = req.getSession();
         httpSession.setAttribute("login", login);
         httpSession.setAttribute("role", "CUSTOMER");
         return Path.CUSTOMER_SERVLET;

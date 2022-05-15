@@ -21,14 +21,14 @@ public class DeleteRequest implements Command {
             Request request = requestDAO.getData(id);
             if (!request.getComplicationStatus().equals("under consideration") || request.getPaymentStatus().equals("paid")){
                 req.setAttribute("result","you cannot delete request");
-                return Path.CUSTOMER_JSP;
+                return Path.CUSTOMER_SERVLET;
             }
             requestDAO.delete(request);
         } catch (DBException e) {
             req.setAttribute("result",null);
-            return Path.CUSTOMER_JSP;
+            return Path.CUSTOMER_SERVLET;
         }
         req.setAttribute("result","deletion successful");
-        return Path.CUSTOMER_JSP;
+        return Path.CUSTOMER_SERVLET;
     }
 }

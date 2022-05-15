@@ -514,7 +514,7 @@
                                                         <th scope="col"></th>
                                                         <th scope="col"></th>
                                                     </tr>
-                                                    <form action="ManagerServlet" method="get">
+                                                    <form action="ManagerServlet" method="post">
                                                         <tr>
                                                             <td><c:out value="${request.requestID}"/></td>
                                                             <td><c:out value="${request.description}"/></td>
@@ -629,7 +629,7 @@
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="ManagerServlet" method="get">
+                                                <form action="ManagerServlet" method="post">
                                                     <select name="usr" class="form-select my-2"
                                                             aria-label="Default select example">
                                                         <c:forEach var="user" items="${requestScope.users}">

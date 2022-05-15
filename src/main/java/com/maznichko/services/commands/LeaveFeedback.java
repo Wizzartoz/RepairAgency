@@ -23,7 +23,7 @@ public class LeaveFeedback implements Command {
             rating = Integer.parseInt(req.getParameter("rating"));
         } catch (NumberFormatException e) {
             req.setAttribute("result", "data in evaluation field is incorrect");
-            return Path.CUSTOMER_JSP;
+            return Path.CUSTOMER_SERVLET;
         }
         long id = Long.parseLong(req.getParameter("feedbackID"));
         Feedback feedback = new Feedback();
@@ -32,11 +32,11 @@ public class LeaveFeedback implements Command {
         feedback.setRequestID(id);
         if (feedbackText.isEmpty()) {
             req.setAttribute("result", "review is empty");
-            return Path.CUSTOMER_JSP;
+            return Path.CUSTOMER_SERVLET;
         }
         if (!status.equals("done")) {
             req.setAttribute("result", "the master has not made an order yet");
-            return Path.CUSTOMER_JSP;
+            return Path.CUSTOMER_SERVLET;
         }
         Feedback feedback1;
         try {
@@ -47,7 +47,7 @@ public class LeaveFeedback implements Command {
         }
         if (feedback1 != null) {
             req.setAttribute("result", "you have already submitted a request");
-            return Path.CUSTOMER_JSP;
+            return Path.CUSTOMER_SERVLET;
         }
         try {
             feedbackDAO.insert(feedback);
@@ -56,7 +56,7 @@ public class LeaveFeedback implements Command {
             return Path.ERROR;
         }
         req.setAttribute("result", "comment successfully posted");
-        return Path.CUSTOMER_JSP;
+        return Path.CUSTOMER_SERVLET;
 
 
     }

@@ -46,16 +46,6 @@
         <servlet-name>CustomerJSP</servlet-name>
         <url-pattern>/customer</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <servlet-name>GeneralCustomer</servlet-name>
-        <servlet-class>com.maznichko.servlets.GeneralCustomerServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>GeneralCustomer</servlet-name>
-        <url-pattern>/GeneralCustomerServlet</url-pattern>
-    </servlet-mapping>
-
     <resource-ref>
         <description>DB Connection</description>
         <res-ref-name>jdbc/postgres</res-ref-name>
