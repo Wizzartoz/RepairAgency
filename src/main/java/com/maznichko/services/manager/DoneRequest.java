@@ -1,4 +1,4 @@
-package com.maznichko.services.commands;
+package com.maznichko.services.manager;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;

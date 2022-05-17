@@ -58,22 +58,6 @@ VALUES (DEFAULT, 'user2', 'maznich40', 'misha1@mail.ru', '+380958316825', 'CUSTO
 INSERT INTO "user"
 VALUES (DEFAULT, 'user3', 'Wizzartoz', 'misha2@mail.ru', '+380958316826', 'MANAGER', 0, 'misha', 'maznichko');
 
-INSERT INTO request
-VALUES (DEFAULT, 'ВОТ ТАКАЯ ВОТ ЖИЗНЬ', DEFAULT, 'under consideration', 'unpaid', 100);
-INSERT INTO request
-VALUES (DEFAULT, 'ВОТ ТАКАЯ ВОТ ЖИЗНЬ', DEFAULT, 'under consideration', 'waiting for payment', 1000);
-INSERT INTO request
-VALUES (DEFAULT, 'ВОТ ТАКАЯ ВОТ ЖИЗНЬ', DEFAULT, 'done', 'paid', 250);
-
-INSERT INTO feedback VALUES (DEFAULT,'меня всё устраивает',5,DEFAULT,1,'user1');
-
-INSERT INTO user_request
-VALUES ('user1', 1);
-INSERT INTO user_request
-VALUES ('user1', 2);
-INSERT INTO user_request
-VALUES ('user1', 3);
-
 
 
 

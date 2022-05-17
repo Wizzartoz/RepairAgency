@@ -1,4 +1,4 @@
-package com.maznichko.services.commands;
+package com.maznichko.services.manager;
 
 import com.maznichko.dao.FeedbackDAO;
 import com.maznichko.dao.RequestDAO;
@@ -20,19 +20,17 @@ public class CommandContainer {
 
     static {
         commands.put("login", new Login(USER_DAO));
-        commands.put("deleteRequest", new DeleteRequest(REQUEST_DAO));
         commands.put("doneRequest", new DoneRequest(REQUEST_DAO));
-        commands.put("leaveFeedback", new LeaveFeedback(FEEDBACK_DAO));
         commands.put("register", new Register(USER_DAO));
-        commands.put("paid", new Paid(USER_DAO,REQUEST_DAO));
-        commands.put("filter", new Filter(REQUEST_DAO));
-        commands.put("replenishment", new Replenishment(USER_DAO));
-        commands.put("sendRequest", new SendRequest(REQUEST_DAO));
         commands.put("takeRequest", new TakeRequest(REQUEST_DAO));
         commands.put("setMaster", new SetMaster(REQUEST_DAO));
         commands.put("editRequest", new EditRequest(REQUEST_DAO));
     }
-
+    /**
+     * This method by parameter return you object
+     * @param command - parameter who we are getting from request
+     * @return - object
+     */
     public static Command get(String command) {
         if (command == null || !commands.containsKey(command)) {
             return null;

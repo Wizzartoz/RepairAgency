@@ -1,4 +1,4 @@
-package com.maznichko.services.commands;
+package com.maznichko.services.customer;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
@@ -6,16 +6,15 @@ import com.maznichko.dao.entity.Request;
 import com.maznichko.services.Path;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-public class DeleteRequest implements Command {
+public class DeleteRequest implements CustomerCommand {
     private final RequestDAO requestDAO;
     public DeleteRequest(RequestDAO requestDAO){
         this.requestDAO = requestDAO;
 
     }
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req) {
         long id = Long.parseLong(req.getParameter("id"));
         try {
             Request request = requestDAO.getData(id);

@@ -47,7 +47,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="ManagerServlet" method="post">
-                                        <select name="login" class="form-select my-2" aria-label="Default select example">
+                                        <select name="login" class="form-select my-2"
+                                                aria-label="Default select example">
                                             <c:forEach var="user" items="${requestScope.users}">
                                                 <option value="${user.login}">${user.login}</option>
                                             </c:forEach>
@@ -160,111 +161,110 @@
                 </div>
                 <div class="my-2">
                     <div class="mx-1">
-                        Complication status:
-                        <div class="form-check my-1">
-                            <input onchange="filterContent1();" class="form-check-input" type="checkbox"
-                                   value="done"
-                                   id="done" name="compStatus">
-                            <label class="form-check-label" for="done">
-                                done
-                            </label>
-                        </div>
-                        <div class="form-check my-1">
-                            <input onchange="filterContent2();" class="form-check-input" type="checkbox"
-                                   name="compStatus"
-                                   value="in progress"
-                                   id="progress">
-                            <label class="form-check-label" for="progress">
-                                in progress
-                            </label>
-                        </div>
-                        <div class="form-check my-1">
-                            <input onchange="filterContent3();" class="form-check-input" type="checkbox"
-                                   name="compStatus" value="under consideration"
-                                   id="unconsideration">
-                            <label class="form-check-label" for="unconsideration">
-                                under consideration
-                            </label>
-                        </div>
-                        <div class="form-check my-1">
-                            <input onchange="filterContent4();" class="form-check-input" type="checkbox"
-                                   name="compStatus" value="consideration"
-                                   id="consideration">
-                            <label class="form-check-label" for="consideration">
-                                consideration
-                            </label>
-                        </div>
-                        <div class="form-check border-bottom border-dark my-1">
-                            <input onchange="filterContent5();" class="form-check-input" type="checkbox"
-                                   name="compStatus" value="refuse"
-                                   id="refuse">
-                            <label class="form-check-label" for="refuse">
-                                refuse
-                            </label>
-                        </div>
-                        Payment status:
-                        <div class="form-check my-1">
-                            <input onchange="filterContent6();" class="form-check-input" type="checkbox"
-                                   name="payStatus" value="unpaid"
-                                   id="unpaid">
-                            <label class="form-check-label" for="unpaid">
-                                unpaid
-                            </label>
-                        </div>
-                        <div class="form-check my-1">
-                            <input onchange="filterContent7();" class="form-check-input" type="checkbox"
-                                   name="payStatus" value="waiting for payment"
-                                   id="waiting">
-                            <label class="form-check-label" for="waiting">
-                                waiting for payment
-                            </label>
-                        </div>
-                        <div class="form-check my-1">
-                            <input onchange="filterContent8();" class="form-check-input" type="checkbox"
-                                   name="payStatus" value="paid"
-                                   id="paid">
-                            <label class="form-check-label" for="paid">
-                                paid
-                            </label>
-                        </div>
+                            Complication status:
+                            <div class="form-check my-1">
+                                <input onchange="filterContent1();" class="form-check-input" type="checkbox"
+                                       value="done"
+                                       id="done" name="compStatus">
+                                <label class="form-check-label" for="done">
+                                    done
+                                </label>
+                            </div>
+                            <div class="form-check my-1">
+                                <input onchange="filterContent2();" class="form-check-input" type="checkbox"
+                                       name="compStatus"
+                                       value="in progress"
+                                       id="progress">
+                                <label class="form-check-label" for="progress">
+                                    in progress
+                                </label>
+                            </div>
+                            <div class="form-check my-1">
+                                <input onchange="filterContent3();" class="form-check-input" type="checkbox"
+                                       name="compStatus" value="under consideration"
+                                       id="unconsideration">
+                                <label class="form-check-label" for="unconsideration">
+                                    under consideration
+                                </label>
+                            </div>
+                            <div class="form-check my-1">
+                                <input onchange="filterContent4();" class="form-check-input" type="checkbox"
+                                       name="compStatus" value="consideration"
+                                       id="consideration">
+                                <label class="form-check-label" for="consideration">
+                                    consideration
+                                </label>
+                            </div>
+                            <div class="form-check border-bottom border-dark my-1">
+                                <input onchange="filterContent5();" class="form-check-input" type="checkbox"
+                                       name="compStatus" value="refuse"
+                                       id="refuse">
+                                <label class="form-check-label" for="refuse">
+                                    refuse
+                                </label>
+                            </div>
+                            Payment status:
+                            <div class="form-check my-1">
+                                <input onchange="filterContent6();" class="form-check-input" type="checkbox"
+                                       name="payStatus" value="unpaid"
+                                       id="unpaid">
+                                <label class="form-check-label" for="unpaid">
+                                    unpaid
+                                </label>
+                            </div>
+                            <div class="form-check my-1">
+                                <input onchange="filterContent7();" class="form-check-input" type="checkbox"
+                                       name="payStatus" value="waiting for payment"
+                                       id="waiting">
+                                <label class="form-check-label" for="waiting">
+                                    waiting for payment
+                                </label>
+                            </div>
+                            <div class="form-check my-1">
+                                <input onchange="filterContent8();" class="form-check-input" type="checkbox"
+                                       name="payStatus" value="paid"
+                                       id="paid">
+                                <label class="form-check-label" for="paid">
+                                    paid
+                                </label>
+                            </div>
 
+                            <div class="dropdown my-1">
+                                <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button"
+                                   id="dropdownMenuLink"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    Select masters
+                                </a>
 
-
-                        <div class="dropdown my-1">
-                            <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button"
-                               id="dropdownMenuLink"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Select masters
-                            </a>
-
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <c:forEach var="user" items="${requestScope.masters}">
-                                    <li class="mx-1">
-                                        <input class="form-check-input"
-                                               onchange="filterMaster${user.userID}();"
-                                               id="master${user.userID}" type="checkbox"
-                                               name="masterLogin"
-                                               value="${user.login}"/> ${user.login}
-                                    </li>
-                                    <script>
-                                        function filterMaster${user.userID}() {
-                                            var checkbox1 = document.getElementById("master${user.userID}");
-                                            if (checkbox1.checked) {
-                                                sessionStorage.setItem('master${user.userID}', 'true');
-                                            } else {
-                                                sessionStorage.setItem('master${user.userID}', 'false');
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <c:forEach var="user" items="${requestScope.masters}">
+                                        <li class="mx-1">
+                                            <input class="form-check-input"
+                                                   onchange="filterMaster${user.userID}();"
+                                                   id="master${user.userID}" type="checkbox"
+                                                   name="masterLogin"
+                                                   value="${user.login}"/> ${user.login}
+                                        </li>
+                                        <script>
+                                            function filterMaster${user.userID}() {
+                                                var checkbox1 = document.getElementById("master${user.userID}");
+                                                if (checkbox1.checked) {
+                                                    sessionStorage.setItem('master${user.userID}', 'true');
+                                                } else {
+                                                    sessionStorage.setItem('master${user.userID}', 'false');
+                                                }
+                                                sendFilter();
                                             }
-                                            sendFilter();
-                                        }
-                                    </script>
-                                </c:forEach>
-                            </ul>
-                        </div>
+                                        </script>
+                                    </c:forEach>
+                                </ul>
+                            </div>
                     </div>
                     <input type="hidden" name="command" value="filter">
                     </form>
                 </div>
                 <script>
+
                     function filterContent1() {
                         var checkbox1 = document.getElementById("done");
                         if (checkbox1.checked) {
@@ -273,6 +273,7 @@
                             sessionStorage.setItem('checkbox1', 'false');
                         }
                         sendFilter();
+
                     }
 
                     function filterContent2() {
@@ -283,6 +284,7 @@
                             sessionStorage.setItem('checkbox2', 'false');
                         }
                         sendFilter();
+
                     }
 
                     function filterContent3() {
@@ -293,6 +295,7 @@
                             sessionStorage.setItem('checkbox3', 'false');
                         }
                         sendFilter();
+
                     }
 
                     function filterContent4() {
@@ -303,6 +306,7 @@
                             sessionStorage.setItem('checkbox4', 'false');
                         }
                         sendFilter();
+
                     }
 
                     function filterContent5() {
@@ -313,6 +317,7 @@
                             sessionStorage.setItem('checkbox5', 'false');
                         }
                         sendFilter();
+
                     }
                     function filterContent6() {
                         var checkbox1 = document.getElementById("unpaid");
@@ -322,6 +327,8 @@
                             sessionStorage.setItem('checkbox6', 'false');
                         }
                         sendFilter();
+
+
                     }
                     function filterContent7() {
                         var checkbox1 = document.getElementById("waiting");
@@ -358,6 +365,7 @@
                         sendFilter();
 
                     }
+
 
                     function setCheckboxes() {
 
@@ -439,6 +447,7 @@
                         document.getElementById("sendFilterForm").href = "/ManagerServlet?" + reqAttribute.substring(1) + "&command=filter";
                         document.getElementById("sendFilterForm").click();
                     }
+
                 </script>
                 <a id="sendFilterForm" href=""></a>
             </div>
@@ -470,6 +479,7 @@
                         <th>price</th>
                         <th>payment status</th>
                         <th>complication status</th>
+                        <th>master login</th>
                         <th>date</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -484,9 +494,16 @@
                             <td><c:out value="${request.price}"/></td>
                             <td><c:out value="${request.paymentStatus}"/></td>
                             <td><c:out value="${request.complicationStatus}"/></td>
+                            <c:if test="${request.masterLogin == null}">
+                                <td>мастер не назначен</td>
+                            </c:if>
+                            <c:if test="${request.masterLogin != null}">
+                                <td><c:out value="${request.masterLogin}"/></td>
+                            </c:if>
+
                             <td><c:out value="${request.date}"/></td>
                             <td>
-                                <button onclick="setReqID(${request.requestID});" type="button"
+                                <button onclick="setReqID(${request});" type="button"
                                         class="btn btn-outline-dark" data-bs-toggle="modal"
                                         data-bs-target="#editModal">
                                     Edit
@@ -509,6 +526,7 @@
                                                         <th>price</th>
                                                         <th>payment status</th>
                                                         <th>complication status</th>
+                                                        <th>master login</th>
                                                         <th>date</th>
                                                         <th scope="col"></th>
                                                         <th scope="col"></th>
@@ -593,11 +611,23 @@
                                                                     </select>
                                                                 </td>
                                                             </c:if>
+                                                            <c:if test="${request.masterLogin == null}">
+                                                                <td><select name="usr" class="form-select my-2"
+                                                                            aria-label="Default select example">
+                                                                    <c:forEach var="user" items="${requestScope.masters}">
+                                                                        <option value="${user.login}">${user.login}</option>
+                                                                    </c:forEach>
+                                                                </select></td>
+                                                            </c:if>
+                                                            <c:if test="${request.masterLogin != null}">
+                                                                <td><c:out value="${request.masterLogin}"/></td>
+                                                            </c:if>
                                                             <td><c:out value="${request.date}"/></td>
                                                             <input type="hidden" name="command" value="editRequest"/>
                                                             <input id="reqID" type="hidden" name="reqID"
                                                                    value="${request.requestID}"/>
-                                                            <td><input type="submit" name="Send" class="btn btn-outline-warning">
+                                                            <td><input type="submit" name="Send"
+                                                                       class="btn btn-outline-warning">
                                                             </td>
                                                         </tr>
                                                     </form>
@@ -632,7 +662,7 @@
                                                 <form action="ManagerServlet" method="post">
                                                     <select name="usr" class="form-select my-2"
                                                             aria-label="Default select example">
-                                                        <c:forEach var="user" items="${requestScope.users}">
+                                                        <c:forEach var="user" items="${requestScope.masters}">
                                                             <option value="${user.login}">${user.login}</option>
                                                         </c:forEach>
                                                     </select>

@@ -1,21 +1,19 @@
-package com.maznichko.services.commands;
+package com.maznichko.services.customer;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.FeedbackDAO;
 import com.maznichko.dao.entity.Feedback;
-import com.maznichko.dao.impl.FeedbackDAOimpl;
 import com.maznichko.services.Path;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-public class LeaveFeedback implements Command {
+public class LeaveFeedback implements CustomerCommand {
     private final FeedbackDAO feedbackDAO;
     public LeaveFeedback(FeedbackDAO feedbackDAO){
         this.feedbackDAO = feedbackDAO;
     }
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req) {
         String feedbackText = req.getParameter("feedback");
         String status = req.getParameter("comp");
         int rating;

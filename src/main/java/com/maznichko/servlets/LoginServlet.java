@@ -1,8 +1,8 @@
 package com.maznichko.servlets;
 
 import com.maznichko.services.Path;
-import com.maznichko.services.commands.Command;
-import com.maznichko.services.commands.CommandContainer;
+import com.maznichko.services.manager.Command;
+import com.maznichko.services.manager.CommandContainer;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

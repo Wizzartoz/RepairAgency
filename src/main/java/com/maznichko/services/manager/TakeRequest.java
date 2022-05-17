@@ -1,9 +1,8 @@
-package com.maznichko.services.commands;
+package com.maznichko.services.manager;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
-import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.services.Path;
 
 import javax.servlet.http.HttpServletRequest;

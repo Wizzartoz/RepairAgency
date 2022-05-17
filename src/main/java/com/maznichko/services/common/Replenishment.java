@@ -1,50 +1,44 @@
-package com.maznichko.services.commands;
+package com.maznichko.services.common;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
-import com.maznichko.dao.impl.UserDAOimpl;
-import com.maznichko.services.Path;
+
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class Replenishment implements Command {
+
+public class Replenishment {
     private final UserDAO userDAO;
-    public Replenishment(UserDAO userDAO){
+
+    public Replenishment(UserDAO userDAO) {
         this.userDAO = userDAO;
 
     }
-    @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        HttpSession httpSession = req.getSession();
-        String login;
-        if (req.getParameter("login") == null){
-            login = (String) httpSession.getAttribute("login");
-            req.setAttribute("path",Path.CUSTOMER_SERVLET);
-        }else {
-            login = req.getParameter("login");
-            req.setAttribute("path", Path.MANAGER_SERVLET);
+
+    public boolean replenishment(HttpServletRequest req) {
+        String login = req.getParameter("login");
+        if (req.getParameter("login") == null) {
+            login = (String) req.getSession().getAttribute("login");
         }
         int money;
         try {
             money = Integer.parseInt(req.getParameter("money"));
         } catch (NumberFormatException e) {
             req.setAttribute("result", "you didn't enter anything");
-            return Path.CUSTOMER_SERVLET;
+            return true;
         }
 
         if (money <= 0) {
             req.setAttribute("result", "Enter a positive number");
-            return Path.CUSTOMER_SERVLET;
+            return true;
         }
         User user;
         try {
             user = userDAO.getUserByLogin(login);
         } catch (DBException e) {
             req.setAttribute("result", e.getMessage());
-            return Path.ERROR;
+            return false;
         }
         if (user != null) {
             int wallet = user.getBank();
@@ -52,13 +46,13 @@ public class Replenishment implements Command {
             try {
                 userDAO.update(user);
                 req.setAttribute("result", "payment was successful");
-                return Path.CUSTOMER_SERVLET;
+                return true;
             } catch (DBException e) {
                 req.setAttribute("result", e.getMessage());
-                return Path.ERROR;
+                return false;
             }
         }
-        return Path.ERROR;
+        return false;
     }
 }
 

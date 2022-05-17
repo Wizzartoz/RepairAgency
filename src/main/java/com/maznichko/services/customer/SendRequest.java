@@ -1,22 +1,20 @@
-package com.maznichko.services.commands;
+package com.maznichko.services.customer;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
-import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.services.Path;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class SendRequest implements Command {
+public class SendRequest implements CustomerCommand {
     private final RequestDAO requestDAO;
     public SendRequest(RequestDAO requestDAO){
         this.requestDAO = requestDAO;
     }
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req) {
         HttpSession httpSession = req.getSession();
         String login = (String) httpSession.getAttribute("login");
         String message = req.getParameter("user_message");
@@ -37,6 +35,7 @@ public class SendRequest implements Command {
         }
         try {
             requestDAO.insertRequestInUserRequest(login, request.getRequestID());
+            requestDAO.insertRequestInUserRequest("user3", request.getRequestID());
         } catch (DBException e) {
             req.setAttribute("result",e.getMessage());
             return Path.ERROR;

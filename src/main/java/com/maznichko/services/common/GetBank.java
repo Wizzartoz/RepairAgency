@@ -1,4 +1,4 @@
-package com.maznichko.services;
+package com.maznichko.services.common;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.entity.User;
