@@ -20,7 +20,7 @@ public class CustomerContainer {
 
     static {
         commands.put("deleteRequest", new DeleteRequest(REQUEST_DAO));
-        commands.put("leaveFeedback", new LeaveFeedback(FEEDBACK_DAO));
+        commands.put("leaveFeedback", new LeaveFeedback(FEEDBACK_DAO,REQUEST_DAO));
         commands.put("paid", new Paid(USER_DAO,REQUEST_DAO));
         commands.put("sendRequest", new SendRequest(REQUEST_DAO));
     }

@@ -12,6 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>main-page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
           rel="stylesheet"
@@ -80,9 +81,9 @@
     </nav>
 </header>
 <section>
-    <div class="container-xxl">
+    <div class="container-fluid d-flex justify-content-center">
         <div class="row my-5">
-            <div class="col-6">
+            <div class="col-2" style="width: 300px">
                 <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
                     How to
@@ -156,113 +157,111 @@
                         Some
                     </div>
                 </div>
-                <div>
-                    <b class="text-center text-danger ali">${requestScope.result}</b>
-                </div>
                 <div class="my-2">
                     <div class="mx-1">
-                            Complication status:
-                            <div class="form-check my-1">
-                                <input onchange="filterContent1();" class="form-check-input" type="checkbox"
-                                       value="done"
-                                       id="done" name="compStatus">
-                                <label class="form-check-label" for="done">
-                                    done
-                                </label>
-                            </div>
-                            <div class="form-check my-1">
-                                <input onchange="filterContent2();" class="form-check-input" type="checkbox"
-                                       name="compStatus"
-                                       value="in progress"
-                                       id="progress">
-                                <label class="form-check-label" for="progress">
-                                    in progress
-                                </label>
-                            </div>
-                            <div class="form-check my-1">
-                                <input onchange="filterContent3();" class="form-check-input" type="checkbox"
-                                       name="compStatus" value="under consideration"
-                                       id="unconsideration">
-                                <label class="form-check-label" for="unconsideration">
-                                    under consideration
-                                </label>
-                            </div>
-                            <div class="form-check my-1">
-                                <input onchange="filterContent4();" class="form-check-input" type="checkbox"
-                                       name="compStatus" value="consideration"
-                                       id="consideration">
-                                <label class="form-check-label" for="consideration">
-                                    consideration
-                                </label>
-                            </div>
-                            <div class="form-check border-bottom border-dark my-1">
-                                <input onchange="filterContent5();" class="form-check-input" type="checkbox"
-                                       name="compStatus" value="refuse"
-                                       id="refuse">
-                                <label class="form-check-label" for="refuse">
-                                    refuse
-                                </label>
-                            </div>
-                            Payment status:
-                            <div class="form-check my-1">
-                                <input onchange="filterContent6();" class="form-check-input" type="checkbox"
-                                       name="payStatus" value="unpaid"
-                                       id="unpaid">
-                                <label class="form-check-label" for="unpaid">
-                                    unpaid
-                                </label>
-                            </div>
-                            <div class="form-check my-1">
-                                <input onchange="filterContent7();" class="form-check-input" type="checkbox"
-                                       name="payStatus" value="waiting for payment"
-                                       id="waiting">
-                                <label class="form-check-label" for="waiting">
-                                    waiting for payment
-                                </label>
-                            </div>
-                            <div class="form-check my-1">
-                                <input onchange="filterContent8();" class="form-check-input" type="checkbox"
-                                       name="payStatus" value="paid"
-                                       id="paid">
-                                <label class="form-check-label" for="paid">
-                                    paid
-                                </label>
-                            </div>
+                        Complication status:
+                        <div class="form-check my-1">
+                            <input onchange="filterContent1();" class="form-check-input" type="checkbox"
+                                   value="done"
+                                   id="done" name="compStatus">
+                            <label class="form-check-label" for="done">
+                                done
+                            </label>
+                        </div>
+                        <div class="form-check my-1">
+                            <input onchange="filterContent2();" class="form-check-input" type="checkbox"
+                                   name="compStatus"
+                                   value="in progress"
+                                   id="progress">
+                            <label class="form-check-label" for="progress">
+                                in progress
+                            </label>
+                        </div>
+                        <div class="form-check my-1">
+                            <input onchange="filterContent3();" class="form-check-input" type="checkbox"
+                                   name="compStatus" value="under consideration"
+                                   id="unconsideration">
+                            <label class="form-check-label" for="unconsideration">
+                                under consideration
+                            </label>
+                        </div>
+                        <div class="form-check my-1">
+                            <input onchange="filterContent4();" class="form-check-input" type="checkbox"
+                                   name="compStatus" value="consideration"
+                                   id="consideration">
+                            <label class="form-check-label" for="consideration">
+                                consideration
+                            </label>
+                        </div>
+                        <div class="form-check border-bottom border-dark my-1">
+                            <input onchange="filterContent5();" class="form-check-input" type="checkbox"
+                                   name="compStatus" value="refuse"
+                                   id="refuse">
+                            <label class="form-check-label" for="refuse">
+                                refuse
+                            </label>
+                        </div>
+                        Payment status:
+                        <div class="form-check my-1">
+                            <input onchange="filterContent6();" class="form-check-input" type="checkbox"
+                                   name="payStatus" value="unpaid"
+                                   id="unpaid">
+                            <label class="form-check-label" for="unpaid">
+                                unpaid
+                            </label>
+                        </div>
+                        <div class="form-check my-1">
+                            <input onchange="filterContent7();" class="form-check-input" type="checkbox"
+                                   name="payStatus" value="waiting for payment"
+                                   id="waiting">
+                            <label class="form-check-label" for="waiting">
+                                waiting for payment
+                            </label>
+                        </div>
+                        <div class="form-check my-1">
+                            <input onchange="filterContent8();" class="form-check-input" type="checkbox"
+                                   name="payStatus" value="paid"
+                                   id="paid">
+                            <label class="form-check-label" for="paid">
+                                paid
+                            </label>
+                        </div>
 
-                            <div class="dropdown my-1">
-                                <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button"
-                                   id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    Select masters
-                                </a>
+                        <div class="dropdown my-1">
+                            <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button"
+                               id="dropdownMenuLink"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Select masters
+                            </a>
 
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <c:forEach var="user" items="${requestScope.masters}">
-                                        <li class="mx-1">
-                                            <input class="form-check-input"
-                                                   onchange="filterMaster${user.userID}();"
-                                                   id="master${user.userID}" type="checkbox"
-                                                   name="masterLogin"
-                                                   value="${user.login}"/> ${user.login}
-                                        </li>
-                                        <script>
-                                            function filterMaster${user.userID}() {
-                                                var checkbox1 = document.getElementById("master${user.userID}");
-                                                if (checkbox1.checked) {
-                                                    sessionStorage.setItem('master${user.userID}', 'true');
-                                                } else {
-                                                    sessionStorage.setItem('master${user.userID}', 'false');
-                                                }
-                                                sendFilter();
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <c:forEach var="user" items="${requestScope.masters}">
+                                    <li class="mx-1">
+                                        <input class="form-check-input"
+                                               onchange="filterMaster${user.userID}();"
+                                               id="master${user.userID}" type="checkbox"
+                                               name="masterLogin"
+                                               value="${user.login}"/> ${user.login}
+                                    </li>
+                                    <script>
+                                        function filterMaster${user.userID}() {
+                                            var checkbox1 = document.getElementById("master${user.userID}");
+                                            if (checkbox1.checked) {
+                                                sessionStorage.setItem('master${user.userID}', 'true');
+                                            } else {
+                                                sessionStorage.setItem('master${user.userID}', 'false');
                                             }
-                                        </script>
-                                    </c:forEach>
-                                </ul>
-                            </div>
+                                            sendFilter();
+                                        }
+                                    </script>
+                                </c:forEach>
+                            </ul>
+                        </div>
                     </div>
                     <input type="hidden" name="command" value="filter">
                     </form>
                 </div>
+                <b class="text-center text-danger ali">${requestScope.result}</b>
                 <script>
 
                     function filterContent1() {
@@ -319,6 +318,7 @@
                         sendFilter();
 
                     }
+
                     function filterContent6() {
                         var checkbox1 = document.getElementById("unpaid");
                         if (checkbox1.checked) {
@@ -330,6 +330,7 @@
 
 
                     }
+
                     function filterContent7() {
                         var checkbox1 = document.getElementById("waiting");
                         if (checkbox1.checked) {
@@ -339,6 +340,7 @@
                         }
                         sendFilter();
                     }
+
                     function filterContent8() {
                         var checkbox1 = document.getElementById("paid");
                         if (checkbox1.checked) {
@@ -451,7 +453,7 @@
                 </script>
                 <a id="sendFilterForm" href=""></a>
             </div>
-            <div class="col-6">
+            <div class="col-10" style="width: 1450px">
                 <select id="sorted" name="sort" onchange="SortingContent1();" class="form-select"
                         aria-label="Default select example">
                     <option value="date">sorting by date</option>
@@ -488,214 +490,100 @@
                     </thead>
                     <tbody>
                     <c:forEach var="request" items="${requestScope.table}">
-                        <tr class="border-dark">
-                            <td><c:out value="${request.requestID}"/></td>
-                            <td><c:out value="${request.description}"/></td>
-                            <td><c:out value="${request.price}"/></td>
-                            <td><c:out value="${request.paymentStatus}"/></td>
-                            <td><c:out value="${request.complicationStatus}"/></td>
-                            <c:if test="${request.masterLogin == null}">
-                                <td>мастер не назначен</td>
-                            </c:if>
-                            <c:if test="${request.masterLogin != null}">
-                                <td><c:out value="${request.masterLogin}"/></td>
-                            </c:if>
+                        <form action="ManagerServlet" method="post">
+                            <tr class="border-dark">
+                                <td><c:out value="${request.requestID}"/></td>
+                                <td><c:out value="${request.description}"/></td>
+                                <c:if test="${request.price == 0}">
+                                    <td><input type="number" name="price" value="price"/></td>
+                                </c:if>
+                                <c:if test="${request.price != 0}">
+                                    <td><c:out value="${request.price}"/></td>
+                                </c:if>
+                                <c:if test="${request.paymentStatus.equals('waiting for payment')}">
 
-                            <td><c:out value="${request.date}"/></td>
-                            <td>
-                                <button onclick="setReqID(${request});" type="button"
-                                        class="btn btn-outline-dark" data-bs-toggle="modal"
-                                        data-bs-target="#editModal">
-                                    Edit
-                                </button>
-                                <!-- Modal -->
-                                <div class="modal fade" id="editModal" tabindex="-1"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body" style="padding: 6rem">
-                                                <table class="table table-hover">
-                                                    <tr>
-                                                        <th>id</th>
-                                                        <th>description</th>
-                                                        <th>price</th>
-                                                        <th>payment status</th>
-                                                        <th>complication status</th>
-                                                        <th>master login</th>
-                                                        <th>date</th>
-                                                        <th scope="col"></th>
-                                                        <th scope="col"></th>
-                                                        <th scope="col"></th>
-                                                    </tr>
-                                                    <form action="ManagerServlet" method="post">
-                                                        <tr>
-                                                            <td><c:out value="${request.requestID}"/></td>
-                                                            <td><c:out value="${request.description}"/></td>
-                                                            <td><input type="number" name="price"></td>
-                                                            <c:if test="${request.paymentStatus.equals('unpaid')}">
-                                                                <td>
-                                                                    <select name="pStatus" onchange="changeStatus();"
-                                                                            class="form-select"
-                                                                            aria-label="Default select example">
-                                                                        <option value="unpaid">unpaid</option>
-                                                                        <option value="waiting for payment">waiting for
-                                                                            payment
-                                                                        </option>
-                                                                    </select>
-                                                                </td>
-                                                            </c:if>
-                                                            <c:if test="${request.paymentStatus.equals('waiting for payment')}">
+                                    <td>
+                                        <p>waiting for payment</p>
+                                    </td>
+                                </c:if>
+                                <c:if test="${request.paymentStatus.equals('paid')}">
 
-                                                                <td>
-                                                                    <select name="pStatus" class="form-select"
-                                                                            aria-label="Default select example">
-                                                                        <option value="${request.paymentStatus}">${request.paymentStatus}</option>
-                                                                    </select>
-                                                                </td>
-                                                            </c:if>
-                                                            <c:if test="${request.paymentStatus.equals('paid')}">
+                                    <td>
+                                        <p>paid</p>
+                                    </td>
+                                </c:if>
+                                <c:if test="${request.paymentStatus.equals('unpaid')}">
 
-                                                                <td>
-                                                                    <select name="pStatus" class="form-select"
-                                                                            aria-label="Default select example">
-                                                                        <option value="${request.paymentStatus}">${request.paymentStatus}</option>
-                                                                    </select>
-                                                                </td>
-                                                            </c:if>
-                                                            <c:if test="${request.complicationStatus.equals('under consideration')}">
-                                                                <td>
-                                                                    <select name="cStatus" id="statusf"
-                                                                            class="form-select"
-                                                                            aria-label="Default select example">
-                                                                        <option value="consideration">
-                                                                            consideration
-                                                                        </option>
-                                                                        <option value="refuse">refuse</option>
-                                                                    </select>
-                                                                </td>
-                                                            </c:if>
-                                                            <c:if test="${request.complicationStatus.equals('consideration') ||
-                                                            request.complicationStatus.equals('refuse')}">
-                                                                <td>
-                                                                    <select name="cStatus" class="form-select"
-                                                                            aria-label="Default select example">
-                                                                        <option value="${request.complicationStatus}">${request.complicationStatus}</option>
-                                                                    </select>
-                                                                </td>
-                                                            </c:if>
-                                                            <c:if test="${request.complicationStatus.equals('in progress')}">
-                                                                <td>
-                                                                    <select name="cStatus"
-                                                                            class="form-select"
-                                                                            aria-label="Default select example">
-                                                                        <option value="consideration">
-                                                                            in progress
-                                                                        </option>
-                                                                        <option value="refuse">refuse</option>
-                                                                    </select>
-                                                                </td>
-                                                            </c:if>
-                                                            <c:if test="${request.complicationStatus.equals('done')}">
-                                                                <td>
-                                                                    <select name="cStatus"
-                                                                            class="form-select"
-                                                                            aria-label="Default select example">
-                                                                        <option value="consideration">
-                                                                            done
-                                                                        </option>
-                                                                    </select>
-                                                                </td>
-                                                            </c:if>
-                                                            <c:if test="${request.masterLogin == null}">
-                                                                <td><select name="usr" class="form-select my-2"
-                                                                            aria-label="Default select example">
-                                                                    <c:forEach var="user" items="${requestScope.masters}">
-                                                                        <option value="${user.login}">${user.login}</option>
-                                                                    </c:forEach>
-                                                                </select></td>
-                                                            </c:if>
-                                                            <c:if test="${request.masterLogin != null}">
-                                                                <td><c:out value="${request.masterLogin}"/></td>
-                                                            </c:if>
-                                                            <td><c:out value="${request.date}"/></td>
-                                                            <input type="hidden" name="command" value="editRequest"/>
-                                                            <input id="reqID" type="hidden" name="reqID"
-                                                                   value="${request.requestID}"/>
-                                                            <td><input type="submit" name="Send"
-                                                                       class="btn btn-outline-warning">
-                                                            </td>
-                                                        </tr>
-                                                    </form>
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-warning"
-                                                        data-bs-dismiss="modal">Close
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <button onclick="setReq(${request.requestID});" type="button"
-                                        class="btn btn-outline-warning" data-bs-toggle="modal"
-                                        data-bs-target="#setModal">
-                                    Edit
-                                </button>
-                                <!-- Modal -->
-                                <div class="modal fade" id="setModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                     aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="setModalLabel">Set master</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="ManagerServlet" method="post">
-                                                    <select name="usr" class="form-select my-2"
-                                                            aria-label="Default select example">
-                                                        <c:forEach var="user" items="${requestScope.masters}">
-                                                            <option value="${user.login}">${user.login}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                    <input type="submit" class="btn btn-outline-warning" value="Set">
-                                                    <input type="hidden" name="command" value="setMaster">
-                                                    <input id="req" type="hidden" name="ReqID"
-                                                           value="${request.requestID}">
-                                                </form>
-                                                <script>
-                                                    function setReq(req) {
-                                                        document.getElementById("req").value = req;
-                                                    }
+                                    <td>
+                                        <select name="pStatus" class="form-select"
+                                                aria-label="Default select example">
+                                            <option value="unpaid">unpaid</option>
+                                            <option value="waiting for payment">waiting for payment</option>
+                                        </select>
+                                    </td>
+                                </c:if>
 
-                                                    function setReqID(req) {
-                                                        document.getElementById("reqID").value = req;
-                                                    }
-                                                </script>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    Close
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+
+                                <c:if test="${request.complicationStatus.equals('consideration')
+                                                           }">
+                                    <td>
+                                        <p>consideration</p>
+                                    </td>
+                                </c:if>
+                                <c:if test="${request.complicationStatus.equals('in progress')}">
+                                    <td>
+                                        <p>in progress</p>
+                                    </td>
+                                </c:if>
+                                <c:if test="${request.complicationStatus.equals('done')}">
+                                    <td>
+                                        <p>done</p>
+                                    </td>
+                                </c:if>
+                                <c:if test="${request.complicationStatus.equals('under consideration')}">
+
+                                    <td>
+                                        <select name="cStatus" class="form-select"
+                                                aria-label="Default select example">
+                                            <option value="under consideration">${request.complicationStatus}</option>
+                                            <option value="consideration">consideration</option>
+                                            <option value="refuse">refuse</option>
+                                        </select>
+                                    </td>
+                                </c:if>
+                                <c:if test="${request.complicationStatus.equals('refuse')}">
+
+                                <td>
+                                    <p>refuse</p>
+                                </td>
+                                </c:if>
+                                <c:if test="${request.masterLogin == null}">
+                                    <td>
+                                        <select name="usr" class="form-select my-2"
+                                                aria-label="Default select example">
+                                            <option>мастер не назначен</option>
+                                            <c:forEach var="user" items="${requestScope.masters}">
+                                                <option value="${user.login}">${user.login}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
+                                </c:if>
+                                <c:if test="${request.masterLogin != null}">
+                                    <td><c:out value="${request.masterLogin}"/></td>
+                                </c:if>
+
+                                <td><c:out value="${request.date}"/></td>
+                                <td>
+                                    <input type="hidden" name="id" value="${request.requestID}">
+                                    <input type="hidden" name="command" value="editRequest">
+                                   <input type="submit" class="btn btn-outline-warning">
+                                </td>
+                                <td>
+                        </form>
                     </c:forEach>
                     </tbody>
                 </table>
                 <div>
-                    <b>${requestScope.result}</b>
                 </div>
             </div>
         </div>

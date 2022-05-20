@@ -3,38 +3,110 @@ package com.maznichko.services.manager;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
+import com.maznichko.dao.entity.User;
 import com.maznichko.services.Path;
+import com.maznichko.services.common.GetMasters;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
-public class EditRequest implements Command{
+public class EditRequest implements Command {
     private final RequestDAO requestDAO;
-    public EditRequest(RequestDAO requestDAO){
+
+    public EditRequest(RequestDAO requestDAO) {
         this.requestDAO = requestDAO;
 
     }
+
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        long id = Long.parseLong(req.getParameter("reqID"));
+        long id = Long.parseLong(req.getParameter("id"));
+        float price;
+        //checking on refuse
+        //TODO НУЖНО ПОФИКСИТЬ REFUSE
+        //checking price
+        if (req.getParameter("price") == null){
+            req.setAttribute("result", "request already added");
+            return Path.MANAGER_SERVLET;
+        }
+        try {
+            price = Float.parseFloat(req.getParameter("price"));
+        } catch (NumberFormatException e) {
+            req.setAttribute("result", "incorrect price value");
+            return Path.MANAGER_SERVLET;
+        }
+        if (price <= 0) {
+            req.setAttribute("result", "incorrect price value");
+            return Path.MANAGER_SERVLET;
+        }
+        //get request
         Request request;
         try {
             request = requestDAO.getData(id);
         } catch (DBException e) {
-            req.setAttribute("result", e.getMessage());
+            req.setAttribute("result", e);
             return Path.ERROR;
         }
-        float price = Float.parseFloat(req.getParameter("price"));
-        String compStatus = req.getParameter("cStatus");
-        String payStatus = req.getParameter("pStatus");
+        //checking payment status
+        String paymentStatus = req.getParameter("pStatus");
+        if (paymentStatus == null || !paymentStatus.equals("waiting for payment")) {
+            req.setAttribute("result", "incorrect payment status");
+            return Path.MANAGER_SERVLET;
+        }
+        if (!request.getPaymentStatus().equals("unpaid")) {
+            req.setAttribute("result", "incorrect payment status");
+            return Path.MANAGER_SERVLET;
+        }
+        //checking master
+        String masterLogin = req.getParameter("usr");
+        if (masterLogin == null) {
+            req.setAttribute("result", "you must be select the master");
+            return Path.MANAGER_SERVLET;
+        }
+        List<User> masters = GetMasters.findMasters(req);
+        User master = new User();
+        master.setLogin(masterLogin);
+        if (!masters.contains(master)) {
+            req.setAttribute("result", "master didn't exist");
+            return Path.MANAGER_SERVLET;
+        }
+        //checking complication status
+        String complicationStatus = req.getParameter("cStatus");
+        if (complicationStatus == null) {
+            req.setAttribute("result", "wrong complication status");
+            return Path.MANAGER_SERVLET;
+        }
+        if (!request.getComplicationStatus().equals("under consideration")) {
+            req.setAttribute("result", "wrong complication status");
+            return Path.MANAGER_SERVLET;
+        }
+        if (!(complicationStatus.equals("refuse") || complicationStatus.equals("consideration"))) {
+            req.setAttribute("result", "wrong complication status");
+            return Path.MANAGER_SERVLET;
+        }
+        if (complicationStatus.equals("refuse")) {
+            masterLogin = null;
+        }
+        //set parameters
         request.setPrice(price);
-        request.setComplicationStatus(compStatus);
-        request.setPaymentStatus(payStatus);
+        request.setPaymentStatus(paymentStatus);
+        request.setComplicationStatus(complicationStatus);
+        request.setMasterLogin(masterLogin);
+        //set data to db
         try {
             requestDAO.update(request);
         } catch (DBException e) {
-            req.setAttribute("result", e.getMessage());
+            req.setAttribute("result", e);
             return Path.ERROR;
+        }
+        if (!complicationStatus.equals("refuse")) {
+            try {
+                requestDAO.insertRequestInUserRequest(masterLogin, id);
+            } catch (DBException e) {
+                req.setAttribute("result", e);
+                return Path.ERROR;
+            }
         }
         return Path.MANAGER_SERVLET;
     }

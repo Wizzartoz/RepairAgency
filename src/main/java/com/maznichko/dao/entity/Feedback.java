@@ -64,7 +64,7 @@ public class Feedback implements Entity{
         if (obj == null) return false;
         if (!(obj instanceof Feedback)) return false;
         Feedback feedback = (Feedback) obj;
-        return Objects.equals(feedback.getRequestID(),this.feedbackID);
+        return Objects.equals(feedback.getRequestID(),this.requestID);
     }
 //Гарантированная колизия , нужно это как то исправить
     @Override

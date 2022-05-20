@@ -36,11 +36,10 @@
                     </button>
                 </li>
                 <li class="nav-item">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-warning mx-3" data-bs-toggle="modal"
-                            data-bs-target="#">
-                        Log out
-                    </button>
+                    <form action="GeneralCustomerServlet" method="post">
+                        <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
+                    <input type="submit" class="btn btn-outline-warning">
+                    </form>
                 </li>
             </ul>
             <!-- Modal -->
@@ -209,7 +208,7 @@
                                 </form>
                             </th>
                             <th scope="col">
-                                <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                                <button onclick="setID(${request.requestID});" type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
                                         data-bs-target="#feedback">
                                     Feedback
                                 </button>
@@ -246,9 +245,11 @@
                                                            value="Send request"/>
                                                     <input  type="hidden"
                                                            name="feedbackID"
-                                                           value="${request.requestID}"/>
+                                                           id="feedbackID"
+                                                    value="1"/>
                                                     <input  type="hidden" name="comp"
-                                                           value="${request.complicationStatus}"/>
+                                                           id="comp"
+                                                    value="2"/>
                                                     <input  type="hidden" name="command"
                                                            value="leaveFeedback"/>
                                                 </form>
@@ -263,6 +264,11 @@
                                 </div>
                             </th>
                         </tr>
+                        <script>
+                            function setID(id) {
+                                document.getElementById("feedbackID").value = id;
+                            }
+                        </script>
                     </c:forEach>
                 </table>
             </div>

@@ -1,14 +1,15 @@
-package com.maznichko.services.manager;
+package com.maznichko.services.master;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
 import com.maznichko.services.Path;
+import com.maznichko.services.manager.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class TakeRequest implements Command {
+public class TakeRequest implements MasterCommand {
     private final RequestDAO requestDAO;
     public TakeRequest(RequestDAO requestDAO){
         this.requestDAO = requestDAO;

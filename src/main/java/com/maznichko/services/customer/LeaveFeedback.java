@@ -2,20 +2,27 @@ package com.maznichko.services.customer;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.FeedbackDAO;
+import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Feedback;
+import com.maznichko.dao.entity.Request;
 import com.maznichko.services.Path;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public class LeaveFeedback implements CustomerCommand {
     private final FeedbackDAO feedbackDAO;
-    public LeaveFeedback(FeedbackDAO feedbackDAO){
+    private final RequestDAO requestDAO;
+
+    public LeaveFeedback(FeedbackDAO feedbackDAO, RequestDAO requestDAO) {
         this.feedbackDAO = feedbackDAO;
+        this.requestDAO = requestDAO;
     }
+
     @Override
     public String execute(HttpServletRequest req) {
+        //checking rating
         String feedbackText = req.getParameter("feedback");
-        String status = req.getParameter("comp");
         int rating;
         try {
             rating = Integer.parseInt(req.getParameter("rating"));
@@ -23,30 +30,53 @@ public class LeaveFeedback implements CustomerCommand {
             req.setAttribute("result", "data in evaluation field is incorrect");
             return Path.CUSTOMER_SERVLET;
         }
-        long id = Long.parseLong(req.getParameter("feedbackID"));
-        Feedback feedback = new Feedback();
-        feedback.setFeedbackText(feedbackText);
-        feedback.setRating(rating);
-        feedback.setRequestID(id);
-        if (feedbackText.isEmpty()) {
-            req.setAttribute("result", "review is empty");
+        if (!(rating >= 1 && rating <= 5)) {
+            req.setAttribute("result", "rating have incorrect value");
             return Path.CUSTOMER_SERVLET;
         }
-        if (!status.equals("done")) {
-            req.setAttribute("result", "the master has not made an order yet");
-            return Path.CUSTOMER_SERVLET;
-        }
-        Feedback feedback1;
+        //checking id
+        long id;
         try {
-            feedback1 = feedbackDAO.getData(id);
+            id = Long.parseLong(req.getParameter("feedbackID"));
+        } catch (NumberFormatException e) {
+            req.setAttribute("result", e.getMessage());
+            return Path.ERROR;
+        }
+        //get and checking request
+        Request request;
+        try {
+            request = requestDAO.getData(id);
         } catch (DBException e) {
             req.setAttribute("result", e.getMessage());
             return Path.ERROR;
         }
-        if (feedback1 != null) {
-            req.setAttribute("result", "you have already submitted a request");
+        if (!request.getComplicationStatus().equals("done")) {
+            req.setAttribute("result", "the master has not made an order yet");
             return Path.CUSTOMER_SERVLET;
         }
+        //set up feedbacks
+        Feedback feedback = new Feedback();
+        feedback.setFeedbackText(feedbackText);
+        feedback.setRating(rating);
+        feedback.setRequestID(id);
+        feedback.setMasterLogin(request.getMasterLogin());
+        if (feedbackText.isEmpty()) {
+            req.setAttribute("result", "review is empty");
+            return Path.CUSTOMER_SERVLET;
+        }
+        //check feedback on duplicate
+        List<Feedback> feedbackList;
+        try {
+            feedbackList = feedbackDAO.findAll();
+        } catch (DBException e) {
+            req.setAttribute("result", e.getMessage());
+            return Path.ERROR;
+        }
+        if (feedbackList.contains(feedback)) {
+            req.setAttribute("result", "feedback already left");
+            return Path.CUSTOMER_SERVLET;
+        }
+        //insert feedback
         try {
             feedbackDAO.insert(feedback);
         } catch (DBException e) {
@@ -55,7 +85,5 @@ public class LeaveFeedback implements CustomerCommand {
         }
         req.setAttribute("result", "comment successfully posted");
         return Path.CUSTOMER_SERVLET;
-
-
     }
 }

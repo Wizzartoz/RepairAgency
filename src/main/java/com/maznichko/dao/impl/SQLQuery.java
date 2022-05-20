@@ -23,6 +23,7 @@ public class SQLQuery {
         static final String INSERT_FEEDBACK = "INSERT INTO feedback VALUES(DEFAULT,?,?,DEFAULT,?,?)";
         static final String DELETE_FROM_FEEDBACK = "DELETE FROM feedback WHERE feedback_id=?";
         static final String SELECT_ALL_FROM_FEEDBACK = "SELECT * FROM feedback";
+        static final String SELECT_ALL_FROM_FEEDBACK_WHERE = "SELECT * FROM feedback WHERE id_request=?";
     }
 
 }

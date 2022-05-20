@@ -1,5 +1,7 @@
 package com.maznichko.servlets;
 
+import com.maznichko.dao.impl.UserDAOimpl;
+import com.maznichko.services.Login;
 import com.maznichko.services.Path;
 import com.maznichko.services.manager.Command;
 import com.maznichko.services.manager.CommandContainer;
@@ -22,11 +24,9 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Command command = CommandContainer.get(request.getParameter("command"));
         String result = Path.ERROR;
-        if (command != null) {
-            result = CommandContainer.get(request.getParameter("command")).execute(request, response);
-        }
+        Login login = new Login(new UserDAOimpl());
+        result = login.execute(request);
         response.sendRedirect(result + "?result=" + request.getAttribute("result"));
     }
 }

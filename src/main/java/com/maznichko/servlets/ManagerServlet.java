@@ -26,7 +26,7 @@ public class ManagerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandContainer.get(request.getParameter("command"));
         GetBank.execute(request, response);
-        GetMasters.execute(request, response);
+        GetMasters.findMasters(request);
         GetUsers.execute(request, response);
         String result = Path.MANAGER_JSP;
         Filterable filter = new GenerateTableRequests(new RequestDAOimpl());

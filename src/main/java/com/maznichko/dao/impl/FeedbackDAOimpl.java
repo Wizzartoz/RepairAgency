@@ -22,7 +22,7 @@ public class FeedbackDAOimpl extends FeedbackDAO {
             feedback.setRequestID(resultSet.getInt("id_request"));
             feedback.setMasterLogin(resultSet.getString("master_login"));
         } catch (SQLException e) {
-            throw new DBException("SQL Exception", e);
+            throw new DBException("SQL Exception: cannot create feedback", e);
         }
         return feedback;
     }
@@ -42,7 +42,7 @@ public class FeedbackDAOimpl extends FeedbackDAO {
                 feedbacks.add(feedback);
             }
         } catch (SQLException e) {
-            throw new DBException("SQL Exception", e);
+            throw new DBException("SQL Exception: cannot find all feedback", e);
         } finally {
             dao.close(connection);
         }
@@ -51,7 +51,23 @@ public class FeedbackDAOimpl extends FeedbackDAO {
 
     @Override
     public Feedback getData(long id) throws DBException {
-        return null;
+        Feedback feedback;
+        Connection connection = null;
+        PreparedStatement prGet = null;
+        try {
+            connection = dao.connect();
+            prGet = connection.prepareStatement(SQLQuery.RequestFeedback.SELECT_ALL_FROM_FEEDBACK_WHERE);
+            prGet.setLong(1, id);
+            ResultSet rs = prGet.executeQuery();
+            rs.next();
+            feedback = createFeedback(rs);
+        } catch (SQLException e) {
+            throw new DBException("SQL Exception: cannot get feedback", e);
+        } finally {
+            dao.close(prGet);
+            dao.close(connection);
+        }
+        return feedback;
     }
 
     @Override
@@ -72,7 +88,7 @@ public class FeedbackDAOimpl extends FeedbackDAO {
                 return false;
             }
         } catch (SQLException e) {
-            throw new DBException("SQL Exception", e);
+            throw new DBException("SQL Exception: cannot delete feedback", e);
         } finally {
             dao.close(prDelete);
             dao.close(connection);
@@ -100,7 +116,7 @@ public class FeedbackDAOimpl extends FeedbackDAO {
             connection.commit();
         } catch (SQLException e) {
             dao.rollback(connection);
-            throw new DBException("SQL Exception", e);
+            throw new DBException("SQL Exception: cannot insert feedback", e);
         } finally {
             dao.autocommit(connection, true);
             dao.close(pstmt);

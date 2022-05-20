@@ -1,3 +1,13 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: misha
+  Date: 20.05.22
+  Time: 21:09
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html>
 <head>
     <link href="/css/maine_page.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -15,9 +25,13 @@
         <div class="container-xxl">
             <ul class="nav">
                 <li><a class="navbar-brand text-white"
-                       href="/index.html">RepairAgent</a></li>
+                       href="${pageContext.request.contextPath}/index.jsp">RepairAgent</a></li>
             </ul>
             <ul class="nav">
+                <c:if test="${sessionScope.get('role') != null}">
+                    <li><a href="LoginServlet" style="color: #f1f1f1">Hi ${sessionScope.get('login')}!</a></li>
+                </c:if>
+                <c:if test="${sessionScope.get('role') == null}">
                 <li class="nav-item">
                     <!-- Button trigger modal -->
                     <a href="login" class="btn btn-outline-warning mx-3" role="button">Log in</a>
@@ -26,6 +40,7 @@
                     <!-- Button trigger modal -->
                     <a href="register" class="btn btn-outline-warning" role="button">Register</a>
                 </li>
+                </c:if>
             </ul>
         </div>
     </nav>

@@ -17,6 +17,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 @WebServlet(name = "GeneralCustomerServlet", value = "/GeneralCustomerServlet")
 public class GeneralCustomerServlet extends HttpServlet {
     @Override
