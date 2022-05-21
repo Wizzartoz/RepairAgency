@@ -49,12 +49,6 @@ CREATE TABLE IF NOT EXISTS public."feedback"
     FOREIGN KEY (id_request) REFERENCES request (id_request)
 );
 
-
-
-INSERT INTO "user"
-VALUES (DEFAULT, 'user1', 'magik455', 'misha@mail.ru', '+380958316823', 'MASTER', 250, 'anton', 'smoylev');
-INSERT INTO "user"
-VALUES (DEFAULT, 'user2', 'maznich40', 'misha1@mail.ru', '+380958316825', 'CUSTOMER', 250, 'misha', 'smoylev');
 INSERT INTO "user"
 VALUES (DEFAULT, 'user3', 'Wizzartoz', 'misha2@mail.ru', '+380958316826', 'MANAGER', 0, 'misha', 'maznichko');
 

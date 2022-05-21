@@ -151,7 +151,8 @@
                         <button class="btn btn-warning" type="submit">Send request</button>
                     </div>
                 </form>
-                <b class="text-center text-danger ali"><c:if test="${not empty requestScope.result}">
+                <b class="text-center text-danger ali">
+                    <c:if test="${!requestScope.result.equals('null')}">
                     ${requestScope.result}
                 </c:if></b>
             </div>

@@ -1,7 +1,4 @@
 package com.maznichko.servlets.filters;
-
-import com.maznichko.services.Path;
-
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;

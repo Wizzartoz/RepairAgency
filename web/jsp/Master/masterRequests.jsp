@@ -25,10 +25,10 @@
             <ul class="nav">
                 <li class="nav-item mx-3 my-2"><b class="text-white">${requestScope.bank} - count</b></li>
                 <li class="nav-item">
-                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                            data-bs-target="#">
-                        Log out
-                    </button>
+                    <form action="GeneralCustomerServlet" method="post">
+                        <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
+                        <input type="submit" class="btn btn-outline-warning">
+                    </form>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,9 @@
                     </div>
                 </div>
                 <div>
+                <c:if test="${!requestScope.result.equals('null')}">
                     <b class="text-center text-danger ali">${requestScope.result}</b>
+                </c:if>
                 </div>
             </div>
             <div class="col-6">

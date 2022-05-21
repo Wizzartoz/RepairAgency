@@ -19,7 +19,7 @@
     <div class="row">
         <div class="colm-form">
             <div class="form-container">
-                <form action="LoginServlet" method="post">
+                <form action="RegisterServlet" method="post">
                     <b>${requestScope.result}</b>
                     <input type="text" placeholder="Name" name="name">
                     <input type="text" placeholder="Surname" name="surname">

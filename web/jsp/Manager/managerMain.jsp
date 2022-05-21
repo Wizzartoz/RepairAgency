@@ -58,7 +58,7 @@
                                             <input type="number" name="money"><br/>
                                         </label>
                                         <input type="hidden" name="command" value="replenishment">
-                                        <button type="submit" class="btn btn-outline-warning">Replenishment</button>
+                                        <button onclick="offCheckBox()" type="submit" class="btn btn-outline-warning">Replenishment</button>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -70,11 +70,10 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                        Log out
-                    </button>
+                    <form action="GeneralCustomerServlet" method="post">
+                        <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
+                        <input type="submit" class="btn btn-outline-warning">
+                    </form>
                 </li>
             </ul>
         </div>
@@ -86,55 +85,64 @@
             <div class="col-2" style="width: 300px">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#registerModal">
-                   Register new master
+                    Register new master
                 </button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+                <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="registerModalLabel">Register</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <div class="modal-body" style="padding: 3rem">
                                 <div class="row">
                                     <div class="colm-form">
                                         <div class="form-container">
                                             <form action="ManagerServlet" method="post">
-                                                <b>${requestScope.result}</b>
                                                 <div class="form-floating">
-                                                    <input type="text" name="name" class="form-control" id="floatingInput" placeholder="Name">
+                                                    <input type="text" name="name" class="form-control"
+                                                           id="floatingInput" placeholder="Name">
                                                     <label for="floatingInput">Name</label>
                                                 </div>
                                                 <div class="form-floating">
-                                                    <input type="text" name="surname" class="form-control" id="Surname" placeholder="Surname">
+                                                    <input type="text" name="surname" class="form-control" id="Surname"
+                                                           placeholder="Surname">
                                                     <label for="Surname">Surname</label>
                                                 </div>
                                                 <div class="form-floating">
-                                                    <input type="text" name="login" class="form-control" id="Login" placeholder="Login">
+                                                    <input type="text" name="login" class="form-control" id="Login"
+                                                           placeholder="Login">
                                                     <label for="Login">Login</label>
                                                 </div>
                                                 <div class="form-floating">
-                                                    <input type="password" name="pass" class="form-control" id="Password" placeholder="Password">
+                                                    <input type="password" name="pass" class="form-control"
+                                                           id="Password" placeholder="Password">
                                                     <label for="Password">Password</label>
                                                 </div>
                                                 <div class="form-floating">
-                                                    <input type="email" name="email" class="form-control" id="Email" placeholder="Email">
+                                                    <input type="email" name="email" class="form-control" id="Email"
+                                                           placeholder="Email">
                                                     <label for="Email">Email</label>
                                                 </div>
                                                 <div class="form-floating">
-                                                    <input type="text" name="phone" class="form-control" id="Phone" placeholder="Phone">
+                                                    <input type="text" name="phone" class="form-control" id="Phone"
+                                                           placeholder="Phone">
                                                     <label for="Phone">Phone</label>
                                                 </div>
-                                                <button class="w-100 btn btn-lg btn-warning" type="submit">Register</button>
+                                                <button class="w-100 btn btn-lg btn-warning" type="submit">Register
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -245,7 +253,9 @@
                     <input type="hidden" name="command" value="filter">
                     </form>
                 </div>
-                <b class="text-center text-danger ali">${requestScope.result}</b>
+                <c:if test="${!requestScope.result.equals('null')}">
+                    <b class="text-center text-danger ali">${requestScope.result}</b>
+                </c:if>
                 <script>
 
                     function filterContent1() {
@@ -474,29 +484,30 @@
                     </thead>
                     <tbody>
                     <c:forEach var="request" items="${requestScope.table}">
-                        <form action="ManagerServlet" method="post">
-                            <tr class="border-dark">
-                                <td><c:out value="${request.requestID}"/></td>
-                                <td><c:out value="${request.description}"/></td>
-                                <c:if test="${request.price == 0}">
+                        <c:if test="${!request.complicationStatus.equals('refuse')}">
+                            <form action="ManagerServlet" method="post">
+                                <tr class="border-dark">
+                                    <td><c:out value="${request.requestID}"/></td>
+                                    <td><c:out value="${request.description}"/></td>
+                                    <c:if test="${request.price == 0}">
                                     <td><input type="number" name="price" value="price"/></td>
-                                </c:if>
-                                <c:if test="${request.price != 0}">
+                                    </c:if>
+                                    <c:if test="${request.price != 0}">
                                     <td><c:out value="${request.price}"/></td>
-                                </c:if>
-                                <c:if test="${request.paymentStatus.equals('waiting for payment')}">
+                                    </c:if>
+                                    <c:if test="${request.paymentStatus.equals('waiting for payment')}">
 
                                     <td>
                                         <p>waiting for payment</p>
                                     </td>
-                                </c:if>
-                                <c:if test="${request.paymentStatus.equals('paid')}">
+                                    </c:if>
+                                    <c:if test="${request.paymentStatus.equals('paid')}">
 
                                     <td>
                                         <p>paid</p>
                                     </td>
-                                </c:if>
-                                <c:if test="${request.paymentStatus.equals('unpaid')}">
+                                    </c:if>
+                                    <c:if test="${request.paymentStatus.equals('unpaid')}">
 
                                     <td>
                                         <select name="pStatus" class="form-select"
@@ -505,26 +516,26 @@
                                             <option value="waiting for payment">waiting for payment</option>
                                         </select>
                                     </td>
-                                </c:if>
+                                    </c:if>
 
 
-                                <c:if test="${request.complicationStatus.equals('consideration')
+                                    <c:if test="${request.complicationStatus.equals('consideration')
                                                            }">
                                     <td>
                                         <p>consideration</p>
                                     </td>
-                                </c:if>
-                                <c:if test="${request.complicationStatus.equals('in progress')}">
+                                    </c:if>
+                                    <c:if test="${request.complicationStatus.equals('in progress')}">
                                     <td>
                                         <p>in progress</p>
                                     </td>
-                                </c:if>
-                                <c:if test="${request.complicationStatus.equals('done')}">
+                                    </c:if>
+                                    <c:if test="${request.complicationStatus.equals('done')}">
                                     <td>
                                         <p>done</p>
                                     </td>
-                                </c:if>
-                                <c:if test="${request.complicationStatus.equals('under consideration')}">
+                                    </c:if>
+                                    <c:if test="${request.complicationStatus.equals('under consideration')}">
 
                                     <td>
                                         <select name="cStatus" class="form-select"
@@ -534,14 +545,14 @@
                                             <option value="refuse">refuse</option>
                                         </select>
                                     </td>
-                                </c:if>
-                                <c:if test="${request.complicationStatus.equals('refuse')}">
+                                    </c:if>
+                                    <c:if test="${request.complicationStatus.equals('refuse')}">
 
-                                <td>
-                                    <p>refuse</p>
-                                </td>
-                                </c:if>
-                                <c:if test="${request.masterLogin == null}">
+                                    <td>
+                                        <p>refuse</p>
+                                    </td>
+                                    </c:if>
+                                    <c:if test="${request.masterLogin == null}">
                                     <td>
                                         <select name="usr" class="form-select my-2"
                                                 aria-label="Default select example">
@@ -551,19 +562,38 @@
                                             </c:forEach>
                                         </select>
                                     </td>
-                                </c:if>
-                                <c:if test="${request.masterLogin != null}">
+                                    </c:if>
+                                    <c:if test="${request.masterLogin != null}">
                                     <td><c:out value="${request.masterLogin}"/></td>
-                                </c:if>
+                                    </c:if>
 
-                                <td><c:out value="${request.date}"/></td>
+                                    <td><c:out value="${request.date}"/></td>
+                                    <td>
+                                        <input type="hidden" name="id" value="${request.requestID}">
+                                        <input type="hidden" name="command" value="editRequest">
+                                        <input type="submit" class="btn btn-outline-warning">
+                                    </td>
+                                    <td>
+                            </form>
+                        </c:if>
+                        <c:if test="${request.complicationStatus.equals('refuse')}">
+                            <tr>
+                                <td scope="col"><c:out value="${request.requestID}"/></td>
+                                <td scope="col"><c:out value="${request.description}"/></td>
+                                <td scope="col"><c:out value="${request.price}"/></td>
+                                <td scope="col"><c:out value="${request.paymentStatus}"/></td>
+                                <td scope="col"><c:out value="${request.complicationStatus}"/></td>
+                                <td scope="col"><c:out value="не назначен"/></td>
+                                <td scope="col"><c:out value="${request.date}"/></td>
                                 <td>
+                                    <form action="ManagerServlet" method="post">
                                     <input type="hidden" name="id" value="${request.requestID}">
                                     <input type="hidden" name="command" value="editRequest">
-                                   <input type="submit" class="btn btn-outline-warning">
+                                    <input type="submit" class="btn btn-outline-warning">
+                                        </form>
                                 </td>
-                                <td>
-                        </form>
+                            </tr>
+                        </c:if>
                     </c:forEach>
                     </tbody>
                 </table>
@@ -572,6 +602,22 @@
             </div>
         </div>
     </div>
+    <script>
+        function offCheckBox(){
+            sessionStorage.setItem("checkbox1","false");
+            sessionStorage.setItem("checkbox2","false");
+            sessionStorage.setItem("checkbox3","false");
+            sessionStorage.setItem("checkbox4","false");
+            sessionStorage.setItem("checkbox5","false");
+            sessionStorage.setItem("checkbox6","false");
+            sessionStorage.setItem("checkbox7","false");
+            sessionStorage.setItem("checkbox8","false");
+            sessionStorage.setItem('sorted', 'date');
+            <c:forEach var="user"  items="${requestScope.masters}">
+            sessionStorage.setItem("master${user.userID}","false");
+            </c:forEach>
+        }
+    </script>
 </section>
 <footer class="bg-dark text-center text-white fixed-bottom">
     <!-- Copyright -->

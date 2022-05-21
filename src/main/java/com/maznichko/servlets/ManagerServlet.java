@@ -39,10 +39,8 @@ public class ManagerServlet extends HttpServlet {
         if (command != null) {
             result = command.execute(request, response);
         }
-        if (request.getParameter("result") != null) {
-            String res = request.getParameter("result");
-            request.setAttribute("result", res);
-        }
+        String res = request.getParameter("result");
+        request.setAttribute("result", res);
         request.setAttribute("bank", request.getSession().getAttribute("bank"));
         RequestDispatcher dispatcher = request.getRequestDispatcher(result);
         dispatcher.forward(request, response);
@@ -57,17 +55,17 @@ public class ManagerServlet extends HttpServlet {
         if (request.getParameter("login") != null) {
             if (new Replenishment(new UserDAOimpl()).replenishment(request)) {
                 result = Path.MANAGER_SERVLET;
-            }else {
+            } else {
                 result = Path.ERROR;
             }
         }
         if (command != null) {
             result = command.execute(request, response);
         }
-        if (request.getParameter("name") != null){
+        if (request.getParameter("name") != null) {
             result = Path.MANAGER_SERVLET;
             Register register = new Register(new UserDAOimpl());
-            register.register(request,"MASTER");
+            register.register(request, "MASTER");
         }
         String res = (String) request.getAttribute("result");
         response.sendRedirect(result + "?result=" + res);

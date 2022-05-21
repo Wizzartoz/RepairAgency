@@ -23,10 +23,9 @@ public class MasterServlet extends HttpServlet {
         filter.linkWith(new Pagination());
         filter.action(new ArrayList<>(), request);
         GetBank.execute(request, response);
-        if (request.getParameter("result") != null) {
-            String res = request.getParameter("result");
-            request.setAttribute("result", res);
-        }
+        String res = request.getParameter("result");
+        System.out.println(res);
+        request.setAttribute("result", res);
         request.setAttribute("bank", request.getSession().getAttribute("bank"));
         RequestDispatcher dispatcher = request.getRequestDispatcher(Path.MASTER_JSP);
         dispatcher.forward(request, response);

@@ -26,10 +26,8 @@ public class GeneralCustomerServlet extends HttpServlet {
         getTable.linkWith(new Pagination());
         getTable.action(new ArrayList<>(), request);
         GetBank.execute(request, response);
-        if (request.getParameter("result") != null) {
-            String res = request.getParameter("result");
-            request.setAttribute("result", res);
-        }
+        String res = request.getParameter("result");
+        request.setAttribute("result", res);
         Integer bank = (Integer) request.getSession().getAttribute("bank");
         request.setAttribute("bank", bank);
         RequestDispatcher dispatcher = request.getRequestDispatcher(Path.CUSTOMER_JSP);
