@@ -22,9 +22,9 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String result = Path.ERROR;
+        String result = Path.REGISTER_SERVLET;
         Register register = new Register(new UserDAOimpl());
-        result = register.execute(request,"CUSTOMER");
+        register.register(request,"CUSTOMER");
         response.sendRedirect(result + "?result=" + request.getAttribute("result"));
     }
 }

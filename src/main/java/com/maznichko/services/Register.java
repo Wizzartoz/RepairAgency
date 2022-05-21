@@ -17,7 +17,7 @@ public class Register{
         this.userDAO = userDAO;
     }
 
-    public String execute(HttpServletRequest req,String role) {
+    public boolean register(HttpServletRequest req,String role) {
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String login = req.getParameter("login");
@@ -26,15 +26,15 @@ public class Register{
         String phone = req.getParameter("phone");
         if (login.isEmpty() || password.isEmpty()) {
             req.setAttribute("result", "Login or Password is empty");
-            return Path.REGISTER_SERVLET;
+            return false;
         }
         if (name.isEmpty() || surname.isEmpty()) {
             req.setAttribute("result", "Name or Surname is empty");
-            return Path.REGISTER_SERVLET;
+            return false;
         }
         if (email.isEmpty()) {
             req.setAttribute("result", "Email is empty");
-            return Path.REGISTER_SERVLET;
+            return false;
         }
         User user = new User();
         user.setRole(role);
@@ -48,12 +48,15 @@ public class Register{
             userDAO.insert(user);
         } catch (DBException e) {
             req.setAttribute("result", "what's wrong");
-            return Path.REGISTER_SERVLET;
+            return false;
         }
-        HttpSession httpSession = req.getSession();
-        httpSession.setAttribute("login", login);
-        httpSession.setAttribute("role", role);
-        return Path.CUSTOMER_SERVLET;
+        if(!role.equals("MASTER")){
+            HttpSession httpSession = req.getSession();
+            httpSession.setAttribute("login", login);
+            httpSession.setAttribute("role", role);
+        }
+        req.setAttribute("result","user successfully registered");
+        return true;
     }
 }
 

@@ -118,7 +118,7 @@
             </div>
             <div class="col-6">
                 <ul class="pagination">
-                    <c:forEach var="i" begin="0" end="${requestScope.pages}">
+                    <c:forEach var="i" begin="0" end="${requestScope.pages -1}">
                         <li class="page-item"><a style="color: #1c1c1c" class="page-link"
                                                  href="${pageContext.request.contextPath}/MasterServlet?offset=${i*8}">${i+1}</a></li>
                     </c:forEach>

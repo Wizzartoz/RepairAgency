@@ -64,6 +64,11 @@ public class ManagerServlet extends HttpServlet {
         if (command != null) {
             result = command.execute(request, response);
         }
+        if (request.getParameter("name") != null){
+            result = Path.MANAGER_SERVLET;
+            Register register = new Register(new UserDAOimpl());
+            register.register(request,"MASTER");
+        }
         String res = (String) request.getAttribute("result");
         response.sendRedirect(result + "?result=" + res);
     }

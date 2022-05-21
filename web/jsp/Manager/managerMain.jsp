@@ -84,79 +84,63 @@
     <div class="container-fluid d-flex justify-content-center">
         <div class="row my-5">
             <div class="col-2" style="width: 300px">
-                <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                   aria-expanded="false" aria-controls="collapseExample">
-                    How to
-                </a>
-                <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample2" role="button"
-                   aria-expanded="false" aria-controls="collapseExample">
-                    Send request
-                </a>
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingOne">
-                                    <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                            aria-controls="flush-collapseOne">
-                                        Step 1
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                     aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">First you need to leave a request in the form on the
-                                        left,
-                                        describe in detail what you need to fix
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#registerModal">
+                   Register new master
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="padding: 3rem">
+                                <div class="row">
+                                    <div class="colm-form">
+                                        <div class="form-container">
+                                            <form action="ManagerServlet" method="post">
+                                                <b>${requestScope.result}</b>
+                                                <div class="form-floating">
+                                                    <input type="text" name="name" class="form-control" id="floatingInput" placeholder="Name">
+                                                    <label for="floatingInput">Name</label>
+                                                </div>
+                                                <div class="form-floating">
+                                                    <input type="text" name="surname" class="form-control" id="Surname" placeholder="Surname">
+                                                    <label for="Surname">Surname</label>
+                                                </div>
+                                                <div class="form-floating">
+                                                    <input type="text" name="login" class="form-control" id="Login" placeholder="Login">
+                                                    <label for="Login">Login</label>
+                                                </div>
+                                                <div class="form-floating">
+                                                    <input type="password" name="pass" class="form-control" id="Password" placeholder="Password">
+                                                    <label for="Password">Password</label>
+                                                </div>
+                                                <div class="form-floating">
+                                                    <input type="email" name="email" class="form-control" id="Email" placeholder="Email">
+                                                    <label for="Email">Email</label>
+                                                </div>
+                                                <div class="form-floating">
+                                                    <input type="text" name="phone" class="form-control" id="Phone" placeholder="Phone">
+                                                    <label for="Phone">Phone</label>
+                                                </div>
+                                                <button class="w-100 btn btn-lg btn-warning" type="submit">Register</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingTwo">
-                                    <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                            aria-controls="flush-collapseTwo">
-                                        Step 2
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                     aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">After sending the application, the manager will view
-                                        it,
-                                        assign
-                                        a price and a master to it, you can see all applications in the "Request"
-                                        tab
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingThree">
-                                    <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                            aria-controls="flush-collapseThree">
-                                        Step 3
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                     aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">Next, you need to pay for the application, at the
-                                        top
-                                        left you
-                                        can see your invoice, after paying for it, the master will take
-                                    </div>
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="collapse" id="collapseExample2">
-                    <div class="card card-body">
-                        Some
-                    </div>
-                </div>
+
+
                 <div class="my-2">
                     <div class="mx-1">
                         Complication status:
@@ -441,7 +425,7 @@
                             reqAttribute += "&" + document.getElementById("master${user.userID}").name + "=" + document.getElementById("master${user.userID}").value;
                         }
                         </c:forEach>
-                        <c:forEach var="i" begin="0" end="${requestScope.pages}">
+                        <c:forEach var="i" begin="0" end="${requestScope.pages -1 }">
                         if (document.getElementById("pagination${i}").checked) {
                             reqAttribute += "&offset=" + document.getElementById("pagination${i}").value;
                         }
@@ -463,7 +447,7 @@
                     <option value="descending">price sorting in descending order</option>
                 </select>
                 <ul class="pagination my-2">
-                    <c:forEach var="i" begin="0" end="${requestScope.pages}">
+                    <c:forEach var="i" begin="0" end="${requestScope.pages - 1}">
                         <li class="page-item">
                             <div class="form-check form-check-inline">
                                 <input onclick="sendFilter()" class="form-check-input" type="radio"

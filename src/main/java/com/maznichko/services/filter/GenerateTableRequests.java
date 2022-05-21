@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GenerateTableRequests extends Filterable {
+
     private final RequestDAO requestDAO;
 
     public GenerateTableRequests(RequestDAO requestDAO) {
