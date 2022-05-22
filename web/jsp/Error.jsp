@@ -20,7 +20,7 @@
         <div class="row">
             <div class="position-absolute top-50 start-50 translate-middle-y">
             <h1>OOOOPS,WHATS'S WRONG!</h1>
-                <form class="align-items-center" method="get" action="LoginServlet">
+                <form class="align-items-center" method="get" action="${pageContext.request.contextPath}/index.jsp">
                     <input value="Back to home" type="submit" class="btn btn-warning mx-auto">
                 </form>
             </div>
