@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Request implements Entity {
     private long requestID;
     private String description;
-    private Timestamp date;
+    private String date;
     private String complicationStatus;
     private String paymentStatus;
     private Float price;
@@ -36,11 +36,11 @@ public class Request implements Entity {
         this.description = description;
     }
 
-    public Timestamp getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

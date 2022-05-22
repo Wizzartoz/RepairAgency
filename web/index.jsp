@@ -61,8 +61,7 @@
 <footer class="bg-dark text-center text-white fixed-bottom">
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2022 Copyright:
-        <b class="text-white">made by maznichko</b>
+        © 2022 Copyright: made by maznichko
     </div>
     <!-- Copyright -->
 </footer>

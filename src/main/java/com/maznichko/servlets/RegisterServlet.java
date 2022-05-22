@@ -23,7 +23,9 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String result = Path.REGISTER_SERVLET;
         Register register = new Register(new UserDAOimpl());
-        register.register(request,"CUSTOMER");
+        if(register.register(request,"CUSTOMER")){
+            result = Path.CUSTOMER_SERVLET;
+        }
         response.sendRedirect(result + "?result=" + request.getAttribute("result"));
     }
 }

@@ -24,7 +24,7 @@ public class SendRequest implements CustomerCommand {
         }
         Request request = new Request();
         request.setDescription(message);
-        request.setPrice(0f);
+        request.setPrice(0F);
         request.setPaymentStatus("unpaid");
         request.setComplicationStatus("under consideration");
         try {

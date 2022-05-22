@@ -25,7 +25,7 @@
                     <input type="text" placeholder="Surname" name="surname">
                     <input type="text" placeholder="Login" name="login">
                     <input type="password" placeholder="Password" name="pass">
-                    <input type="text" placeholder="Email" name="email">
+                    <input type="text" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email">
                     <input type="text" placeholder="Phone" name="phone">
                     <input type="hidden" name="command" value="register"/>
                     <button class="btn-login">Register</button>

@@ -22,10 +22,10 @@
 </head>
 <body onload="setCheckboxes()">
 <header>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-xxl">
+    <nav class="navbar navbar-dark bg-dark"  style="height: 55px">
+        <div class="container-xxl align-items-start">
             <ul class="nav">
-                <li><a class="navbar-brand text-white"
+                <li class="my-1"><a class="navbar-brand text-white"
                        href="${pageContext.request.contextPath}/ManagerServlet">RepairAgent</a></li>
             </ul>
             <ul class="nav">
@@ -62,7 +62,7 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close
                                     </button>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                 <li class="nav-item">
                     <form action="GeneralCustomerServlet" method="post">
                         <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
-                        <input type="submit" class="btn btn-outline-warning">
+                        <input value="Log out" type="submit" class="btn btn-outline-warning">
                     </form>
                 </li>
             </ul>
@@ -84,7 +84,7 @@
         <div class="row my-5">
             <div class="col-2" style="width: 300px">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#registerModal">
+                <button onclick="offCheckBox()" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#registerModal">
                     Register new master
                 </button>
 
@@ -571,13 +571,13 @@
                                     <td>
                                         <input type="hidden" name="id" value="${request.requestID}">
                                         <input type="hidden" name="command" value="editRequest">
-                                        <input type="submit" class="btn btn-outline-warning">
+                                        <input onclick="offCheckBox()" value="Edit request" type="submit" class="btn btn-outline-warning">
                                     </td>
                                     <td>
                             </form>
                         </c:if>
                         <c:if test="${request.complicationStatus.equals('refuse')}">
-                            <tr>
+                            <tr class="border-dark">
                                 <td scope="col"><c:out value="${request.requestID}"/></td>
                                 <td scope="col"><c:out value="${request.description}"/></td>
                                 <td scope="col"><c:out value="${request.price}"/></td>
@@ -589,7 +589,7 @@
                                     <form action="ManagerServlet" method="post">
                                     <input type="hidden" name="id" value="${request.requestID}">
                                     <input type="hidden" name="command" value="editRequest">
-                                    <input type="submit" class="btn btn-outline-warning">
+                                    <input onclick="offCheckBox()" value="Edit request" type="submit" class="btn btn-outline-warning">
                                         </form>
                                 </td>
                             </tr>
@@ -622,8 +622,7 @@
 <footer class="bg-dark text-center text-white fixed-bottom">
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2022 Copyright:
-        <b class="text-white">made by maznichko</b>
+        © 2022 Copyright: made by maznichko
     </div>
     <!-- Copyright -->
 </footer>

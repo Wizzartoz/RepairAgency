@@ -20,10 +20,10 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-xxl">
+    <nav class="navbar navbar-dark bg-dark" style="height: 55px">
+        <div class="container-xxl align-items-start">
             <ul class="nav">
-                <li><a class="navbar-brand text-white"
+                <li class="my-1"><a class="navbar-brand text-white"
                        href="${pageContext.request.contextPath}/GeneralCustomerServlet">RepairAgent</a></li>
             </ul>
             <ul class="nav">
@@ -35,10 +35,10 @@
                         Replenishment
                     </button>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mx-2">
                     <form action="GeneralCustomerServlet" method="post">
                         <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
-                    <input type="submit" class="btn btn-outline-warning">
+                    <input value="Log out" type="submit" class="btn btn-outline-warning">
                     </form>
                 </li>
             </ul>
@@ -48,7 +48,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Replenishment</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -61,7 +61,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -77,10 +77,6 @@
                 <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
                     How to
-                </a>
-                <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample2" role="button"
-                   aria-expanded="false" aria-controls="collapseExample">
-                    Send request
                 </a>
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body">
@@ -256,7 +252,7 @@
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
                                                     Close
                                                 </button>
                                             </div>
@@ -279,8 +275,7 @@
 <footer class="bg-dark text-center text-white fixed-bottom">
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2022 Copyright:
-        <b class="text-white">made by maznichko</b>
+        © 2022 Copyright: made by maznichko
     </div>
     <!-- Copyright -->
 </footer>

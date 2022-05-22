@@ -16,10 +16,10 @@
           crossorigin="anonymous">
 </head>
 <header>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-xxl">
+    <nav class="navbar navbar-dark bg-dark"  style="height: 55px">
+        <div class="container-xxl align-items-start">
             <ul class="nav">
-                <li><a class="navbar-brand text-white"
+                <li class="my-1"><a class="navbar-brand text-white"
                        href="${pageContext.request.contextPath}/MasterServlet">RepairAgent</a></li>
             </ul>
             <ul class="nav">
@@ -27,7 +27,7 @@
                 <li class="nav-item">
                     <form action="GeneralCustomerServlet" method="post">
                         <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
-                        <input type="submit" class="btn btn-outline-warning">
+                        <input value="Log out" type="submit" class="btn btn-outline-warning">
                     </form>
                 </li>
             </ul>
@@ -38,87 +38,10 @@
 <section class="my-5">
     <div class="container-xxl align-items-top">
         <div class="row">
-            <div class="col-6">
-                <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample" role="button"
-                   aria-expanded="false" aria-controls="collapseExample">
-                    How to
-                </a>
-                <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample2" role="button"
-                   aria-expanded="false" aria-controls="collapseExample">
-                    Send request
-                </a>
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingOne">
-                                    <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                            aria-controls="flush-collapseOne">
-                                        Step 1
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                     aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">First you need to leave a request in the form on the
-                                        left,
-                                        describe in detail what you need to fix
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingTwo">
-                                    <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                            aria-controls="flush-collapseTwo">
-                                        Step 2
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                     aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">After sending the application, the manager will view
-                                        it,
-                                        assign
-                                        a price and a master to it, you can see all applications in the "Request"
-                                        tab
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingThree">
-                                    <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                            aria-controls="flush-collapseThree">
-                                        Step 3
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                     aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">Next, you need to pay for the application, at the
-                                        top
-                                        left you
-                                        can see your invoice, after paying for it, the master will take
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="collapse" id="collapseExample2">
-                    <div class="card card-body">
-                        Some
-                    </div>
-                </div>
-                <div>
-                <c:if test="${!requestScope.result.equals('null')}">
-                    <b class="text-center text-danger ali">${requestScope.result}</b>
-                </c:if>
-                </div>
-            </div>
-            <div class="col-6">
+            <c:if test="${!requestScope.result.equals('null')}">
+                <b class="text-center text-danger ali">${requestScope.result}</b>
+            </c:if>
+            <div class="col-12">
                 <ul class="pagination">
                     <c:forEach var="i" begin="0" end="${requestScope.pages -1}">
                         <li class="page-item"><a style="color: #1c1c1c" class="page-link"
@@ -175,8 +98,7 @@
 <footer class="bg-dark text-center text-white fixed-bottom">
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2022 Copyright:
-        <b class="text-white">made by maznichko</b>
+        © 2022 Copyright: made by maznichko
     </div>
     <!-- Copyright -->
 </footer>
