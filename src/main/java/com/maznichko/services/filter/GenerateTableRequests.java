@@ -16,6 +16,11 @@ public class GenerateTableRequests extends Filterable {
         this.requestDAO = requestDAO;
     }
 
+    /**
+     * getting all request from DB
+     * @param requests - this set of requests who we are got from DB
+     * @param request  - our request
+     */
     @Override
     public void action(List<Request> requests, HttpServletRequest request) {
         List<Request> requestList = requests;

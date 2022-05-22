@@ -19,6 +19,11 @@ public class LeaveFeedback implements CustomerCommand {
         this.requestDAO = requestDAO;
     }
 
+    /**
+     * Put feedback into DB
+     * @param req - request who we are getting
+     * @return - path of servlet
+     */
     @Override
     public String execute(HttpServletRequest req) {
         //checking rating

@@ -3,13 +3,16 @@ package com.maznichko.dao.entity;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+/**
+ * This class is entity for feedback
+ */
 public class Feedback implements Entity{
-    long feedbackID;
-    String feedbackText;
-    Integer rating;
-    Timestamp date;
-    long requestID;
-    String masterLogin;
+    private long feedbackID;
+    private String feedbackText;
+    private Integer rating;
+    private Timestamp date;
+    private long requestID;
+    private String masterLogin;
 
     public long getFeedbackID() {
         return feedbackID;
@@ -66,7 +69,6 @@ public class Feedback implements Entity{
         Feedback feedback = (Feedback) obj;
         return Objects.equals(feedback.getRequestID(),this.requestID);
     }
-//Гарантированная колизия , нужно это как то исправить
     @Override
     public int hashCode() {
         return (int) this.feedbackID;

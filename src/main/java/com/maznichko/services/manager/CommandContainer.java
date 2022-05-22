@@ -1,11 +1,9 @@
 package com.maznichko.services.manager;
 
-import com.maznichko.dao.FeedbackDAO;
+
 import com.maznichko.dao.RequestDAO;
-import com.maznichko.dao.UserDAO;
-import com.maznichko.dao.impl.FeedbackDAOimpl;
 import com.maznichko.dao.impl.RequestDAOimpl;
-import com.maznichko.dao.impl.UserDAOimpl;
+
 
 
 
@@ -14,9 +12,7 @@ import java.util.TreeMap;
 
 public class CommandContainer {
     private static final Map<String, Command> commands = new TreeMap<>();
-    private static final UserDAO USER_DAO = new UserDAOimpl();
     private static final RequestDAO REQUEST_DAO = new RequestDAOimpl();
-    private static final FeedbackDAO FEEDBACK_DAO = new FeedbackDAOimpl();
 
 
     static {

@@ -25,7 +25,7 @@ public class GeneralCustomerServlet extends HttpServlet {
         Filterable getTable = new GenerateTableRequests(new RequestDAOimpl());
         getTable.linkWith(new Pagination());
         getTable.action(new ArrayList<>(), request);
-        GetBank.execute(request, response);
+        GetBank.getBank(request);
         String result = request.getParameter("result");
         request.setAttribute("result", result);
         Integer bank = (Integer) request.getSession().getAttribute("bank");

@@ -29,21 +29,21 @@ public class MainFilter implements Filter {
         if (session.getAttribute("role") == null) {
             resp.sendRedirect("/index.jsp");
         } else if (destination.equals(Path.CUSTOMER_SERVLET)) {
-            if (!session.getAttribute("role").equals("CUSTOMER")) {
+            if (!session.getAttribute("role").equals("CUSTOMER")){
                 resp.sendRedirect(Path.ERROR);
-            } else {
+            }else {
                 chain.doFilter(request, response);
             }
-        } else if (destination.equals(Path.MANAGER_SERVLET)) {
-            if (!session.getAttribute("role").equals("MANAGER")) {
+        }  else if (destination.equals(Path.MANAGER_SERVLET)) {
+            if (!session.getAttribute("role").equals("MANAGER")){
                 resp.sendRedirect(Path.ERROR);
-            } else {
+            }else {
                 chain.doFilter(request, response);
             }
-        } else if (destination.equals(Path.MASTER_SERVLET)) {
-            if (!session.getAttribute("role").equals("MASTER")) {
+        }  else if (destination.equals(Path.MASTER_SERVLET)) {
+            if (!session.getAttribute("role").equals("MASTER")){
                 resp.sendRedirect(Path.ERROR);
-            } else {
+            }else {
                 chain.doFilter(request, response);
             }
         } else {

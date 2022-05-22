@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PaymentFilter extends Filterable {
+    /**
+     * filtering list of requests by payment status
+     * @param requests - this set of requests who we are got from DB
+     * @param request  - our request
+     */
     @Override
     public void action(List<Request> requests, HttpServletRequest request) {
         List<Request> payRequests = new ArrayList<>();

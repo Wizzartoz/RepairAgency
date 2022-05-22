@@ -17,7 +17,11 @@ public class Login {
         this.userDAO = userDAO;
     }
 
-
+    /**
+     * log in user by login and password
+     * @param req - servlet request
+     * @return - path of servlet
+     */
     public String execute(HttpServletRequest req) {
         String login = req.getParameter("login");
         String password = req.getParameter("pass");

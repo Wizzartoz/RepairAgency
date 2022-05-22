@@ -1,5 +1,8 @@
 package com.maznichko.dao;
 
+/**
+ * Exception to DB
+ */
 public class DBException extends Exception {
     public DBException() {
     }

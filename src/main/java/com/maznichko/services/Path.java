@@ -1,5 +1,8 @@
 package com.maznichko.services;
 
+/**
+ * class who contain constant path to servlets
+ */
 public class Path {
     public static final String CUSTOMER_JSP = "/jsp/Customer/customerMain.jsp";
     public static final String MANAGER_JSP = "/jsp/Manager/managerMain.jsp";

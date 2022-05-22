@@ -17,9 +17,14 @@ public class Paid implements CustomerCommand {
         this.userDAO = userDAO;
         this.requestDAO = requestDAO;
     }
+
+    /**
+     * this method implement pay of request by customer
+     * @param req - request who we are getting
+     * @return - path of servlet
+     */
     @Override
     public String execute(HttpServletRequest req) {
-        //PAYMENT STATUS : unpaid waiting for payment,paid COMPLICATION STATUS : under consideration,consideration,refuse,,in progress , done
         HttpSession httpSession = req.getSession();
         String login = (String) httpSession.getAttribute("login");
         float price = Float.parseFloat(req.getParameter("price"));

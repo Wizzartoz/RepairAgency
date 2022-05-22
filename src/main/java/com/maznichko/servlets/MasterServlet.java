@@ -22,7 +22,7 @@ public class MasterServlet extends HttpServlet {
         Filterable filter = new GenerateTableRequests(new RequestDAOimpl());
         filter.linkWith(new Pagination());
         filter.action(new ArrayList<>(), request);
-        GetBank.execute(request, response);
+        GetBank.getBank(request);
         String result = request.getParameter("result");
         request.setAttribute("result", result);
         request.setAttribute("bank", request.getSession().getAttribute("bank"));

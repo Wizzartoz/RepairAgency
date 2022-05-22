@@ -4,7 +4,6 @@ import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
 import com.maznichko.services.Path;
-import com.maznichko.services.manager.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +13,13 @@ public class TakeRequest implements MasterCommand {
     public TakeRequest(RequestDAO requestDAO){
         this.requestDAO = requestDAO;
     }
+
+    /**
+     * Master marking request if he took it
+     * @param req - request who we are getting
+     * @param resp - response servlet
+     * @return - path of servlet
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         long id = Long.parseLong(req.getParameter("id"));

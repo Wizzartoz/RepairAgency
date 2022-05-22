@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class ManagerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        GetBank.execute(request, response);
+        GetBank.getBank(request);
         GetMasters.findMasters(request);
         GetUsers.execute(request, response);
         String path = Path.MANAGER_JSP;

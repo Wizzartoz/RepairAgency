@@ -1,7 +1,9 @@
 package com.maznichko.dao.entity;
 
 import java.util.Objects;
-
+/**
+ * This class is entity for user
+ */
 public class User implements Entity{
     private long userID;
     private String login;

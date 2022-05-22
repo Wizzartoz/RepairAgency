@@ -2,7 +2,9 @@ package com.maznichko.dao.entity;
 
 import java.sql.Timestamp;
 import java.util.Objects;
-
+/**
+ * This class is entity for request
+ */
 public class Request implements Entity {
     private long requestID;
     private String description;

@@ -5,7 +5,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
+/**
+ * Concrete realisation connect to Postgres DB
+ */
 public class PostgresDBManager extends ManagerDB {
     private static PostgresDBManager instance = null;
 
@@ -14,6 +16,10 @@ public class PostgresDBManager extends ManagerDB {
         super.CONNECTION_URL = "jdbc:postgresql://127.0.0.1:5432/agent?user=maznich40&password=magik455";
     }
 
+    /**
+     * return the only one object of class
+     * @return - object
+     */
     public static synchronized PostgresDBManager getInstance() {
         if (instance == null) {
             instance = new PostgresDBManager();

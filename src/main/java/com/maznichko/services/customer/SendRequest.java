@@ -13,6 +13,12 @@ public class SendRequest implements CustomerCommand {
     public SendRequest(RequestDAO requestDAO){
         this.requestDAO = requestDAO;
     }
+
+    /**
+     * this method sends a request that the client leaves
+     * @param req - request who we are getting
+     * @return - path of request
+     */
     @Override
     public String execute(HttpServletRequest req) {
         HttpSession httpSession = req.getSession();

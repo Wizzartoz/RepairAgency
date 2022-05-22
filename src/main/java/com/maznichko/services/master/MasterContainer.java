@@ -13,9 +13,8 @@ import java.util.TreeMap;
 
 public class MasterContainer {
     private static final Map<String, MasterCommand> commands = new TreeMap<>();
-    private static final UserDAO USER_DAO = new UserDAOimpl();
     private static final RequestDAO REQUEST_DAO = new RequestDAOimpl();
-    private static final FeedbackDAO FEEDBACK_DAO = new FeedbackDAOimpl();
+
 
 
     static {

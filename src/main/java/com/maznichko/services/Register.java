@@ -17,6 +17,12 @@ public class Register{
         this.userDAO = userDAO;
     }
 
+    /**
+     * method registering new user
+     * @param req - request servlet
+     * @param role - role of user
+     * @return - true if register was successful or not if false
+     */
     public boolean register(HttpServletRequest req,String role) {
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");

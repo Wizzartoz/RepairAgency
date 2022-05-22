@@ -19,6 +19,12 @@ public class EditRequest implements Command {
 
     }
 
+    /**
+     * Editing request which customer left
+     * @param req - request who we are getting
+     * @param resp - servlet response
+     * @return - path of servlet
+     */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         long id = Long.parseLong(req.getParameter("id"));

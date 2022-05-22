@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Sort extends Filterable {
-
+    /**
+     * Sorting list of requests by parameters
+     * @param requests - this set of requests who we are got from DB
+     * @param request  - our request
+     */
     @Override
     public void action(List<Request> requests, HttpServletRequest request) {
         String sort = request.getParameter("sort");
