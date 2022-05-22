@@ -23,9 +23,8 @@ public class MasterServlet extends HttpServlet {
         filter.linkWith(new Pagination());
         filter.action(new ArrayList<>(), request);
         GetBank.execute(request, response);
-        String res = request.getParameter("result");
-        System.out.println(res);
-        request.setAttribute("result", res);
+        String result = request.getParameter("result");
+        request.setAttribute("result", result);
         request.setAttribute("bank", request.getSession().getAttribute("bank"));
         RequestDispatcher dispatcher = request.getRequestDispatcher(Path.MASTER_JSP);
         dispatcher.forward(request, response);
@@ -35,11 +34,10 @@ public class MasterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         MasterCommand command = MasterContainer.get(request.getParameter("command"));
-        String result = Path.MASTER_JSP;
+        String path = Path.MASTER_JSP;
         if (command != null) {
-            result = command.execute(request, response);
+            path = command.execute(request, response);
         }
-        String res = (String) request.getAttribute("result");
-        response.sendRedirect(result + "?result=" + res);
+        response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }
 }

@@ -21,11 +21,13 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String result = Path.REGISTER_SERVLET;
+        String path = Path.REGISTER_SERVLET;
         Register register = new Register(new UserDAOimpl());
-        if(register.register(request,"CUSTOMER")){
-            result = Path.CUSTOMER_SERVLET;
+        boolean isRegister = register.register(request, "CUSTOMER");
+        if (isRegister) {
+            path = Path.CUSTOMER_SERVLET;
         }
-        response.sendRedirect(result + "?result=" + request.getAttribute("result"));
+        response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }
 }
+

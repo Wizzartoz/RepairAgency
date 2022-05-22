@@ -24,11 +24,10 @@ import java.util.ArrayList;
 public class ManagerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Command command = CommandContainer.get(request.getParameter("command"));
         GetBank.execute(request, response);
         GetMasters.findMasters(request);
         GetUsers.execute(request, response);
-        String result = Path.MANAGER_JSP;
+        String path = Path.MANAGER_JSP;
         Filterable filter = new GenerateTableRequests(new RequestDAOimpl());
         filter.linkWith(new StatusFilter())
                 .linkWith(new PaymentFilter())
@@ -36,13 +35,14 @@ public class ManagerServlet extends HttpServlet {
                 .linkWith(new Sort())
                 .linkWith(new Pagination());
         filter.action(new ArrayList<>(), request);
+        Command command = CommandContainer.get(request.getParameter("command"));
         if (command != null) {
-            result = command.execute(request, response);
+            path = command.execute(request, response);
         }
-        String res = request.getParameter("result");
-        request.setAttribute("result", res);
+        String result = request.getParameter("result");
+        request.setAttribute("result", result);
         request.setAttribute("bank", request.getSession().getAttribute("bank"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher(result);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(path);
         dispatcher.forward(request, response);
 
 
@@ -50,24 +50,24 @@ public class ManagerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Command command = CommandContainer.get(request.getParameter("command"));
-        String result = Path.MANAGER_JSP;
+        String path = Path.MANAGER_JSP;
         if (request.getParameter("login") != null) {
-            if (new Replenishment(new UserDAOimpl()).replenishment(request)) {
-                result = Path.MANAGER_SERVLET;
+            boolean isReplenishment = new Replenishment(new UserDAOimpl()).replenishment(request);
+            if (isReplenishment) {
+                path = Path.MANAGER_SERVLET;
             } else {
-                result = Path.ERROR;
+                path = Path.ERROR;
             }
         }
+        Command command = CommandContainer.get(request.getParameter("command"));
         if (command != null) {
-            result = command.execute(request, response);
+            path = command.execute(request, response);
         }
         if (request.getParameter("name") != null) {
-            result = Path.MANAGER_SERVLET;
+            path = Path.MANAGER_SERVLET;
             Register register = new Register(new UserDAOimpl());
             register.register(request, "MASTER");
         }
-        String res = (String) request.getAttribute("result");
-        response.sendRedirect(result + "?result=" + res);
+        response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }
 }

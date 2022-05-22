@@ -26,8 +26,8 @@ public class GeneralCustomerServlet extends HttpServlet {
         getTable.linkWith(new Pagination());
         getTable.action(new ArrayList<>(), request);
         GetBank.execute(request, response);
-        String res = request.getParameter("result");
-        request.setAttribute("result", res);
+        String result = request.getParameter("result");
+        request.setAttribute("result", result);
         Integer bank = (Integer) request.getSession().getAttribute("bank");
         request.setAttribute("bank", bank);
         RequestDispatcher dispatcher = request.getRequestDispatcher(Path.CUSTOMER_JSP);
@@ -36,19 +36,19 @@ public class GeneralCustomerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CustomerCommand command = CustomerContainer.get(request.getParameter("command"));
-        String result = Path.CUSTOMER_JSP;
+        String path = Path.CUSTOMER_JSP;
         if (request.getParameter("money") != null) {
-            if (new Replenishment(new UserDAOimpl()).replenishment(request)) {
-                result = Path.CUSTOMER_SERVLET;
+            boolean isReplenishment = new Replenishment(new UserDAOimpl()).replenishment(request);
+            if (isReplenishment) {
+                path = Path.CUSTOMER_SERVLET;
             } else {
-                result = Path.ERROR;
+                path = Path.ERROR;
             }
         }
+        CustomerCommand command = CustomerContainer.get(request.getParameter("command"));
         if (command != null) {
-            result = command.execute(request);
+            path = command.execute(request);
         }
-        String res = (String) request.getAttribute("result");
-        response.sendRedirect(result + "?result=" + res);
+        response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }
 }
