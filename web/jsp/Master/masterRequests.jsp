@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -15,6 +16,15 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
 </head>
+<c:if test="${sessionScope.get('locale') == null}">
+    <fmt:setBundle basename = "base" var = "lang"/>
+</c:if>
+<c:if test="${sessionScope.get('locale').equals('en')}">
+    <fmt:setBundle basename = "EN-en" var = "lang"/>
+</c:if>
+<c:if test="${sessionScope.get('locale').equals('ru')}">
+    <fmt:setBundle basename = "RU-ru" var = "lang"/>
+</c:if>
 <header>
     <nav class="navbar navbar-dark bg-dark"  style="height: 55px">
         <div class="container-xxl align-items-start">
@@ -23,11 +33,23 @@
                        href="${pageContext.request.contextPath}/MasterServlet">RepairAgent</a></li>
             </ul>
             <ul class="nav">
-                <li class="nav-item mx-3 my-2"><b class="text-white">${requestScope.bank} - count</b></li>
+                <li class="nav-item mx-3 my-2"><b class="text-white">${requestScope.bank} - <fmt:message key = "customer.header.count" bundle = "${lang}"/></b></li>
+                <li class="mx-2">
+                    <div class="dropdown">
+                        <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <fmt:message key = "customer.header.button.len" bundle = "${lang}"/>
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="MasterServlet?locale=en">En</a></li>
+                            <li><a class="dropdown-item" href="MasterServlet?locale=ru">Ru</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <form action="GeneralCustomerServlet" method="post">
                         <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
-                        <input value="Log out" type="submit" class="btn btn-outline-warning">
+                        <input value="<fmt:message key = "customer.header.button.log_out" bundle = "${lang}"/>" type="submit" class="btn btn-outline-warning">
                     </form>
                 </li>
             </ul>
@@ -51,12 +73,12 @@
                 <table class="table table-hover">
                     <thead>
                     <tr class="border-dark">
-                        <th>id</th>
-                        <th>description</th>
-                        <th>price</th>
-                        <th>payment status</th>
-                        <th>complication status</th>
-                        <th>date</th>
+                        <th><fmt:message key = "customer.main.table_title.id" bundle = "${lang}"/></th>
+                        <th><fmt:message key = "customer.main.table_title.description" bundle = "${lang}"/></th>
+                        <th><fmt:message key = "customer.main.table_title.price" bundle = "${lang}"/></th>
+                        <th><fmt:message key = "customer.main.table_title.payment_status" bundle = "${lang}"/></th>
+                        <th><fmt:message key = "customer.main.table_title.complication_status" bundle = "${lang}"/></th>
+                        <th><fmt:message key = "customer.main.table_title.date" bundle = "${lang}"/></th>
                         <th ></th>
                         <th ></th>
                         <th ></th>
@@ -74,7 +96,7 @@
                             <td>
                                 <form method="post"
                                       action=${pageContext.request.contextPath}/MasterServlet>
-                                    <input type="submit" class="btn btn-outline-dark" value="Take"/>
+                                    <input type="submit" class="btn btn-outline-dark" value="<fmt:message key = "master.table.button.take" bundle = "${lang}"/>"/>
                                     <input type="hidden" name="id" value="${request.requestID}">
                                     <input type="hidden" name="command" value="takeRequest">
                                 </form>
@@ -82,7 +104,7 @@
                             <td>
                                 <form method="post"
                                       action=${pageContext.request.contextPath}/MasterServlet>
-                                    <input type="submit" class="btn btn-outline-warning" value="Done"/>
+                                    <input type="submit" class="btn btn-outline-warning" value="<fmt:message key = "master.table.button.done" bundle = "${lang}"/>"/>
                                 <input type="hidden" name="doneID" value="${request.requestID}">
                                 <input type="hidden" name="command" value="doneRequest">
                                 </form>

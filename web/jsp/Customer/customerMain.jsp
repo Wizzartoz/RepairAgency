@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>main-customer</title>
@@ -16,9 +17,18 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
     <link href="${pageContext.request.contextPath}/css/feedback.css" rel="stylesheet" type="text/css">
-
+    <meta charset="UTF-8">
 </head>
 <body>
+<c:if test="${sessionScope.get('locale') == null}">
+    <fmt:setBundle basename = "base" var = "lang"/>
+</c:if>
+<c:if test="${sessionScope.get('locale').equals('en')}">
+    <fmt:setBundle basename = "EN-en" var = "lang"/>
+</c:if>
+<c:if test="${sessionScope.get('locale').equals('ru')}">
+    <fmt:setBundle basename = "RU-ru" var = "lang"/>
+</c:if>
 <header>
     <nav class="navbar navbar-dark bg-dark" style="height: 55px">
         <div class="container-xxl align-items-start">
@@ -27,18 +37,30 @@
                        href="${pageContext.request.contextPath}/GeneralCustomerServlet">RepairAgent</a></li>
             </ul>
             <ul class="nav">
-                <li class="nav-item mx-3 my-2"><b class="text-white">${requestScope.bank} - count</b></li>
+                <li class="nav-item mx-3 my-2"><b class="text-white">${requestScope.bank} - <fmt:message key = "customer.header.count" bundle = "${lang}"/> </b></li>
                 <li class="nav-item">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
-                        Replenishment
+                        <fmt:message key = "customer.header.button.replenishment" bundle = "${lang}"/>
                     </button>
                 </li>
-                <li class="nav-item mx-2">
+                <li class="mx-2">
+                    <div class="dropdown">
+                        <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <fmt:message key = "customer.header.button.len" bundle = "${lang}"/>
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="GeneralCustomerServlet?locale=en">En</a></li>
+                            <li><a class="dropdown-item" href="GeneralCustomerServlet?locale=ru">Ru</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <form action="GeneralCustomerServlet" method="post">
                         <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
-                    <input value="Log out" type="submit" class="btn btn-outline-warning">
+                    <input value="<fmt:message key = "customer.header.button.log_out" bundle = "${lang}"/>" type="submit" class="btn btn-outline-warning">
                     </form>
                 </li>
             </ul>
@@ -48,20 +70,20 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Replenishment</h5>
+                            <h5 class="modal-title" id="exampleModalLabel"><fmt:message key = "customer.main.modal_title.replenishment" bundle = "${lang}"/></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form action="GeneralCustomerServlet" method="post">
-                                <label>money:
+                                <label><fmt:message key = "customer.main.modal_body.money" bundle = "${lang}"/>:
                                     <input type="number" name="money"><br/>
                                 </label>
                                 <input type="hidden" name="command" value="replenishment">
-                                <button type="submit" class="btn btn-outline-warning">Replenishment</button>
+                                <button type="submit" class="btn btn-outline-warning"><fmt:message key = "customer.main.modal_button.replenishment" bundle = "${lang}"/></button>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal"><fmt:message key = "customer.main.modal_footer.close" bundle = "${lang}"/></button>
                         </div>
                     </div>
                 </div>
@@ -76,7 +98,7 @@
             <div class="col-6">
                 <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseExample" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
-                    How to
+                    <fmt:message key = "customer.main.dropdown.how_to" bundle = "${lang}"/>
                 </a>
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body">
@@ -86,14 +108,12 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseOne" aria-expanded="false"
                                             aria-controls="flush-collapseOne">
-                                        Step 1
+                                        <fmt:message key = "customer.main.dropdown.how_to.title_step_1" bundle = "${lang}"/>
                                     </button>
                                 </h2>
                                 <div id="flush-collapseOne" class="accordion-collapse collapse"
                                      aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">First you need to leave a request in the form on the
-                                        left,
-                                        describe in detail what you need to fix
+                                    <div class="accordion-body"><fmt:message key = "customer.main.dropdown.how_to.body_step_1" bundle = "${lang}"/>
                                     </div>
                                 </div>
                             </div>
@@ -102,14 +122,12 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                             aria-controls="flush-collapseTwo">
-                                        Step 2
+                                        <fmt:message key = "customer.main.dropdown.how_to.title_step_2" bundle = "${lang}"/>
                                     </button>
                                 </h2>
                                 <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                      aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">After sending the application, the manager will view it,
-                                        assign
-                                        a price and a master to it, you can see all applications in the "Request" tab
+                                    <div class="accordion-body"><fmt:message key = "customer.main.dropdown.how_to.body_step_2" bundle = "${lang}"/>
                                     </div>
                                 </div>
                             </div>
@@ -118,33 +136,26 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseThree" aria-expanded="false"
                                             aria-controls="flush-collapseThree">
-                                        Step 3
+                                        <fmt:message key = "customer.main.dropdown.how_to.title_step_3" bundle = "${lang}"/>
                                     </button>
                                 </h2>
                                 <div id="flush-collapseThree" class="accordion-collapse collapse"
                                      aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">Next, you need to pay for the application, at the top
-                                        left you
-                                        can see your invoice, after paying for it, the master will take
+                                    <div class="accordion-body"><fmt:message key = "customer.main.dropdown.how_to.body_step_3" bundle = "${lang}"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="collapse" id="collapseExample2">
-                    <div class="card card-body">
-                        Some
-                    </div>
-                </div>
                 <form action="GeneralCustomerServlet" method="post">
-                    <label for="exampleFormControlTextarea1" class="form-label">Request</label>
+                    <label for="exampleFormControlTextarea1" class="form-label"><fmt:message key = "customer.main.request_form.label" bundle = "${lang}"/></label>
                     <textarea style="height: 400px" name="user_message" class="form-control"
                               id="exampleFormControlTextarea1"
                               rows="3"></textarea>
                     <input type="hidden" name="command" value="sendRequest">
                     <div class="d-grid gap-2">
-                        <button class="btn btn-warning" type="submit">Send request</button>
+                        <button class="btn btn-warning" type="submit"><fmt:message key = "customer.main.request_form.button" bundle = "${lang}"/></button>
                     </div>
                 </form>
                 <b class="text-center text-danger ali">
@@ -162,12 +173,12 @@
                 <table class="table table-hover">
                     <thead class="thead-dark">
                     <tr class="border-dark">
-                        <th scope="col">id</th>
-                        <th scope="col">description</th>
-                        <th scope="col">price</th>
-                        <th scope="col">payment status</th>
-                        <th scope="col">complication status</th>
-                        <th scope="col">date</th>
+                        <th scope="col"><fmt:message key = "customer.main.table_title.id" bundle = "${lang}"/></th>
+                        <th scope="col"><fmt:message key = "customer.main.table_title.description" bundle = "${lang}"/></th>
+                        <th scope="col"><fmt:message key = "customer.main.table_title.price" bundle = "${lang}"/></th>
+                        <th scope="col"><fmt:message key = "customer.main.table_title.payment_status" bundle = "${lang}"/></th>
+                        <th scope="col"><fmt:message key = "customer.main.table_title.complication_status" bundle = "${lang}"/></th>
+                        <th scope="col"><fmt:message key = "customer.main.table_title.date" bundle = "${lang}"/></th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                         <th scope="col"></th>
@@ -188,13 +199,13 @@
                                            value="${request.requestID}"/>
                                     <input class="btn btn-outline-dark" type="hidden" name="command"
                                            value="deleteRequest"/>
-                                    <input class="btn btn-outline-dark" type="submit" value="Delete"/>
+                                    <input class="btn btn-outline-dark" type="submit" value="<fmt:message key = "customer.main.table_button.delete" bundle = "${lang}"/>"/>
                                 </form>
                             </td>
                             <th scope="col">
                                 <form method="post"
                                       action=${pageContext.request.contextPath}/GeneralCustomerServlet>
-                                    <input class="btn btn-outline-dark" type="submit" value="Paid"/>
+                                    <input class="btn btn-outline-dark" type="submit" value="<fmt:message key = "customer.main.table_button.paid" bundle = "${lang}"/>"/>
                                     <input class="btn btn-outline-dark" type="hidden" name="price"
                                            value="${request.price}"/>
                                     <input class="btn btn-outline-dark" type="hidden" name="payment"
@@ -207,7 +218,7 @@
                             <th scope="col">
                                 <button onclick="setID(${request.requestID});" type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
                                         data-bs-target="#feedback">
-                                    Feedback
+                                    <fmt:message key = "customer.main.table_button.feedback" bundle = "${lang}"/>
                                 </button>
                                 <!-- Modal -->
                                 <div class="modal fade" id="feedback" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -215,7 +226,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="feedbackLabel">Feedback</h5>
+                                                <h5 class="modal-title" id="feedbackLabel"><fmt:message key = "customer.main.table_button.feedback" bundle = "${lang}"/></h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
@@ -239,7 +250,7 @@
                                                                   name="feedback"></textarea>
                                                     </div>
                                                     <input class="btn btn-outline-warning my-2" type="submit"
-                                                           value="Send request"/>
+                                                           value="<fmt:message key = "customer.main.table_modal.button_send_feedback" bundle = "${lang}"/>"/>
                                                     <input  type="hidden"
                                                            name="feedbackID"
                                                            id="feedbackID"
@@ -253,7 +264,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">
-                                                    Close
+                                                    <fmt:message key = "customer.main.table_modal.close" bundle = "${lang}"/>
                                                 </button>
                                             </div>
                                         </div>
