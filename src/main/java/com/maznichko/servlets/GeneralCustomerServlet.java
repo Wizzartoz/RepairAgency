@@ -3,6 +3,7 @@ package com.maznichko.servlets;
 import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.dao.impl.UserDAOimpl;
 import com.maznichko.services.Path;
+import com.maznichko.services.Register;
 import com.maznichko.services.common.GetBank;
 import com.maznichko.services.common.Replenishment;
 import com.maznichko.services.customer.CustomerCommand;
@@ -10,6 +11,7 @@ import com.maznichko.services.customer.CustomerContainer;
 import com.maznichko.services.filter.Filterable;
 import com.maznichko.services.filter.GenerateTableRequests;
 import com.maznichko.services.filter.Pagination;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 
 @WebServlet(name = "GeneralCustomerServlet", value = "/GeneralCustomerServlet")
 public class GeneralCustomerServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(GeneralCustomerServlet.class);
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Filterable getTable = new GenerateTableRequests(new RequestDAOimpl());
@@ -42,12 +45,14 @@ public class GeneralCustomerServlet extends HttpServlet {
             if (isReplenishment) {
                 path = Path.CUSTOMER_SERVLET;
             } else {
+                log.error("replenishment is failed");
                 path = Path.ERROR;
             }
         }
         CustomerCommand command = CustomerContainer.get(request.getParameter("command"));
         if (command != null) {
             path = command.execute(request);
+            log.info("command: " + command + " is completed");
         }
         response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }

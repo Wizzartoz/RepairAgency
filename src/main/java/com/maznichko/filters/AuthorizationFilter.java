@@ -1,6 +1,8 @@
 package com.maznichko.filters;
 
 import com.maznichko.services.Path;
+import com.maznichko.servlets.MasterServlet;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;
@@ -11,12 +13,14 @@ import java.io.IOException;
 
 @WebFilter("/LoginServlet")
 public class AuthorizationFilter implements Filter {
+    private static final Logger log = Logger.getLogger(AuthorizationFilter.class);
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
+        log.info("redirect filter is working...");
         if (session.getAttribute("role") != null) {
             if (session.getAttribute("role").equals("CUSTOMER")) {
                resp.sendRedirect(Path.CUSTOMER_SERVLET);

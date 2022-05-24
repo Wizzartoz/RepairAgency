@@ -8,6 +8,7 @@ import com.maznichko.services.filter.GenerateTableRequests;
 import com.maznichko.services.filter.Pagination;
 import com.maznichko.services.master.MasterCommand;
 import com.maznichko.services.master.MasterContainer;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -16,7 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @WebServlet(name = "MasterServlet", value = "/MasterServlet")
+
 public class MasterServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(MasterServlet.class);
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Filterable filter = new GenerateTableRequests(new RequestDAOimpl());
@@ -38,6 +41,7 @@ public class MasterServlet extends HttpServlet {
         if (command != null) {
             path = command.execute(request, response);
         }
+        log.info("command: " + command + " is completed");
         response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }
 }

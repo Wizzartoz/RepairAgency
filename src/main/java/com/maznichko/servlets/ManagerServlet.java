@@ -11,6 +11,7 @@ import com.maznichko.services.common.GetBank;
 import com.maznichko.services.common.GetMasters;
 import com.maznichko.services.common.GetUsers;
 import com.maznichko.services.filter.*;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 @WebServlet(name = "ManagerServlet", value = "/ManagerServlet")
 
 public class ManagerServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(ManagerServlet.class);
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         GetBank.getBank(request);
@@ -39,6 +41,7 @@ public class ManagerServlet extends HttpServlet {
         if (command != null) {
             path = command.execute(request, response);
         }
+        log.info("command: " + command + " is completed");
         String result = request.getParameter("result");
         request.setAttribute("result", result);
         request.setAttribute("bank", request.getSession().getAttribute("bank"));
@@ -56,6 +59,7 @@ public class ManagerServlet extends HttpServlet {
             if (isReplenishment) {
                 path = Path.MANAGER_SERVLET;
             } else {
+                log.error("replenishment is failed");
                 path = Path.ERROR;
             }
         }
@@ -63,10 +67,12 @@ public class ManagerServlet extends HttpServlet {
         if (command != null) {
             path = command.execute(request, response);
         }
+        log.info("command: " + command + " is completed");
         if (request.getParameter("name") != null) {
             path = Path.MANAGER_SERVLET;
             Register register = new Register(new UserDAOimpl());
             register.register(request, "MASTER");
+            log.info("registration method was completed");
         }
         response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }

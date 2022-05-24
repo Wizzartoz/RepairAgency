@@ -3,6 +3,7 @@ package com.maznichko.servlets;
 import com.maznichko.dao.impl.UserDAOimpl;
 import com.maznichko.services.Path;
 import com.maznichko.services.Register;
+import org.apache.log4j.Logger;
 
 
 import javax.servlet.*;
@@ -12,6 +13,7 @@ import java.io.IOException;
 
 @WebServlet(name = "RegisterServlet", value = "/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(RegisterServlet.class);
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("result", request.getParameter("result"));
@@ -24,6 +26,7 @@ public class RegisterServlet extends HttpServlet {
         String path = Path.REGISTER_SERVLET;
         Register register = new Register(new UserDAOimpl());
         boolean isRegister = register.register(request, "CUSTOMER");
+        log.info("method login is completed path: " + path);
         if (isRegister) {
             path = Path.CUSTOMER_SERVLET;
         }
