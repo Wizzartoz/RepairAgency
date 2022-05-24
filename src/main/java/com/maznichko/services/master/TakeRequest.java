@@ -4,12 +4,14 @@ import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
 import com.maznichko.services.Path;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class TakeRequest implements MasterCommand {
     private final RequestDAO requestDAO;
+    private static final Logger log = Logger.getLogger(TakeRequest.class);
     public TakeRequest(RequestDAO requestDAO){
         this.requestDAO = requestDAO;
     }
@@ -28,6 +30,7 @@ public class TakeRequest implements MasterCommand {
             request = requestDAO.getData(id);
         } catch (DBException e) {
             req.setAttribute("result", e.getMessage());
+            log.error(e.getMessage() + " take request is failed");
             return Path.ERROR;
         }
         if (!request.getPaymentStatus().equals("paid")) {
@@ -47,6 +50,7 @@ public class TakeRequest implements MasterCommand {
            requestDAO.update(request);
         } catch (DBException e) {
             req.setAttribute("result", e.getMessage());
+            log.error(e.getMessage() + " take request is failed");
             return Path.ERROR;
         }
         req.setAttribute("result", "status changed successfully");

@@ -1,4 +1,4 @@
-package com.maznichko.servlets.filters;
+package com.maznichko.filters;
 
 import com.maznichko.services.Path;
 

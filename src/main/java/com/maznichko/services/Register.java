@@ -5,6 +5,7 @@ import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
 import com.maznichko.services.Path;
 import com.maznichko.services.manager.Command;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +14,11 @@ import javax.servlet.http.HttpSession;
 
 public class Register{
     private final UserDAO userDAO;
+    private static final Logger log = Logger.getLogger(Register.class);
     public Register(UserDAO userDAO){
         this.userDAO = userDAO;
     }
+
 
     /**
      * method registering new user
@@ -62,6 +65,7 @@ public class Register{
             httpSession.setAttribute("role", role);
         }
         req.setAttribute("result","user successfully registered");
+        log.info("user " + login + " was registering successful");
         return true;
     }
 }

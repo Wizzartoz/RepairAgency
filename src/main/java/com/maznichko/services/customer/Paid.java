@@ -6,6 +6,7 @@ import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.Request;
 import com.maznichko.dao.entity.User;
 import com.maznichko.services.Path;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 public class Paid implements CustomerCommand {
     private final UserDAO userDAO;
     private final RequestDAO requestDAO;
+    private static final Logger log = Logger.getLogger(Paid.class);
     public Paid(UserDAO userDAO,RequestDAO requestDAO){
         this.userDAO = userDAO;
         this.requestDAO = requestDAO;
@@ -36,6 +38,7 @@ public class Paid implements CustomerCommand {
                 user = userDAO.getUserByLogin(login);
             } catch (DBException e) {
                 req.setAttribute("result", e.getMessage());
+                log.error(e.getMessage() + " paid is failed");
                 return Path.ERROR;
             }
             if (user.getBank() >= price) {
@@ -48,6 +51,7 @@ public class Paid implements CustomerCommand {
                 }
             } else {
                 req.setAttribute("result", "not enough money");
+                log.error("paid is failed: not enough money");
                 return Path.ERROR;
             }
             Request request;
@@ -55,6 +59,7 @@ public class Paid implements CustomerCommand {
                 request = requestDAO.getData(id);
             } catch (DBException e) {
                 req.setAttribute("result", e.getMessage());
+                log.error(e.getMessage() + " paid is failed");
                 return Path.ERROR;
             }
             request.setPaymentStatus("paid");

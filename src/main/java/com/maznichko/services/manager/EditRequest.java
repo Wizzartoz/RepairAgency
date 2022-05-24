@@ -6,6 +6,7 @@ import com.maznichko.dao.entity.Request;
 import com.maznichko.dao.entity.User;
 import com.maznichko.services.Path;
 import com.maznichko.services.common.GetMasters;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class EditRequest implements Command {
     private final RequestDAO requestDAO;
+    private static final Logger log = Logger.getLogger(EditRequest.class);
 
     public EditRequest(RequestDAO requestDAO) {
         this.requestDAO = requestDAO;
@@ -38,6 +40,7 @@ public class EditRequest implements Command {
             request = requestDAO.getData(id);
         } catch (DBException e) {
             req.setAttribute("result", e);
+            log.error(e.getMessage() + " edit request is failed");
             return Path.ERROR;
         }
         if (req.getParameter("cStatus").equals("refuse")) {
@@ -106,6 +109,7 @@ public class EditRequest implements Command {
                 requestDAO.insertRequestInUserRequest(masterLogin, id);
             } catch (DBException e) {
                 req.setAttribute("result", e);
+                log.error(e.getMessage() + " edit request is failed");
                 return Path.ERROR;
             }
         }
@@ -114,6 +118,7 @@ public class EditRequest implements Command {
             requestDAO.update(request);
         } catch (DBException e) {
             req.setAttribute("result", e);
+            log.error(e.getMessage() + " edit request is failed");
             return Path.ERROR;
         }
         return Path.MANAGER_SERVLET;

@@ -4,12 +4,14 @@ package com.maznichko.dao.impl;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOimpl extends UserDAO {
+    private static final Logger log = Logger.getLogger(UserDAOimpl.class);
 
     private User createUser(ResultSet resultSet) throws DBException {
         User user = new User();
@@ -23,8 +25,10 @@ public class UserDAOimpl extends UserDAO {
             user.setBank(resultSet.getInt("bank"));
             user.setName(resultSet.getString("name"));
             user.setSurname(resultSet.getString("surname"));
+            log.info("create user was successfully ID: " + resultSet.getInt("id_user"));
         } catch (SQLException e) {
-            throw new DBException("SQl Exception", e);
+            log.error(e.getMessage() + " failed to create user");
+            throw new DBException("SQl Exception: failed to create user", e);
         }
         return user;
     }
@@ -43,8 +47,10 @@ public class UserDAOimpl extends UserDAO {
                 User user = createUser(resultSet);
                 users.add(user);
             }
+            log.info("find all users was successfully");
         } catch (SQLException e) {
-            throw new DBException("SQl Exception", e);
+            log.error(e.getMessage() + " failed to find all users");
+            throw new DBException("SQl Exception: failed to find all users", e);
         } finally {
             dao.close(connection);
         }
@@ -63,8 +69,10 @@ public class UserDAOimpl extends UserDAO {
             ResultSet rs = prGet.executeQuery();
             rs.next();
             user = createUser(rs);
+            log.info("get user by id was successfully ID: " + id);
         } catch (SQLException e) {
-            throw new DBException("SQl Exception", e);
+            log.error(e.getMessage() + " failed to get user by id");
+            throw new DBException("SQl Exception: failed to get user by id", e);
         } finally {
             dao.close(prGet);
             dao.close(connection);
@@ -93,11 +101,13 @@ public class UserDAOimpl extends UserDAO {
             if (updateResult == 0) {
                 return false;
             }
+            log.info("update user was successfully ID: " + data.getUserID());
             con.commit();
 
         } catch (SQLException e) {
             dao.rollback(con);
-            throw new DBException("SQl Exception", e);
+            log.error(e.getMessage() + " failed to update user");
+            throw new DBException("SQl Exception: failed to update user", e);
         } finally {
             dao.autocommit(con, true);
             dao.close(pstmt);
@@ -118,8 +128,10 @@ public class UserDAOimpl extends UserDAO {
             if (delResult == 0) {
                 return false;
             }
+            log.info("delete user was successfully login: " + data.getLogin());
         } catch (SQLException e) {
-            throw new DBException("SQl Exception", e);
+            log.error(e.getMessage() + " failed to delete user");
+            throw new DBException("SQl Exception: failed to delete user", e);
         } finally {
             dao.close(prDelete);
             dao.close(connection);
@@ -149,6 +161,7 @@ public class UserDAOimpl extends UserDAO {
                 rs = prInsert.getGeneratedKeys();
                 if (rs.next()) {
                     data.setUserID(rs.getInt(1));
+                    log.info("insert user was successfully login: " + data.getLogin());
                     connection.commit();
                 }
             } else {
@@ -157,7 +170,8 @@ public class UserDAOimpl extends UserDAO {
             }
         } catch (SQLException e) {
             dao.rollback(connection);
-            throw new DBException("SQl Exception", e);
+            log.error(e.getMessage() + " failed to insert user");
+            throw new DBException("SQl Exception: failed to insert user", e);
         } finally {
             dao.autocommit(connection, true);
             dao.close(prInsert);
@@ -178,8 +192,10 @@ public class UserDAOimpl extends UserDAO {
             ResultSet rs = prGet.executeQuery();
             rs.next();
             user = createUser(rs);
+            log.info("get request by loin was successfully login: " + login);
         } catch (SQLException e) {
-            throw new DBException("SQl Exception", e);
+            log.error(e.getMessage() + " failed to get user by login");
+            throw new DBException("SQl Exception: failed to get user by login", e);
         } finally {
             dao.close(prGet);
             dao.close(connection);

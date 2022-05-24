@@ -1,5 +1,6 @@
 package com.maznichko.dao;
 
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +10,8 @@ import java.sql.SQLException;
  * Concrete realisation connect to Postgres DB
  */
 public class PostgresDBManager extends ManagerDB {
+
+    private static final Logger log = Logger.getLogger(PostgresDBManager.class);
     private static PostgresDBManager instance = null;
 
     //Singlton
@@ -32,6 +35,7 @@ public class PostgresDBManager extends ManagerDB {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
+            log.error(e.getMessage() + " postgresql driver didn't find");
             e.printStackTrace();
         }
         Connection con;
@@ -40,8 +44,10 @@ public class PostgresDBManager extends ManagerDB {
                     CONNECTION_URL);
             con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
         } catch (SQLException e) {
+            log.error(e.getMessage() + " connection to postgresql is failed");
             throw new RuntimeException(e);
         }
+        log.info("connection to DB successful");
         return con;
     }
 

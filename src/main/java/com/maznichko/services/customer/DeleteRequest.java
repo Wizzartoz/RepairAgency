@@ -4,11 +4,13 @@ import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
 import com.maznichko.services.Path;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class DeleteRequest implements CustomerCommand {
     private final RequestDAO requestDAO;
+    private static final Logger log = Logger.getLogger(DeleteRequest.class);
     public DeleteRequest(RequestDAO requestDAO){
         this.requestDAO = requestDAO;
 
@@ -30,6 +32,7 @@ public class DeleteRequest implements CustomerCommand {
             }
             requestDAO.delete(request);
         } catch (DBException e) {
+            log.error(e.getMessage() + " delete request is failed");
             req.setAttribute("result",null);
             return Path.CUSTOMER_SERVLET;
         }

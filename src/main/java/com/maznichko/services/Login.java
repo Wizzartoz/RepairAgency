@@ -3,15 +3,14 @@ package com.maznichko.services;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
-import com.maznichko.services.Path;
-import com.maznichko.services.manager.Command;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class Login {
     private final UserDAO userDAO;
+    private static final Logger log = Logger.getLogger(Login.class);
 
     public Login(UserDAO userDAO) {
         this.userDAO = userDAO;
@@ -40,6 +39,7 @@ public class Login {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("login", login);
             httpSession.setAttribute("role", user.getRole());
+            log.info("user " + login + " logged in successfully");
             return Path.LOGIN_SERVLET;
         }
         req.setAttribute("result", "Wrong password");

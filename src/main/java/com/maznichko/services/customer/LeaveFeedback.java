@@ -6,6 +6,7 @@ import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Feedback;
 import com.maznichko.dao.entity.Request;
 import com.maznichko.services.Path;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 public class LeaveFeedback implements CustomerCommand {
     private final FeedbackDAO feedbackDAO;
     private final RequestDAO requestDAO;
+    private static final Logger log = Logger.getLogger(LeaveFeedback.class);
 
     public LeaveFeedback(FeedbackDAO feedbackDAO, RequestDAO requestDAO) {
         this.feedbackDAO = feedbackDAO;
@@ -44,6 +46,7 @@ public class LeaveFeedback implements CustomerCommand {
         try {
             id = Long.parseLong(req.getParameter("feedbackID"));
         } catch (NumberFormatException e) {
+            log.error(e.getMessage() + " leave feedback is failed");
             req.setAttribute("result", e.getMessage());
             return Path.ERROR;
         }
@@ -53,6 +56,7 @@ public class LeaveFeedback implements CustomerCommand {
             request = requestDAO.getData(id);
         } catch (DBException e) {
             req.setAttribute("result", e.getMessage());
+            log.error(e.getMessage() + " leave feedback is failed");
             return Path.ERROR;
         }
         if (!request.getComplicationStatus().equals("done")) {
@@ -75,6 +79,7 @@ public class LeaveFeedback implements CustomerCommand {
             feedbackList = feedbackDAO.findAll();
         } catch (DBException e) {
             req.setAttribute("result", e.getMessage());
+            log.error(e.getMessage() + " leave feedback is failed");
             return Path.ERROR;
         }
         if (feedbackList.contains(feedback)) {
@@ -86,6 +91,7 @@ public class LeaveFeedback implements CustomerCommand {
             feedbackDAO.insert(feedback);
         } catch (DBException e) {
             req.setAttribute("result", "Can't leave a comment");
+            log.error(e.getMessage() + " leave feedback is failed");
             return Path.ERROR;
         }
         req.setAttribute("result", "comment successfully posted");

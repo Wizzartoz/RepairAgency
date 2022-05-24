@@ -2,6 +2,7 @@ package com.maznichko.dao.impl;
 
 import com.maznichko.dao.*;
 import com.maznichko.dao.entity.Feedback;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackDAOimpl extends FeedbackDAO {
+    private static final Logger log = Logger.getLogger(FeedbackDAOimpl.class);
 
     private Feedback createFeedback(ResultSet resultSet) throws DBException {
         Feedback feedback = new Feedback();
@@ -21,7 +23,9 @@ public class FeedbackDAOimpl extends FeedbackDAO {
             feedback.setDate(resultSet.getTimestamp("date"));
             feedback.setRequestID(resultSet.getInt("id_request"));
             feedback.setMasterLogin(resultSet.getString("master_login"));
+            log.info("feedback was created successfully ID:" + feedback.getFeedbackID());
         } catch (SQLException e) {
+            log.error(e.getMessage() + " cannot create feedback");
             throw new DBException("SQL Exception: cannot create feedback", e);
         }
         return feedback;
@@ -41,7 +45,9 @@ public class FeedbackDAOimpl extends FeedbackDAO {
                 Feedback feedback = createFeedback(resultSet);
                 feedbacks.add(feedback);
             }
+            log.info("All feedbacks was founded successfully");
         } catch (SQLException e) {
+            log.error(e.getMessage() + " cannot find all feedback");
             throw new DBException("SQL Exception: cannot find all feedback", e);
         } finally {
             dao.close(connection);
@@ -61,7 +67,9 @@ public class FeedbackDAOimpl extends FeedbackDAO {
             ResultSet rs = prGet.executeQuery();
             rs.next();
             feedback = createFeedback(rs);
+            log.info("get feedback was successfully ID:" + feedback.getFeedbackID());
         } catch (SQLException e) {
+            log.error(e.getMessage() + " cannot get feedback");
             throw new DBException("SQL Exception: cannot get feedback", e);
         } finally {
             dao.close(prGet);
@@ -87,7 +95,9 @@ public class FeedbackDAOimpl extends FeedbackDAO {
             if (delResult == 0) {
                 return false;
             }
+            log.info("delete feedback was successfully ID:" + data.getFeedbackID());
         } catch (SQLException e) {
+            log.error(e.getMessage() + " cannot delete feedback");
             throw new DBException("SQL Exception: cannot delete feedback", e);
         } finally {
             dao.close(prDelete);
@@ -114,7 +124,9 @@ public class FeedbackDAOimpl extends FeedbackDAO {
                 return false;
             }
             connection.commit();
+            log.info("insert feedback was successfully");
         } catch (SQLException e) {
+            log.error(e.getMessage() + " cannot insert feedback");
             dao.rollback(connection);
             throw new DBException("SQL Exception: cannot insert feedback", e);
         } finally {

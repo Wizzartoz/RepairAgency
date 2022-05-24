@@ -3,12 +3,14 @@ package com.maznichko.services.common;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
+import org.apache.log4j.Logger;
 
 
 import javax.servlet.http.HttpServletRequest;
 
 
 public class Replenishment {
+    private static final Logger log = Logger.getLogger(Replenishment.class);
     private final UserDAO userDAO;
 
     public Replenishment(UserDAO userDAO) {
@@ -37,6 +39,7 @@ public class Replenishment {
         try {
             user = userDAO.getUserByLogin(login);
         } catch (DBException e) {
+            log.error(e.getMessage() + " replenishment wa failed");
             req.setAttribute("result", e.getMessage());
             return false;
         }
@@ -48,10 +51,12 @@ public class Replenishment {
                 req.setAttribute("result", "payment was successful");
                 return true;
             } catch (DBException e) {
+                log.error(e.getMessage() + " replenishment wa failed");
                 req.setAttribute("result", e.getMessage());
                 return false;
             }
         }
+        log.info("replenishment was successfully");
         return false;
     }
 }

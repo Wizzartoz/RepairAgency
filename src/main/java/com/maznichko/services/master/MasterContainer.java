@@ -1,12 +1,8 @@
 package com.maznichko.services.master;
 
-import com.maznichko.dao.FeedbackDAO;
 import com.maznichko.dao.RequestDAO;
-import com.maznichko.dao.UserDAO;
-import com.maznichko.dao.impl.FeedbackDAOimpl;
 import com.maznichko.dao.impl.RequestDAOimpl;
-import com.maznichko.dao.impl.UserDAOimpl;
-import com.maznichko.services.manager.*;
+import org.apache.log4j.Logger;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -14,12 +10,15 @@ import java.util.TreeMap;
 public class MasterContainer {
     private static final Map<String, MasterCommand> commands = new TreeMap<>();
     private static final RequestDAO REQUEST_DAO = new RequestDAOimpl();
+    private static final Logger log = Logger.getLogger(MasterContainer.class);
 
 
 
     static {
         commands.put("doneRequest", new DoneRequest(REQUEST_DAO));
         commands.put("takeRequest", new TakeRequest(REQUEST_DAO));
+        log.info("master container is set up ");
+
     }
     /**
      * This method by parameter return you object
