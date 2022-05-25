@@ -26,10 +26,6 @@ public class MainFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         String destination = req.getServletPath();
-        String locale = req.getParameter("locale");
-        if (locale != null) {
-            session.setAttribute("locale", locale);
-        }
         if (req.getParameter("logout") != null) {
             session.removeAttribute("role");
             session.removeAttribute("login");

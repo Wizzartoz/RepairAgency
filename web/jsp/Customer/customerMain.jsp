@@ -76,10 +76,24 @@
                         <div class="modal-body">
                             <form action="GeneralCustomerServlet" method="post">
                                 <label><fmt:message key = "customer.main.modal_body.money" bundle = "${lang}"/>:
-                                    <input type="number" name="money"><br/>
+                                    <input oninput="checkSum()" id="money" type="number" name="money"><br/>
                                 </label>
-                                <input type="hidden" name="command" value="replenishment">
-                                <button type="submit" class="btn btn-outline-warning"><fmt:message key = "customer.main.modal_button.replenishment" bundle = "${lang}"/></button>
+                                <input  type="hidden" name="command" value="replenishment">
+                                <button disabled id="payButton" type="submit" class="btn btn-outline-warning"><fmt:message key = "customer.main.modal_button.replenishment" bundle = "${lang}"/></button>
+                                <script>
+                                    function checkSum() {
+                                        let x = document.getElementById("money").value;
+                                        if (x <= 0) {
+                                            document.getElementById("money").style.color = "inherit";
+                                            document.getElementById("money").style.backgroundColor = "rgba(250,233,233,0.51)";
+                                            document.getElementById("payButton").disabled = true;
+                                        } else {
+                                            document.getElementById("money").style.color = "inherit";
+                                            document.getElementById("money").style.backgroundColor = "rgba(207,243,210,0.5)";
+                                            document.getElementById("payButton").disabled = false;
+                                        }
+                                    }
+                                </script>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -150,13 +164,27 @@
                 </div>
                 <form action="GeneralCustomerServlet" method="post">
                     <label for="exampleFormControlTextarea1" class="form-label"><fmt:message key = "customer.main.request_form.label" bundle = "${lang}"/></label>
-                    <textarea style="height: 400px" name="user_message" class="form-control"
+                    <textarea oninput="changeTextArea()"   style="height: 400px;user-select: none" name="user_message" class="form-control"
                               id="exampleFormControlTextarea1"
                               rows="3"></textarea>
                     <input type="hidden" name="command" value="sendRequest">
                     <div class="d-grid gap-2">
-                        <button class="btn btn-warning" type="submit"><fmt:message key = "customer.main.request_form.button" bundle = "${lang}"/></button>
+                        <button disabled id="requestButton" class="btn btn-warning" type="submit"><fmt:message key = "customer.main.request_form.button" bundle = "${lang}"/></button>
                     </div>
+                    <script>
+                        function changeTextArea() {
+                            let x = document.getElementById("exampleFormControlTextarea1").value;
+                            if (x.length < 5 || x.length > 50) {
+                                document.getElementById("exampleFormControlTextarea1").style.color = "inherit";
+                                document.getElementById("exampleFormControlTextarea1").style.backgroundColor = "rgba(250,233,233,0.51)";
+                                document.getElementById("requestButton").disabled = true;
+                            } else {
+                                document.getElementById("exampleFormControlTextarea1").style.color = "inherit";
+                                document.getElementById("exampleFormControlTextarea1").style.backgroundColor = "rgba(207,243,210,0.5)";
+                                document.getElementById("requestButton").disabled = false;
+                            }
+                        }
+                    </script>
                 </form>
                 <b class="text-center text-danger ali">
                     <c:if test="${!requestScope.result.equals('null')}">
@@ -246,10 +274,10 @@
                                                             for="1">☆</label>
                                                     </div>
                                                     <div>
-                                                        <textarea style="height: 200px;width: 450px" id="msg"
+                                                        <textarea oninput="checkFeedback();" style="height: 200px;width: 450px" id="msg"
                                                                   name="feedback"></textarea>
                                                     </div>
-                                                    <input class="btn btn-outline-warning my-2" type="submit"
+                                                    <input disabled id="feedbackButton" class="btn btn-outline-warning my-2" type="submit"
                                                            value="<fmt:message key = "customer.main.table_modal.button_send_feedback" bundle = "${lang}"/>"/>
                                                     <input  type="hidden"
                                                            name="feedbackID"
@@ -260,6 +288,20 @@
                                                     value="2"/>
                                                     <input  type="hidden" name="command"
                                                            value="leaveFeedback"/>
+                                                    <script>
+                                                        function checkFeedback() {
+                                                            let x = document.getElementById("msg").value;
+                                                            if (x.length < 4 || x.length > 20) {
+                                                                document.getElementById("msg").style.color = "inherit";
+                                                                document.getElementById("msg").style.backgroundColor = "rgba(250,233,233,0.51)";
+                                                                document.getElementById("feedbackButton").disabled = true;
+                                                            } else {
+                                                                document.getElementById("msg").style.color = "inherit";
+                                                                document.getElementById("msg").style.backgroundColor = "rgba(207,243,210,0.5)";
+                                                                document.getElementById("feedbackButton").disabled = false;
+                                                            }
+                                                        }
+                                                    </script>
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
