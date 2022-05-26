@@ -2,10 +2,10 @@ package com.maznichko.servlets;
 
 import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.services.*;
-import com.maznichko.services.filter.Filterable;
+import com.maznichko.services.filtration.Filterable;
 import com.maznichko.services.common.GetBank;
-import com.maznichko.services.filter.GenerateTableRequests;
-import com.maznichko.services.filter.Pagination;
+import com.maznichko.services.filtration.GenerateTableRequests;
+import com.maznichko.services.filtration.Pagination;
 import com.maznichko.services.master.MasterCommand;
 import com.maznichko.services.master.MasterContainer;
 import org.apache.log4j.Logger;

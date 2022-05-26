@@ -3,14 +3,13 @@ package com.maznichko.servlets;
 import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.dao.impl.UserDAOimpl;
 import com.maznichko.services.Path;
-import com.maznichko.services.Register;
 import com.maznichko.services.common.GetBank;
 import com.maznichko.services.common.Replenishment;
 import com.maznichko.services.customer.CustomerCommand;
 import com.maznichko.services.customer.CustomerContainer;
-import com.maznichko.services.filter.Filterable;
-import com.maznichko.services.filter.GenerateTableRequests;
-import com.maznichko.services.filter.Pagination;
+import com.maznichko.services.filtration.Filterable;
+import com.maznichko.services.filtration.GenerateTableRequests;
+import com.maznichko.services.filtration.Pagination;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;

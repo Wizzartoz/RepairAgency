@@ -10,7 +10,7 @@ import com.maznichko.services.manager.CommandContainer;
 import com.maznichko.services.common.GetBank;
 import com.maznichko.services.common.GetMasters;
 import com.maznichko.services.common.GetUsers;
-import com.maznichko.services.filter.*;
+import com.maznichko.services.filtration.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;

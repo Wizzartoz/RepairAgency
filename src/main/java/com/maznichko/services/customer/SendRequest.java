@@ -26,6 +26,7 @@ public class SendRequest implements CustomerCommand {
         HttpSession httpSession = req.getSession();
         String login = (String) httpSession.getAttribute("login");
         String message = req.getParameter("user_message");
+        System.out.println(message);
         if (message.isEmpty()){
             req.setAttribute("result", "you sent an empty field");
             return Path.CUSTOMER_SERVLET;

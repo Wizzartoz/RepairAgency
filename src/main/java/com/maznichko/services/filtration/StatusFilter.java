@@ -1,4 +1,4 @@
-package com.maznichko.services.filter;
+package com.maznichko.services.filtration;
 
 import com.maznichko.dao.entity.Request;
 import javax.servlet.http.HttpServletRequest;

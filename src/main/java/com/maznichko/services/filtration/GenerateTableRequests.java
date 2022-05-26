@@ -1,9 +1,8 @@
-package com.maznichko.services.filter;
+package com.maznichko.services.filtration;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
-import com.maznichko.services.customer.SendRequest;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;

@@ -3,7 +3,6 @@ package com.maznichko.services.manager;
 
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.impl.RequestDAOimpl;
-import com.maznichko.services.filter.GenerateTableRequests;
 import org.apache.log4j.Logger;
 
 
