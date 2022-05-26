@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS public."feedback"
 );
 
 INSERT INTO "user"
-VALUES (DEFAULT, 'user3', 'Wizzartoz', 'misha2@mail.ru', '+380958316826', 'MANAGER', 0, 'misha', 'maznichko');
+VALUES (DEFAULT, 'user3', 'e784645f8b2796ea0f3501cd2553b8e5', 'misha2@mail.ru', '+380958316826', 'MANAGER', 0, 'misha', 'maznichko');
 
 
 

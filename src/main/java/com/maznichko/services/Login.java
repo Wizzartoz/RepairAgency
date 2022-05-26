@@ -1,5 +1,6 @@
 package com.maznichko.services;
 
+import com.maznichko.MD5;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
@@ -35,7 +36,7 @@ public class Login {
             req.setAttribute("result", "user didn't exist");
             return Path.LOGIN_SERVLET;
         }
-        if (user.getPassword().equals(password)) {
+        if (user.getPassword().equals(MD5.getMd5(password))) {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("login", login);
             httpSession.setAttribute("role", user.getRole());

@@ -1,5 +1,6 @@
 package com.maznichko.services;
 
+import com.maznichko.MD5;
 import com.maznichko.dao.DBException;;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
@@ -45,10 +46,11 @@ public class Register{
             req.setAttribute("result", "Email is empty");
             return false;
         }
+
         User user = new User();
         user.setRole(role);
         user.setLogin(login);
-        user.setPassword(password);
+        user.setPassword(MD5.getMd5(password));
         user.setName(name);
         user.setSurname(surname);
         user.setPhone(phone);
