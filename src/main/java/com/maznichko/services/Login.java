@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class Login {
     private final UserDAO userDAO;
@@ -36,7 +37,17 @@ public class Login {
             req.setAttribute("result", "user didn't exist");
             return Path.LOGIN_SERVLET;
         }
-        if (user.getPassword().equals(MD5.getMd5(password))) {
+        // get reCAPTCHA request param
+        String gRecaptchaResponse = req
+                .getParameter("g-recaptcha-response");
+        boolean verify;
+        try {
+            verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (user.getPassword().equals(MD5.getMd5(password)) && verify) {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("login", login);
             httpSession.setAttribute("role", user.getRole());

@@ -4,13 +4,11 @@ import com.maznichko.MD5;
 import com.maznichko.dao.DBException;;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
-import com.maznichko.services.Path;
-import com.maznichko.services.manager.Command;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 
 public class Register{
@@ -65,6 +63,19 @@ public class Register{
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("login", login);
             httpSession.setAttribute("role", role);
+        }
+        // get reCAPTCHA request param
+        String gRecaptchaResponse = req
+                .getParameter("g-recaptcha-response");
+        boolean verify;
+        try {
+            verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (!verify){
+            req.setAttribute("result", "captcha is failed");
+            return false;
         }
         req.setAttribute("result","user successfully registered");
         log.info("user " + login + " was registering successful");

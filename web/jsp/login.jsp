@@ -36,6 +36,13 @@
                     <input type="text" oninput="changeLogin();" id="login" placeholder="<fmt:message key = "register.label.login" bundle = "${lang}"/>" name="login">
                     <input oninput="changePassword();" id="password" type="password" placeholder="<fmt:message key = "register.label.password" bundle = "${lang}"/>"  name="pass">
                     <input  type="hidden" name="command" value="login"/>
+                    <div class="g-recaptcha" data-sitekey="6LcZQCAgAAAAAObAKxFcknf8_H3aF40wqxZtQ3l0"></div>
+
+                    <!-- элемент для вывода ошибок -->
+                    <div class="text-danger" id="recaptchaError"></div>
+
+                    <!-- js-скрипт гугл капчи -->
+                    <script src='https://www.google.com/recaptcha/api.js'></script>
                     <button onmousemove="checkButton()" id="button" disabled class="btn-login"><fmt:message key = "main.header.button.login" bundle = "${lang}"/></button>
                 </form>
                 <script>

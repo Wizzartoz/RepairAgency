@@ -39,6 +39,13 @@
                     <input oninput="changeEmail()" id="email" type="text" placeholder="<fmt:message key = "register.label.email" bundle = "${lang}"/>"  name="email">
                     <input oninput="changeNumber()" id="phone" type="text" placeholder="<fmt:message key = "register.label.phone" bundle = "${lang}"/>" name="phone">
                     <input type="hidden" name="command" value="register"/>
+                    <div class="g-recaptcha" data-sitekey="6LcZQCAgAAAAAObAKxFcknf8_H3aF40wqxZtQ3l0"></div>
+
+                    <!-- элемент для вывода ошибок -->
+                    <div class="text-danger" id="recaptchaError"></div>
+
+                    <!-- js-скрипт гугл капчи -->
+                    <script src='https://www.google.com/recaptcha/api.js'></script>
                     <button disabled onmousemove="checkButton()" id="button" class="btn-login"><fmt:message key = "register.button.register" bundle = "${lang}"/></button>
                     <script>
                         function changeName() {
