@@ -1,5 +1,6 @@
 package com.maznichko.services.customer;
 
+import com.maznichko.SendEmail;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;

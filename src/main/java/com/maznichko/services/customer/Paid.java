@@ -52,7 +52,7 @@ public class Paid implements CustomerCommand {
             } else {
                 req.setAttribute("result", "not enough money");
                 log.error("paid is failed: not enough money");
-                return Path.ERROR;
+                return Path.CUSTOMER_SERVLET;
             }
             Request request;
             try {

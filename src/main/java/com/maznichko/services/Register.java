@@ -67,15 +67,17 @@ public class Register{
         // get reCAPTCHA request param
         String gRecaptchaResponse = req
                 .getParameter("g-recaptcha-response");
-        boolean verify;
-        try {
-            verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        if (!verify){
-            req.setAttribute("result", "captcha is failed");
-            return false;
+        if (gRecaptchaResponse != null){
+            boolean verify;
+            try {
+                verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if (!verify){
+                req.setAttribute("result","captcha is failed");
+                return false;
+            }
         }
         req.setAttribute("result","user successfully registered");
         log.info("user " + login + " was registering successful");
