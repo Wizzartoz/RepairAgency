@@ -28,6 +28,7 @@ public class Paid implements CustomerCommand {
     @Override
     public String execute(HttpServletRequest req) {
         HttpSession httpSession = req.getSession();
+        System.out.println(httpSession.getAttribute("login"));
         String login = (String) httpSession.getAttribute("login");
         float price = Float.parseFloat(req.getParameter("price"));
         long id = Long.parseLong(req.getParameter("paymentID"));

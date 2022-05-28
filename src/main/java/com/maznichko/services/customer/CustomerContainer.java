@@ -25,7 +25,7 @@ public class CustomerContainer {
         commands.put("leaveFeedback", new LeaveFeedback(FEEDBACK_DAO,REQUEST_DAO));
         commands.put("paid", new Paid(USER_DAO,REQUEST_DAO));
         commands.put("sendRequest", new SendRequest(REQUEST_DAO));
-        log.info("customer container is set up ");
+        log.info("customer container is set up");
     }
 
     /**

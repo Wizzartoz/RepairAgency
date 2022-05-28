@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 public class DeleteRequest implements CustomerCommand {
     private final RequestDAO requestDAO;
     private static final Logger log = Logger.getLogger(DeleteRequest.class);
-    public DeleteRequest(RequestDAO requestDAO){
+
+    public DeleteRequest(RequestDAO requestDAO) {
         this.requestDAO = requestDAO;
 
     }
 
     /**
      * Delete request from DB
+     *
      * @param req - request who we are getting
      * @return - path of servlet
      */
@@ -26,17 +28,24 @@ public class DeleteRequest implements CustomerCommand {
         long id = Long.parseLong(req.getParameter("id"));
         try {
             Request request = requestDAO.getData(id);
-            if (!request.getComplicationStatus().equals("under consideration") || request.getPaymentStatus().equals("paid")){
-                req.setAttribute("result","you cannot delete request");
+            if (checkPermission(request)) {
+                req.setAttribute("result", "you cannot delete request");
                 return Path.CUSTOMER_SERVLET;
             }
             requestDAO.delete(request);
         } catch (DBException e) {
             log.error(e.getMessage() + " delete request is failed");
-            req.setAttribute("result",null);
-            return Path.CUSTOMER_SERVLET;
+            return Path.ERROR;
         }
-        req.setAttribute("result","deletion successful");
+        req.setAttribute("result", "deletion successful");
         return Path.CUSTOMER_SERVLET;
+    }
+
+    private boolean checkPermission(Request request) {
+        String compStatus = request.getComplicationStatus();
+        String paymentStatus = request.getPaymentStatus();
+        if (!compStatus.equals("under consideration")) return true;
+        return paymentStatus.equals("paid");
+
     }
 }

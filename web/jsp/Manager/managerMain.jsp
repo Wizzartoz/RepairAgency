@@ -131,6 +131,10 @@
                         data-bs-target="#registerModal">
                     <fmt:message key="register.button.register_master" bundle="${lang}"/>
                 </button>
+                <form action="ManagerReportServlet" method="get">
+                <button type="submit" class="btn btn-dark">Report</button>
+                </form>
+
 
                 <!-- Modal -->
                 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel"

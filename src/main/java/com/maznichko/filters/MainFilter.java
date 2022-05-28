@@ -14,7 +14,8 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {"/controller"}, servletNames = {
         "GeneralCustomerServlet",
         "ManagerServlet",
-        "MasterServlet"
+        "MasterServlet",
+        "ManagerReportServlet"
 })
 public class MainFilter implements Filter {
     private static final Logger log = Logger.getLogger(MainFilter.class);
@@ -37,7 +38,7 @@ public class MainFilter implements Filter {
             } else {
                 chain.doFilter(request, response);
             }
-        } else if (destination.equals(Path.MANAGER_SERVLET)) {
+        } else if (destination.equals(Path.MANAGER_SERVLET) || destination.equals(Path.REPORT_SERVLET)) {
             if (!session.getAttribute("role").equals("MANAGER")) {
                 resp.sendRedirect(Path.ERROR);
             } else {
