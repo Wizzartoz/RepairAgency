@@ -1,6 +1,7 @@
 package com.maznichko.servlets;
 
 
+import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.dao.impl.UserDAOimpl;
 import com.maznichko.services.*;
@@ -24,18 +25,29 @@ import java.util.ArrayList;
 
 public class ManagerServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(ManagerServlet.class);
+    private Filterable filter;
+    private Replenishment replenishment;
+    private Register register;
+
+    @Override
+    public void init() throws ServletException {
+        UserDAO userDAO = new UserDAOimpl();
+        filter = new GenerateTableRequests(new RequestDAOimpl());
+        filter.linkWith(new StatusFilter())
+                .linkWith(new PaymentFilter())
+                .linkWith(new MasterFilter())
+                .linkWith(new Sort())
+                .linkWith(new Pagination());
+        replenishment = new Replenishment(userDAO);
+        register = new Register(userDAO);
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         GetBank.getBank(request);
         GetMasters.findMasters(request);
         GetUsers.execute(request, response);
         String path = Path.MANAGER_JSP;
-        Filterable filter = new GenerateTableRequests(new RequestDAOimpl());
-        filter.linkWith(new StatusFilter())
-                .linkWith(new PaymentFilter())
-                .linkWith(new MasterFilter())
-                .linkWith(new Sort())
-                .linkWith(new Pagination());
         filter.action(new ArrayList<>(), request);
         Command command = CommandContainer.get(request.getParameter("command"));
         if (command != null) {
@@ -55,7 +67,7 @@ public class ManagerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = Path.MANAGER_JSP;
         if (request.getParameter("login") != null) {
-            boolean isReplenishment = new Replenishment(new UserDAOimpl()).replenishment(request);
+            boolean isReplenishment = replenishment.replenishment(request);
             if (isReplenishment) {
                 path = Path.MANAGER_SERVLET;
             } else {
@@ -70,7 +82,6 @@ public class ManagerServlet extends HttpServlet {
         log.info("command: " + command + " is completed");
         if (request.getParameter("name") != null) {
             path = Path.MANAGER_SERVLET;
-            Register register = new Register(new UserDAOimpl());
             register.register(request, "MASTER");
             log.info("registration method was completed");
         }

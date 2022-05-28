@@ -19,11 +19,17 @@ import java.util.ArrayList;
 @WebServlet(name = "MasterServlet", value = "/MasterServlet")
 
 public class MasterServlet extends HttpServlet {
+    private Filterable filter;
     private static final Logger log = Logger.getLogger(MasterServlet.class);
+
+    @Override
+    public void init() throws ServletException {
+        filter = new GenerateTableRequests(new RequestDAOimpl());
+        filter.linkWith(new Pagination());
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Filterable filter = new GenerateTableRequests(new RequestDAOimpl());
-        filter.linkWith(new Pagination());
         filter.action(new ArrayList<>(), request);
         GetBank.getBank(request);
         String result = request.getParameter("result");

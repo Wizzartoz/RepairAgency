@@ -14,6 +14,13 @@ import java.io.IOException;
 @WebServlet(name = "RegisterServlet", value = "/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(RegisterServlet.class);
+    private Register register;
+
+    @Override
+    public void init() throws ServletException {
+        register = new Register(new UserDAOimpl());
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("result", request.getParameter("result"));
@@ -24,7 +31,6 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = Path.REGISTER_SERVLET;
-        Register register = new Register(new UserDAOimpl());
         boolean isRegister = register.register(request, "CUSTOMER");
         log.info("method login is completed path: " + path);
         if (isRegister) {

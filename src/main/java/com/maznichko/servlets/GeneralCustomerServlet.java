@@ -21,11 +21,20 @@ import java.util.ArrayList;
 
 @WebServlet(name = "GeneralCustomerServlet", value = "/GeneralCustomerServlet")
 public class GeneralCustomerServlet extends HttpServlet {
+    private Filterable getTable;
+    private Replenishment replenishment;
+
+    @Override
+    public void init() throws ServletException {
+        getTable = new GenerateTableRequests(new RequestDAOimpl());
+        getTable.linkWith(new Pagination());
+        replenishment = new Replenishment(new UserDAOimpl());
+    }
+
     private static final Logger log = Logger.getLogger(GeneralCustomerServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Filterable getTable = new GenerateTableRequests(new RequestDAOimpl());
-        getTable.linkWith(new Pagination());
         getTable.action(new ArrayList<>(), request);
         GetBank.getBank(request);
         String result = request.getParameter("result");
@@ -40,7 +49,7 @@ public class GeneralCustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = Path.CUSTOMER_JSP;
         if (request.getParameter("money") != null) {
-            boolean isReplenishment = new Replenishment(new UserDAOimpl()).replenishment(request);
+            boolean isReplenishment = replenishment.replenishment(request);
             if (isReplenishment) {
                 path = Path.CUSTOMER_SERVLET;
             } else {

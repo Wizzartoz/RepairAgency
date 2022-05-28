@@ -12,7 +12,15 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
+    private Login login;
     private static final Logger log = Logger.getLogger(LoginServlet.class);
+
+    @Override
+    public void init() throws ServletException {
+        login = new Login(new UserDAOimpl());
+    }
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("result", request.getParameter("result"));
@@ -24,7 +32,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Login login = new Login(new UserDAOimpl());
         String path = login.execute(request);
         log.info("method login is completed path: " + path);
         response.sendRedirect(path + "?result=" + request.getAttribute("result"));
