@@ -52,7 +52,8 @@ public class MasterReport implements Command {
             }
             reportEntity.setAmountOfOrders(requests.size());
             reportEntity.setMasterLogin(masterLogin);
-            reportEntity.setRate(getRating(masterLogin));
+            String rating = String.valueOf(getRating(masterLogin)).substring(0,3);
+            reportEntity.setRate(rating);
             report.add(reportEntity);
             reportEntity.setEarnings(requests
                     .stream()

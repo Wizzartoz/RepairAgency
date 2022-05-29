@@ -1,11 +1,11 @@
 package com.maznichko.servlets;
 
+import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.impl.FeedbackDAOimpl;
 import com.maznichko.dao.impl.RequestDAOimpl;
-import com.maznichko.dao.impl.UserDAOimpl;
 import com.maznichko.services.Path;
-import com.maznichko.services.customer.Paid;
 import com.maznichko.services.manager.MasterReport;
+import com.maznichko.services.manager.UserReport;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -15,16 +15,23 @@ import java.io.IOException;
 
 @WebServlet(name = "ManagerReportServlet", value = "/ManagerReportServlet")
 public class ManagerReportServlet extends HttpServlet {
-    MasterReport masterReport;
+    private MasterReport masterReport;
+    private UserReport userReport;
     private static final Logger log = Logger.getLogger(ManagerReportServlet.class);
     @Override
     public void init() throws ServletException {
-        masterReport = new MasterReport(new RequestDAOimpl(),new FeedbackDAOimpl());
+        RequestDAO requestDAO = new RequestDAOimpl();
+        masterReport = new MasterReport(requestDAO,new FeedbackDAOimpl());
+        userReport = new UserReport(requestDAO);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        masterReport.execute(request,response);
+        if (request.getParameter("repo") == null){
+            masterReport.execute(request,response);
+        }else {
+            userReport.getReport(request);
+        }
         request.getRequestDispatcher(Path.REPORT_JSP)
                 .forward(request,response);
 

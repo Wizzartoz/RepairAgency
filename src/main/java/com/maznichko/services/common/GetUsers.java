@@ -6,13 +6,12 @@ import com.maznichko.dao.impl.UserDAOimpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class GetUsers  {
     private static final Logger log = Logger.getLogger(GetUsers.class);
 
-    public static String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public static List<User> execute(HttpServletRequest req) {
         List<User> users;
         try {
             users = new UserDAOimpl().findAll();
@@ -22,6 +21,6 @@ public class GetUsers  {
         }
         req.setAttribute("users",users);
         log.info("get users wasn't successful");
-        return "";
+        return users;
     }
 }

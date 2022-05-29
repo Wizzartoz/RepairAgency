@@ -46,7 +46,7 @@ public class ManagerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         GetBank.getBank(request);
         GetMasters.findMasters(request);
-        GetUsers.execute(request, response);
+        GetUsers.execute(request);
         String path = Path.MANAGER_JSP;
         filter.action(new ArrayList<>(), request);
         Command command = CommandContainer.get(request.getParameter("command"));

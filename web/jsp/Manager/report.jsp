@@ -60,37 +60,81 @@
 </header>
 <body>
 <section class="my-5">
-    <div class="container-xxl align-items-top">
+    <div class="container-fluid align-items-top">
         <div class="row">
             <c:if test="${!requestScope.result.equals('null')}">
                 <b class="text-center text-danger ali">${requestScope.result}</b>
             </c:if>
-            <div class="col-12">
-                <table class="table table-hover">
-                    <thead>
-                    <tr class="border-dark">
-                        <th>master login</th>
-                        <th>take order</th>
-                        <th>done order</th>
-                        <th>orders</th>
-                        <th>earnings</th>
-                        <th>rating</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="request" items="${requestScope.report}">
-                        <tr>
-                            <td><c:out value="${request.masterLogin}"/></td>
-                            <td><c:out value="${request.takeOrders}"/></td>
-                            <td><c:out value="${request.doneOrders}"/></td>
-                            <td><c:out value="${request.amountOfOrders}"/></td>
-                            <td><c:out value="${request.earnings}"/></td>
-                            <td><c:out value="${request.rate}"/></td>
+            <div class="col-1">
+                <form action="ManagerReportServlet" method="get">
+                    <div class="btn-group-vertical my-2 mx-2" role="group" aria-label="Basic radio toggle button group">
+                        <input onchange="checkBtn()" type="radio" class="btn-check" name="report" value="master" id="masterReport">
+                        <label class="btn btn-outline-warning my-2" for="masterReport">Master</label>
+                        <input onchange="checkBtn()" type="radio" class="btn-check" name="repo" value="customer" id="customerReport" >
+                        <label class="btn btn-outline-warning" for="customerReport">Customer</label>
+                        <script>
+                            function checkBtn(){
+                                if (document.getElementById("masterReport").checked
+                                    || document.getElementById("customerReport").checked){
+                                    document.getElementById("reportBtn").click();
+                                }
+                            }
+                        </script>
+                    </div>
+                    <input hidden type="submit" id="reportBtn">
+                </form>
+            </div>
+            <div class="col-11">
+                <c:if test="${requestScope.get('table') != null}">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="border-dark">
+                            <th>user login</th>
+                            <th>done orders</th>
+                            <th>orders</th>
+                            <th>bank</th>
+                            <th></th>
                         </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="request" items="${requestScope.table}">
+                            <tr>
+                                <td><c:out value="${request.login}"/></td>
+                                <td><c:out value="${request.amountOfOrdersDone}"/></td>
+                                <td><c:out value="${request.amountOfOrders}"/></td>
+                                <td><c:out value="${request.bank}"/></td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
+                <c:if test="${requestScope.get('table') == null}">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr class="border-dark">
+                            <th>master login</th>
+                            <th>take order</th>
+                            <th>done order</th>
+                            <th>orders</th>
+                            <th>earnings</th>
+                            <th>rating</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="request" items="${requestScope.report}">
+                            <tr>
+                                <td><c:out value="${request.masterLogin}"/></td>
+                                <td><c:out value="${request.takeOrders}"/></td>
+                                <td><c:out value="${request.doneOrders}"/></td>
+                                <td><c:out value="${request.amountOfOrders}"/></td>
+                                <td><c:out value="${request.earnings}"/></td>
+                                <td><a href="rating.jsp"><c:out value="${request.rate}"/></a></td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
             </div>
         </div>
     </div>

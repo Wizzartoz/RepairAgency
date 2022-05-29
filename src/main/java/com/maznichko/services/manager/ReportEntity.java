@@ -6,7 +6,7 @@ public class ReportEntity implements Comparable{
     int doneOrders;
     int amountOfOrders;
     float earnings;
-    double rate;
+    String rate;
 
     public int getTakeOrders() {
         return takeOrders;
@@ -48,11 +48,11 @@ public class ReportEntity implements Comparable{
         this.earnings = earnings;
     }
 
-    public double getRate() {
+    public String getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(String rate) {
         this.rate = rate;
     }
 
