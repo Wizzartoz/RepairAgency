@@ -47,7 +47,7 @@ public class MasterReport implements Command {
             try {
                 requests = requestDAO.getRequestByLogin(masterLogin);
             } catch (DBException e) {
-                log.error(e.getMessage() + " get request by login is failed");
+                log.error(e.getMessage() + "<-------- get request by login is failed");
                 throw new RuntimeException(e);
             }
             reportEntity.setAmountOfOrders(requests.size());
@@ -95,7 +95,7 @@ public class MasterReport implements Command {
         try {
             feedbacks = feedbackDAO.findAll();
         } catch (DBException e) {
-            log.error(e.getMessage() + " find all feedback is failed");
+            log.error(e.getMessage() + "<------- find all feedback is failed");
             throw new RuntimeException(e);
         }
         return feedbacks

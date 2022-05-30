@@ -132,7 +132,7 @@
                     <fmt:message key="register.button.register_master" bundle="${lang}"/>
                 </button>
                 <form action="ManagerReportServlet" method="get">
-                <button type="submit" class="btn btn-dark">Report</button>
+                <button type="submit" class="btn btn-dark">Statistic</button>
                 </form>
 
 

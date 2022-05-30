@@ -140,7 +140,7 @@
                             <tr>
                                 <td><c:out value="${request.masterLogin}"/></td>
                                 <td><c:out value="${request.takeOrders}"/></td>
-                                <td><c:out value="${request.doneOrders}"/></td>
+                                <td><a href="${pageContext.request.contextPath}/ManagerReportServlet?requests=${request.masterLogin}"><c:out value="${request.doneOrders}"/></a></td>
                                 <td><c:out value="${request.amountOfOrders}"/></td>
                                 <td><c:out value="${request.earnings}"/></td>
                                 <td><a href="${pageContext.request.contextPath}/ManagerReportServlet?rating=${request.masterLogin}"><c:out value="${request.rate}"/></a></td>

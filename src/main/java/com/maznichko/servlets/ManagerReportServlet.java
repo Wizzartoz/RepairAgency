@@ -9,6 +9,7 @@ import com.maznichko.dao.impl.UserDAOimpl;
 import com.maznichko.services.Path;
 import com.maznichko.services.common.GetFeedback;
 import com.maznichko.services.manager.BLockUser;
+import com.maznichko.services.manager.GetMasterRequests;
 import com.maznichko.services.manager.MasterReport;
 import com.maznichko.services.manager.UserReport;
 import org.apache.log4j.Logger;
@@ -25,6 +26,7 @@ public class ManagerReportServlet extends HttpServlet {
     private UserReport userReport;
     private GetFeedback getFeedback;
     private BLockUser bLockUser;
+    private GetMasterRequests getMasterRequests;
     private static final Logger log = Logger.getLogger(ManagerReportServlet.class);
 
     @Override
@@ -35,6 +37,7 @@ public class ManagerReportServlet extends HttpServlet {
         userReport = new UserReport(requestDAO);
         getFeedback = new GetFeedback(feedbackDAO);
         bLockUser = new BLockUser(new UserDAOimpl());
+        getMasterRequests = new GetMasterRequests(requestDAO);
     }
 
     @Override
@@ -45,6 +48,8 @@ public class ManagerReportServlet extends HttpServlet {
             List<Feedback> feedbacks = getFeedback.getFeedback(masterLogin);
             request.setAttribute("table", feedbacks);
             path = "/jsp/Manager/rating.jsp";
+        } else if (request.getParameter("requests")!= null) {
+            path = getMasterRequests.getRequests(request,request.getParameter("requests"));
         } else if (request.getParameter("repo") == null) {
             path = userReport.getReport(request);
         } else {
