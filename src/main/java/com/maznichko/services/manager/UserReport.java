@@ -24,7 +24,7 @@ public class UserReport {
         List<UserEntity> userEntities = new ArrayList<>();
         List<User> users = GetUsers.execute(request)
                 .stream()
-                .filter(user -> user.getRole().equals("CUSTOMER"))
+                .filter(user -> user.getRole().equals("CUSTOMER") || user.getRole().equals("BLOCK"))
                 .collect(Collectors.toList());
         for (User user : users) {
             UserEntity userEntity = new UserEntity();
@@ -37,10 +37,11 @@ public class UserReport {
                     .stream()
                     .filter(req -> req.getComplicationStatus().equals("done"))
                     .count());
+            userEntity.setRole(user.getRole());
             userEntities.add(userEntity);
         }
         request.setAttribute("table", userEntities);
-        return Path.REPORT_SERVLET;
+        return Path.REPORT_JSP;
 
     }
 

@@ -127,7 +127,7 @@
         <div class="row my-5">
             <div class="col-2" style="width: 300px">
                 <!-- Button trigger modal -->
-                <button onclick="offCheckBox()" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                <button onclick="offCheckBox()" type="button" class="btn btn-dark my-1" data-bs-toggle="modal"
                         data-bs-target="#registerModal">
                     <fmt:message key="register.button.register_master" bundle="${lang}"/>
                 </button>

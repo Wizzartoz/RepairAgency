@@ -68,9 +68,9 @@
             <div class="col-1">
                 <form action="ManagerReportServlet" method="get">
                     <div class="btn-group-vertical my-2 mx-2" role="group" aria-label="Basic radio toggle button group">
-                        <input onchange="checkBtn()" type="radio" class="btn-check" name="report" value="master" id="masterReport">
+                        <input onchange="checkBtn()" type="radio" class="btn-check" name="repo" value="master" id="masterReport">
                         <label class="btn btn-outline-warning my-2" for="masterReport">Master</label>
-                        <input onchange="checkBtn()" type="radio" class="btn-check" name="repo" value="customer" id="customerReport" >
+                        <input onchange="checkBtn()" type="radio" class="btn-check" id="customerReport" >
                         <label class="btn btn-outline-warning" for="customerReport">Customer</label>
                         <script>
                             function checkBtn(){
@@ -93,6 +93,7 @@
                             <th>done orders</th>
                             <th>orders</th>
                             <th>bank</th>
+                            <th>statement</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -103,6 +104,19 @@
                                 <td><c:out value="${request.amountOfOrdersDone}"/></td>
                                 <td><c:out value="${request.amountOfOrders}"/></td>
                                 <td><c:out value="${request.bank}"/></td>
+                                <c:if test="${request.role.equals('CUSTOMER')}">
+                                    <td>unlock</td>
+                                </c:if>
+                                <c:if test="${request.role.equals('BLOCK')}">
+                                    <td>block</td>
+                                </c:if>
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/ManagerReportServlet" method="post">
+                                    <input onclick="checkBtn()" class="btn btn-outline-danger" name="block" id="block" value="Block" type="submit"/>
+                                        <input  class="btn btn-outline-success"  name="block" value="Unblock" type="submit"/>
+                                        <input type="hidden" name="login" value="${request.login}">
+                                    </form>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -129,7 +143,7 @@
                                 <td><c:out value="${request.doneOrders}"/></td>
                                 <td><c:out value="${request.amountOfOrders}"/></td>
                                 <td><c:out value="${request.earnings}"/></td>
-                                <td><a href="rating.jsp"><c:out value="${request.rate}"/></a></td>
+                                <td><a href="${pageContext.request.contextPath}/ManagerReportServlet?rating=${request.masterLogin}"><c:out value="${request.rate}"/></a></td>
                             </tr>
                         </c:forEach>
                         </tbody>

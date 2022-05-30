@@ -17,6 +17,8 @@ public class Path {
     public static final String REGISTER_SERVLET = "/RegisterServlet";
     public static final String REPORT_SERVLET = "/ManagerReportServlet";
     public static final String REPORT_JSP = "/jsp/Manager/report.jsp";
+    public static final String RATING_JSP = "/jsp/Manager/rating.jsp";
+    public static final String BLOCK_JSP = "/jsp/block.jsp";
 
     public static final String ERROR = "/jsp/Error.jsp";
 }
