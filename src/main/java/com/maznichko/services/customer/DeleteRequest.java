@@ -29,15 +29,15 @@ public class DeleteRequest implements CustomerCommand {
         try {
             Request request = requestDAO.getData(id);
             if (checkPermission(request)) {
-                req.setAttribute("result", "you cannot delete request");
+                req.setAttribute("result", "You cannot delete request");
                 return Path.CUSTOMER_SERVLET;
             }
             requestDAO.delete(request);
         } catch (DBException e) {
-            log.error(e.getMessage() + " delete request is failed");
+            log.error(e.getMessage() + "<-------- delete request is failed");
             return Path.ERROR;
         }
-        req.setAttribute("result", "deletion successful");
+        req.setAttribute("result", "Deletion successful");
         return Path.CUSTOMER_SERVLET;
     }
 

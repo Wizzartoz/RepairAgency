@@ -26,7 +26,7 @@ public class CustomerContainer {
         commands.put("paid", new Paid(USER_DAO,REQUEST_DAO));
         commands.put("sendRequest", new SendRequest(REQUEST_DAO));
         commands.put("editProfile", new EditProfile(USER_DAO));
-        log.info("customer container is set up");
+        log.info("<--------- customer container is set up");
     }
 
     /**

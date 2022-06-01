@@ -14,87 +14,110 @@ import java.util.List;
 public class LeaveFeedback implements CustomerCommand {
     private final FeedbackDAO feedbackDAO;
     private final RequestDAO requestDAO;
+    private final Feedback feedback;
     private static final Logger log = Logger.getLogger(LeaveFeedback.class);
 
     public LeaveFeedback(FeedbackDAO feedbackDAO, RequestDAO requestDAO) {
         this.feedbackDAO = feedbackDAO;
         this.requestDAO = requestDAO;
+        feedback = new Feedback();
     }
 
     /**
      * Put feedback into DB
+     *
      * @param req - request who we are getting
      * @return - path of servlet
      */
     @Override
     public String execute(HttpServletRequest req) {
-        //checking rating
+        //Checking rating
         String feedbackText = req.getParameter("feedback");
         int rating;
         try {
             rating = Integer.parseInt(req.getParameter("rating"));
         } catch (NumberFormatException e) {
-            req.setAttribute("result", "data in evaluation field is incorrect");
+            req.setAttribute("result", "Data in evaluation field is incorrect");
             return Path.CUSTOMER_SERVLET;
         }
         if (!(rating >= 1 && rating <= 5)) {
-            req.setAttribute("result", "rating have incorrect value");
+            req.setAttribute("result", "Rating have incorrect value");
             return Path.CUSTOMER_SERVLET;
         }
-        //checking id
+        //Checking id
         long id;
         try {
             id = Long.parseLong(req.getParameter("feedbackID"));
         } catch (NumberFormatException e) {
-            log.error(e.getMessage() + " leave feedback is failed");
-            req.setAttribute("result", e.getMessage());
+            log.error("<---------- leave feedback is failed", e);
             return Path.ERROR;
         }
-        //get and checking request
-        Request request;
-        try {
-            request = requestDAO.getData(id);
-        } catch (DBException e) {
-            req.setAttribute("result", e.getMessage());
-            log.error(e.getMessage() + " leave feedback is failed");
+        //Getting and checking request
+        Request request = getRequest(id);
+        if (request == null) {
             return Path.ERROR;
         }
         if (!request.getComplicationStatus().equals("done")) {
-            req.setAttribute("result", "the master has not made an order yet");
+            req.setAttribute("result", "The master has not made an order yet");
             return Path.CUSTOMER_SERVLET;
         }
-        //set up feedbacks
-        Feedback feedback = new Feedback();
+        //Set up feedback
         feedback.setFeedbackText(feedbackText);
         feedback.setRating(rating);
         feedback.setRequestID(id);
         feedback.setMasterLogin(request.getMasterLogin());
         if (feedbackText.isEmpty()) {
-            req.setAttribute("result", "review is empty");
+            req.setAttribute("result", "Review is empty");
             return Path.CUSTOMER_SERVLET;
         }
-        //check feedback on duplicate
-        List<Feedback> feedbackList;
-        try {
-            feedbackList = feedbackDAO.findAll();
-        } catch (DBException e) {
-            req.setAttribute("result", e.getMessage());
-            log.error(e.getMessage() + " leave feedback is failed");
+        //Checking feedback on duplicate
+        List<Feedback> feedbacks = findAllFeedback();
+        if (feedbacks == null) {
             return Path.ERROR;
         }
-        if (feedbackList.contains(feedback)) {
-            req.setAttribute("result", "feedback already left");
+        if (feedbacks.contains(feedback)) {
+            req.setAttribute("result", "Feedback already left");
             return Path.CUSTOMER_SERVLET;
         }
-        //insert feedback
+        //Inserting feedback
+        boolean isInsert = insertFeedback();
+        if (!isInsert) {
+            return Path.ERROR;
+        }
+        req.setAttribute("result", "Comment successfully posted");
+        return Path.CUSTOMER_SERVLET;
+    }
+
+    private Request getRequest(long id) {
+        Request request;
+        try {
+            request = requestDAO.getData(id);
+        } catch (DBException e) {
+            log.error("<--------- leave feedback is failed", e);
+            return null;
+        }
+        return request;
+    }
+
+    private boolean insertFeedback() {
         try {
             feedbackDAO.insert(feedback);
         } catch (DBException e) {
-            req.setAttribute("result", "Can't leave a comment");
-            log.error(e.getMessage() + " leave feedback is failed");
-            return Path.ERROR;
+            log.error("<--------- leave feedback is failed", e);
+            return false;
         }
-        req.setAttribute("result", "comment successfully posted");
-        return Path.CUSTOMER_SERVLET;
+        return true;
     }
+
+    private List<Feedback> findAllFeedback() {
+        List<Feedback> feedbacks;
+        try {
+            feedbacks = feedbackDAO.findAll();
+        } catch (DBException e) {
+            log.error("<---------- leave feedback is failed", e);
+            return null;
+        }
+        return feedbacks;
+    }
+
 }

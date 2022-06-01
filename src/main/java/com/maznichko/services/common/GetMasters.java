@@ -17,7 +17,7 @@ public class GetMasters {
            users = new UserDAOimpl().findAll();
         } catch (DBException e) {
             log.error("<---------- find all users was failed",e);
-            throw new RuntimeException(e);
+            return null;
         }
         List<User> list = users.stream().filter(x->x.getRole().equals("MASTER")).collect(Collectors.toList());
         req.setAttribute("masters",list);

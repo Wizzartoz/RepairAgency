@@ -3,6 +3,7 @@ package com.maznichko.services.common;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
+import com.maznichko.services.Path;
 import org.apache.log4j.Logger;
 
 
@@ -27,37 +28,47 @@ public class Replenishment {
         try {
             money = Integer.parseInt(req.getParameter("money"));
         } catch (NumberFormatException e) {
-            req.setAttribute("result", "you didn't enter anything");
+            req.setAttribute("result", "You didn't enter anything");
             return true;
         }
-
         if (money <= 0) {
             req.setAttribute("result", "Enter a positive number");
             return true;
         }
+        User user = getUser(login);
+        if (user == null) {
+            return false;
+        }
+        int wallet = user.getBank();
+        user.setBank(money + wallet);
+        boolean isUpdate = updateUser(user);
+        if (!isUpdate) {
+            return false;
+        }
+        log.info("<----------- replenishment was successfully");
+        return false;
+    }
+
+    private boolean updateUser(User user) {
+        try {
+            userDAO.update(user);
+        } catch (DBException e) {
+            log.error("<----------- replenishment wa failed", e);
+            return false;
+        }
+        return true;
+    }
+
+    private User getUser(String login) {
         User user;
         try {
             user = userDAO.getUserByLogin(login);
         } catch (DBException e) {
-            log.error(e.getMessage() + " replenishment wa failed");
-            req.setAttribute("result", e.getMessage());
-            return false;
+            log.error("<----------- replenishment is failed", e);
+            return null;
         }
-        if (user != null) {
-            int wallet = user.getBank();
-            user.setBank(money + wallet);
-            try {
-                userDAO.update(user);
-                req.setAttribute("result", "payment was successful");
-                return true;
-            } catch (DBException e) {
-                log.error(e.getMessage() + " replenishment wa failed");
-                req.setAttribute("result", e.getMessage());
-                return false;
-            }
-        }
-        log.info("replenishment was successfully");
-        return false;
+        return user;
     }
+
 }
 

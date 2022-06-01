@@ -45,9 +45,7 @@ public class ManagerReportServlet extends HttpServlet {
         String path;
         String masterLogin = request.getParameter("rating");
         if (masterLogin != null) {
-            List<Feedback> feedbacks = getFeedback.getFeedback(masterLogin);
-            request.setAttribute("table", feedbacks);
-            path = "/jsp/Manager/rating.jsp";
+            path = getFeedback.getFeedback(request,masterLogin);
         } else if (request.getParameter("requests")!= null) {
             path = getMasterRequests.getRequests(request,request.getParameter("requests"));
         } else if (request.getParameter("repo") == null) {

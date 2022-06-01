@@ -25,18 +25,22 @@ public class UserReport {
     public String getReport(HttpServletRequest request) {
         List<UserEntity> userEntities = new ArrayList<>();
         //Getting users
-        List<User> users = GetUsers.execute(request)
-                .stream()
+        List<User> users = GetUsers.execute(request);
+        if (users == null){
+            return Path.ERROR;
+        }
+        List<User> customerUsers = users.stream()
                 .filter(user -> user.getRole().equals("CUSTOMER") || user.getRole().equals("BLOCK"))
                 .collect(Collectors.toList());
         //Set up use entity
-        for (User user : users) {
+        for (User user : customerUsers) {
             UserEntity userEntity = new UserEntity();
             String login = user.getLogin();
             userEntity.setBank(user.getBank());
             userEntity.setLogin(login);
             List<Request> requests = getRequests(login);
             if (requests == null){
+
                 return Path.ERROR;
             }
             userEntity.setRole(user.getRole());

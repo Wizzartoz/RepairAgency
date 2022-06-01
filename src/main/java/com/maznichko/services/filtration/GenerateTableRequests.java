@@ -21,6 +21,7 @@ public class GenerateTableRequests extends Filterable {
 
     /**
      * getting all request from DB
+     *
      * @param requests - this set of requests who we are got from DB
      * @param request  - our request
      */
@@ -31,8 +32,7 @@ public class GenerateTableRequests extends Filterable {
             String login = (String) request.getSession().getAttribute("login");
             requestList = requestDAO.getRequestByLogin(login);
         } catch (DBException e) {
-            log.error(e.getMessage() + " generate table is failed");
-            request.setAttribute("result", e.getMessage());
+            log.error("<--------generate table is failed", e);
         }
         List<Request> table = requestList.stream()
                 .sorted(Comparator.comparing(Request::getDate))

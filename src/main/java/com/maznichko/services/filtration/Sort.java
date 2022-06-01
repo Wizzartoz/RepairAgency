@@ -55,9 +55,6 @@ public class Sort extends Filterable {
        }else {
 
                checkNext(requests, request);
-
        }
-
-
     }
 }

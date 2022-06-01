@@ -16,11 +16,11 @@ public class GetUsers  {
         try {
             users = new UserDAOimpl().findAll();
         } catch (DBException e) {
-            log.error(e.getMessage() + " get users wasn't successful");
-            throw new RuntimeException(e);
+            log.error("<---------- get users wasn't successful",e);
+            return null;
         }
         req.setAttribute("users",users);
-        log.info("get users wasn't successful");
+        log.info("<-------- get users wasn't successful");
         return users;
     }
 }

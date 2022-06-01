@@ -47,7 +47,7 @@ public class EditProfile implements CustomerCommand {
         if (!isUpdate) {
             return Path.ERROR;
         }
-        req.setAttribute("result", "profile edit successful");
+        req.setAttribute("result", "Profile edit successful");
         log.info(sessionLogin + " <--------- user edit successful");
         return Path.CUSTOMER_SERVLET;
 
@@ -58,7 +58,7 @@ public class EditProfile implements CustomerCommand {
         try {
             user = userDAO.getUserByLogin(login);
         } catch (DBException e) {
-            log.error(e.getMessage() + "<--------- get user is failed");
+            log.error("<--------- get user is failed",e);
             return null;
         }
         return user;
@@ -68,7 +68,7 @@ public class EditProfile implements CustomerCommand {
         try {
             userDAO.update(user);
         } catch (DBException e) {
-            log.error(e.getMessage() + "<--------- update user is failed");
+            log.error("<--------- update user is failed",e);
             return false;
         }
         return true;

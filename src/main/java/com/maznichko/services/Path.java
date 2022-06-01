@@ -21,4 +21,5 @@ public class Path {
     public static final String REQUESTS_JSP = "/jsp/Manager/requests.jsp";
 
     public static final String ERROR = "/jsp/Error.jsp";
+    public static final String RATING_JSP = "/jsp/Manager/rating.jsp";
 }
