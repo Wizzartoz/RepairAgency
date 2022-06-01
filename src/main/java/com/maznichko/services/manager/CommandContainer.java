@@ -21,7 +21,7 @@ public class CommandContainer {
     static {
         commands.put("editRequest", new EditRequest(REQUEST_DAO));
         commands.put("mastersReport",new MasterReport(REQUEST_DAO,FEEDBACK_DAO));
-        log.info("manager container is set up ");
+        log.info("<-------- manager container is set up");
     }
     /**
      * This method by parameter return you object

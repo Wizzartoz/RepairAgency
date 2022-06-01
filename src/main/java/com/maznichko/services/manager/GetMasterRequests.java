@@ -28,7 +28,7 @@ public class GetMasterRequests {
         try {
             requests = requestDAO.getRequestByLogin(login);
         } catch (DBException e) {
-            log.error(e.getMessage() + "<------ get request by login is failed");
+            log.error("<------ get request by login is failed",e);
             return Path.ERROR;
         }
         request.setAttribute("table", requests);

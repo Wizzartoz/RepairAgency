@@ -23,24 +23,21 @@ public class EditRequest implements Command {
 
     /**
      * Editing request which customer left
-     * @param req - request who we are getting
+     *
+     * @param req  - request who we are getting
      * @param resp - servlet response
      * @return - path of servlet
      */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         long id = Long.parseLong(req.getParameter("id"));
-        //get request
-        if (req.getParameter("price") == null){
-            req.setAttribute("result", "request already added");
+        if (req.getParameter("price") == null) {
+            req.setAttribute("result", "Request already added");
             return Path.MANAGER_SERVLET;
         }
-        Request request;
-        try {
-            request = requestDAO.getData(id);
-        } catch (DBException e) {
-            req.setAttribute("result", e);
-            log.error(e.getMessage() + " edit request is failed");
+        //Getting request
+        Request request = getRequest(id);
+        if (request == null) {
             return Path.ERROR;
         }
         if (req.getParameter("cStatus").equals("refuse")) {
@@ -48,49 +45,50 @@ public class EditRequest implements Command {
             request.setPaymentStatus("unpaid");
             request.setComplicationStatus("refuse");
         } else {
-            //checking price
+            //Checking price
             float price;
             try {
                 price = Float.parseFloat(req.getParameter("price"));
             } catch (NumberFormatException e) {
-                req.setAttribute("result", "incorrect price value");
+                req.setAttribute("result", "Incorrect price value");
                 return Path.MANAGER_SERVLET;
             }
             if (price <= 0) {
-                req.setAttribute("result", "incorrect price value");
+                req.setAttribute("result", "Incorrect price value");
                 return Path.MANAGER_SERVLET;
             }
-            //checking payment status
+            //Checking payment status
             String paymentStatus = req.getParameter("pStatus");
             if (paymentStatus == null || !paymentStatus.equals("waiting for payment")) {
-                req.setAttribute("result", "incorrect payment status");
+                req.setAttribute("result", "Incorrect payment status");
                 return Path.MANAGER_SERVLET;
             }
             if (!request.getPaymentStatus().equals("unpaid")) {
-                req.setAttribute("result", "incorrect payment status");
+                req.setAttribute("result", "Incorrect payment status");
                 return Path.MANAGER_SERVLET;
             }
-            //checking master
+            //Checking master
             String masterLogin = req.getParameter("usr");
             if (masterLogin == null) {
-                req.setAttribute("result", "you must be select the master");
+                req.setAttribute("result", "You must be select the master");
                 return Path.MANAGER_SERVLET;
             }
+            //Getting masters
             List<User> masters = GetMasters.findMasters(req);
             User master = new User();
             master.setLogin(masterLogin);
             if (!masters.contains(master)) {
-                req.setAttribute("result", "master didn't exist");
+                req.setAttribute("result", "Master didn't exist");
                 return Path.MANAGER_SERVLET;
             }
-            //checking complication status
+            //Checking complication status
             String complicationStatus = req.getParameter("cStatus");
             if (complicationStatus == null) {
-                req.setAttribute("result", "wrong complication status");
+                req.setAttribute("result", "Wrong complication status");
                 return Path.MANAGER_SERVLET;
             }
             if (!request.getComplicationStatus().equals("under consideration")) {
-                req.setAttribute("result", "wrong complication status");
+                req.setAttribute("result", "Wrong complication status");
                 return Path.MANAGER_SERVLET;
             }
             if (!(complicationStatus.equals("refuse") || complicationStatus.equals("consideration"))) {
@@ -100,27 +98,52 @@ public class EditRequest implements Command {
             if (complicationStatus.equals("refuse")) {
                 masterLogin = null;
             }
-            //set parameters
+            //Set parameters
             request.setPrice(price);
             request.setPaymentStatus(paymentStatus);
             request.setComplicationStatus(complicationStatus);
             request.setMasterLogin(masterLogin);
-            try {
-                requestDAO.insertRequestInUserRequest(masterLogin, id);
-            } catch (DBException e) {
-                req.setAttribute("result", e);
-                log.error(e.getMessage() + " edit request is failed");
+            //Inserting masters
+            boolean isInsert = insertRequest(masterLogin, id);
+            if (!isInsert) {
                 return Path.ERROR;
             }
         }
-        //set data to db
-        try {
-            requestDAO.update(request);
-        } catch (DBException e) {
-            req.setAttribute("result", e);
-            log.error(e.getMessage() + " edit request is failed");
+        //Updating request
+        boolean isUpdate = updateRequest(request);
+        if (!isUpdate) {
             return Path.ERROR;
         }
         return Path.MANAGER_SERVLET;
+    }
+
+    private boolean updateRequest(Request request) {
+        try {
+            requestDAO.update(request);
+        } catch (DBException e) {
+            log.error("<--------- edit request is failed", e);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean insertRequest(String masterLogin, long id) {
+        try {
+            requestDAO.insertRequestInUserRequest(masterLogin, id);
+        } catch (DBException e) {
+            log.error("<------ edit request is failed", e);
+            return false;
+        }
+        return true;
+    }
+
+    private Request getRequest(long id) {
+        Request request = null;
+        try {
+            request = requestDAO.getData(id);
+        } catch (DBException e) {
+            log.error("<-------- edit request is failed", e);
+        }
+        return request;
     }
 }

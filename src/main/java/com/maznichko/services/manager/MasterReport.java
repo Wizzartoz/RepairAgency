@@ -6,6 +6,7 @@ import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Feedback;
 import com.maznichko.dao.entity.Request;
 import com.maznichko.dao.entity.User;
+import com.maznichko.services.Path;
 import com.maznichko.services.common.GetMasters;
 import org.apache.log4j.Logger;
 
@@ -36,10 +37,10 @@ public class MasterReport implements Command {
      */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        //Get all masters
+        //Getting all masters
         List<User> masters = GetMasters.findMasters(req);
         List<ReportEntity> report = new ArrayList<>();
-        //setup list of reportEntity
+        //Setup list of reportEntity
         for (User user : masters) {
             ReportEntity reportEntity = new ReportEntity();
             List<Request> requests;
@@ -47,25 +48,25 @@ public class MasterReport implements Command {
             try {
                 requests = requestDAO.getRequestByLogin(masterLogin);
             } catch (DBException e) {
-                log.error(e.getMessage() + "<-------- get request by login is failed");
-                throw new RuntimeException(e);
+                log.error("<-------- get request by login is failed", e);
+                return Path.ERROR;
             }
             reportEntity.setAmountOfOrders(requests.size());
             reportEntity.setMasterLogin(masterLogin);
-            String rating = String.valueOf(getRating(masterLogin)).substring(0,3);
+            String rating = String.valueOf(getRating(masterLogin)).substring(0, 3);
             reportEntity.setRate(rating);
-            report.add(reportEntity);
+            reportEntity.setDoneOrders(doneRequest(requests));
+            reportEntity.setTakeOrders(takeRequest(requests));
             reportEntity.setEarnings(requests
                     .stream()
                     .map(Request::getPrice)
                     .reduce(Float::sum).orElse(0F));
-            reportEntity.setDoneOrders(doneRequest(requests));
-            reportEntity.setTakeOrders(takeRequest(requests));
+            report.add(reportEntity);
         }
         req.setAttribute("totalSum", allSum(report));
         req.setAttribute("report", report.stream().sorted().collect(Collectors.toList()));
 
-        return "/jsp/Manager/report.jsp";
+        return Path.REPORT_JSP;
     }
 
     private int takeRequest(List<Request> requests) {
@@ -95,7 +96,7 @@ public class MasterReport implements Command {
         try {
             feedbacks = feedbackDAO.findAll();
         } catch (DBException e) {
-            log.error(e.getMessage() + "<------- find all feedback is failed");
+            log.error("<------- find all feedback is failed", e);
             throw new RuntimeException(e);
         }
         return feedbacks

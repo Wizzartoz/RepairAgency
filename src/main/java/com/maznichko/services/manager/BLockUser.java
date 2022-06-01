@@ -15,26 +15,31 @@ public class BLockUser {
 
     }
     public String block(String userLogin){
+        //Getting user
         User user = getUser(userLogin);
         if (user == null){
             return Path.ERROR;
         }
         user.setRole("BLOCK");
-        System.out.println(user.getRole() + "<--------------role");
+        //Updating user
         boolean isUpdate = updateUser(user);
         if (isUpdate){
+            log.info(user + " " + user.getLogin() + " is block <------");
             return Path.REPORT_SERVLET;
         }
         return Path.ERROR;
     }
     public String unblock(String userLogin){
+        //Getting user
         User user = getUser(userLogin);
         if (user == null){
             return Path.ERROR;
         }
         user.setRole("CUSTOMER");
+        //Updating user
         boolean isUpdate = updateUser(user);
         if (isUpdate){
+            log.info(user + " " + user.getLogin() + " is unblock <------");
             return Path.REPORT_SERVLET;
         }
         return Path.ERROR;
@@ -43,7 +48,7 @@ public class BLockUser {
         try {
             userDAO.update(user);
         } catch (DBException e) {
-            log.error(e.getMessage() + "<------ update user is failed login: " + user);
+            log.error("<------ update user is failed login: " + user,e);
             return false;
         }
         return true;
@@ -53,7 +58,7 @@ public class BLockUser {
         try {
             user = userDAO.getUserByLogin(userLogin);
         } catch (DBException e) {
-            log.error(e.getMessage() + "<------ Get user by login is failed login: " + userLogin);
+            log.error("<------ get user by login is failed, login: " + userLogin,e);
         }
         return user;
     }
