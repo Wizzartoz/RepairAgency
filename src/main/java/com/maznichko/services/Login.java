@@ -20,41 +20,70 @@ public class Login {
 
     /**
      * log in user by login and password
+     *
      * @param req - servlet request
      * @return - path of servlet
      */
     public String execute(HttpServletRequest req) {
+        //Validation
         String login = req.getParameter("login");
+        if (login == null || login.isEmpty()) {
+            req.setAttribute("result", "Login is empty");
+            return Path.LOGIN_SERVLET;
+        }
         String password = req.getParameter("pass");
-        if (login.isEmpty() || password.isEmpty()) {
-            req.setAttribute("result", "Password or Login is empty");
+        if (password == null || password.isEmpty()) {
+            req.setAttribute("result", "Password is empty");
             return Path.LOGIN_SERVLET;
         }
-        User user;
-        try {
-            user = userDAO.getUserByLogin(login);
-        } catch (DBException e) {
-            req.setAttribute("result", "user didn't exist");
+        User user = getUser(login);
+        if (user == null) {
+            req.setAttribute("result", "User didn't exist");
             return Path.LOGIN_SERVLET;
         }
-        // get reCAPTCHA request param
-        String gRecaptchaResponse = req
-                .getParameter("g-recaptcha-response");
-        boolean verify;
-        try {
-            verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        //Check captcha
+        boolean isCaptcha = checkCaptcha(req);
+        if (!isCaptcha) {
+            req.setAttribute("result", "Captcha is failed");
+            return Path.LOGIN_SERVLET;
         }
-
-        if (user.getPassword().equals(MD5.getMd5(password)) && verify) {
+        //Checking conditions before enter
+        if (user.getPassword().equals(MD5.getMd5(password))) {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("login", login);
             httpSession.setAttribute("role", user.getRole());
-            log.info("user " + login + " logged in successfully");
+            log.info("user " + login + " <------- logged in successfully");
             return Path.LOGIN_SERVLET;
         }
         req.setAttribute("result", "Wrong password");
         return Path.LOGIN_SERVLET;
+    }
+
+    private User getUser(String login) {
+        User user;
+        try {
+            user = userDAO.getUserByLogin(login);
+        } catch (DBException e) {
+            return null;
+        }
+        return user;
+    }
+
+    private boolean checkCaptcha(HttpServletRequest request) {
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        if (gRecaptchaResponse != null) {
+            try {
+                VerifyRecaptcha.verify(gRecaptchaResponse);
+                if (gRecaptchaResponse.isEmpty()) {
+                    throw new IOException();
+                }
+            } catch (IOException e) {
+                log.warn("<---------- captcha is failed", e);
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
     }
 }

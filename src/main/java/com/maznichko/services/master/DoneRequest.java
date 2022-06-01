@@ -12,41 +12,60 @@ import javax.servlet.http.HttpServletResponse;
 public class DoneRequest implements MasterCommand {
     private final RequestDAO requestDAO;
     private static final Logger log = Logger.getLogger(DoneRequest.class);
-    public DoneRequest(RequestDAO requestDAO){
+
+    public DoneRequest(RequestDAO requestDAO) {
         this.requestDAO = requestDAO;
 
     }
 
     /**
      * Master marking request if he did
-     * @param req - request who we are getting
+     *
+     * @param req  - request who we are getting
      * @param resp - servlet response
      * @return - path of servlet
      */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         long id = Long.parseLong(req.getParameter("doneID"));
+        //Getting request
+        Request request = getRequest(id);
+        if (request == null) {
+            return Path.ERROR;
+        }
+        //Checking complication status
+        if (!request.getComplicationStatus().equals("in progress")) {
+            req.setAttribute("result", "You cannot change the status");
+            return Path.MASTER_SERVLET;
+        }
+        request.setComplicationStatus("done");
+        //Updating request
+        boolean isUpdate = updateRequest(request);
+        if (!isUpdate) {
+            return Path.ERROR;
+        }
+        req.setAttribute("result", "Status changed successfully");
+        return Path.MASTER_SERVLET;
+    }
+
+    private Request getRequest(long id) {
         Request request;
         try {
             request = requestDAO.getData(id);
         } catch (DBException e) {
-            req.setAttribute("result", e.getMessage());
-            log.error(e.getMessage() + " done request is failed");
-            return Path.ERROR;
+            log.error("<-------- done request is failed", e);
+            return null;
         }
-        if (!request.getComplicationStatus().equals("in progress")) {
-            req.setAttribute("result", "you cannot change the status");
-            return Path.MASTER_SERVLET;
-        }
-        request.setComplicationStatus("done");
+        return request;
+    }
+
+    private boolean updateRequest(Request request) {
         try {
             requestDAO.update(request);
         } catch (DBException e) {
-            req.setAttribute("result", e.getMessage());
-            log.error(e.getMessage() + " done request is failed");
-            return Path.ERROR;
+            log.error("<-------- done request is failed", e);
+            return false;
         }
-        req.setAttribute("result", "status changed successfully");
-        return Path.MASTER_SERVLET;
+        return true;
     }
 }

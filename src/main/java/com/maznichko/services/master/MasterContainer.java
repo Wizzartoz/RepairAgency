@@ -17,7 +17,7 @@ public class MasterContainer {
     static {
         commands.put("doneRequest", new DoneRequest(REQUEST_DAO));
         commands.put("takeRequest", new TakeRequest(REQUEST_DAO));
-        log.info("master container is set up ");
+        log.info("<--------- master container is set up");
 
     }
     /**
@@ -25,6 +25,7 @@ public class MasterContainer {
      * @param command - parameter who we are getting from request
      * @return - object
      */
+    //TODO maybe will be better make this method like Optional because I don't check method on null
     public static MasterCommand get(String command) {
         if (command == null || !commands.containsKey(command)) {
             return null;

@@ -1,6 +1,5 @@
 package com.maznichko.services.master;
 
-import com.maznichko.SendEmail;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
@@ -13,48 +12,67 @@ import javax.servlet.http.HttpServletResponse;
 public class TakeRequest implements MasterCommand {
     private final RequestDAO requestDAO;
     private static final Logger log = Logger.getLogger(TakeRequest.class);
-    public TakeRequest(RequestDAO requestDAO){
+
+    public TakeRequest(RequestDAO requestDAO) {
         this.requestDAO = requestDAO;
     }
 
     /**
      * Master marking request if he took it
-     * @param req - request who we are getting
+     *
+     * @param req  - request who we are getting
      * @param resp - response servlet
      * @return - path of servlet
      */
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         long id = Long.parseLong(req.getParameter("id"));
+        //Getting request
+        Request request = getRequest(id);
+        if (request == null) {
+            return Path.ERROR;
+        }
+        //Validation
+        if (!request.getPaymentStatus().equals("paid")) {
+            req.setAttribute("result", "Request must be paid");
+            return Path.MASTER_SERVLET;
+        }
+        if (request.getComplicationStatus().equals("done")) {
+            req.setAttribute("result", "Order already placed");
+            return Path.MASTER_SERVLET;
+        }
+        if (request.getComplicationStatus().equals("under consideration")) {
+            req.setAttribute("result", "Request must be considered");
+            return Path.MASTER_SERVLET;
+        }
+        request.setComplicationStatus("in progress");
+        //Updating request
+        boolean isUpdate = updateRequest(request);
+        if (!isUpdate) {
+            return Path.ERROR;
+        }
+        req.setAttribute("result", "Status changed successfully");
+        return Path.MASTER_SERVLET;
+    }
+
+    private boolean updateRequest(Request request) {
+        try {
+            requestDAO.update(request);
+        } catch (DBException e) {
+            log.error("<---------- take request is failed");
+            return false;
+        }
+        return true;
+    }
+
+    private Request getRequest(long id) {
         Request request;
         try {
             request = requestDAO.getData(id);
         } catch (DBException e) {
-            req.setAttribute("result", e.getMessage());
-            log.error(e.getMessage() + " take request is failed");
-            return Path.ERROR;
+            log.error("<-------- take request is failed", e);
+            return null;
         }
-        if (!request.getPaymentStatus().equals("paid")) {
-            req.setAttribute("result", "request must be paid");
-            return Path.MASTER_SERVLET;
-        }
-        if (request.getComplicationStatus().equals("done")) {
-            req.setAttribute("result", "order already placed");
-            return Path.MASTER_SERVLET;
-        }
-        if (request.getComplicationStatus().equals("under consideration")) {
-            req.setAttribute("result", "request must be considered");
-            return Path.MASTER_SERVLET;
-        }
-        request.setComplicationStatus("in progress");
-        try {
-           requestDAO.update(request);
-        } catch (DBException e) {
-            req.setAttribute("result", e.getMessage());
-            log.error(e.getMessage() + " take request is failed");
-            return Path.ERROR;
-        }
-        req.setAttribute("result", "status changed successfully");
-        return Path.MASTER_SERVLET;
+        return request;
     }
 }
