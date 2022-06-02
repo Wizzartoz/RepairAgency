@@ -44,7 +44,12 @@
                         <fmt:message key = "customer.header.button.replenishment" bundle = "${lang}"/>
                     </button>
                 </li>
-                <li class="mx-2">
+                <li class="nav-item mx-2">
+                    <form action="${pageContext.request.contextPath}/jsp/Customer/profile.jsp" method="get">
+                        <input type="submit" value="<fmt:message key = "customer.header.button.profile" bundle = "${lang}"/>" class="btn btn-outline-warning">
+                    </form>
+                </li>
+                <li >
                     <div class="dropdown">
                         <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             <fmt:message key = "customer.header.button.len" bundle = "${lang}"/>
@@ -60,11 +65,6 @@
                     <form action="GeneralCustomerServlet" method="post">
                         <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
                     <input value="<fmt:message key = "customer.header.button.log_out" bundle = "${lang}"/>" type="submit" class="btn btn-outline-warning">
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <form action="${pageContext.request.contextPath}/jsp/Customer/profile.jsp" method="get">
-                        <input type="submit" class="btn btn-outline-warning">
                     </form>
                 </li>
             </ul>

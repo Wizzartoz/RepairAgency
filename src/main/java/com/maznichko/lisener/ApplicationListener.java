@@ -16,12 +16,12 @@ public class ApplicationListener implements ServletContextListener{
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        log.info("Application was start");
+        log.info("<------------- Application was start");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        log.info("application has completed");
+        log.info("<-------------- Application has completed");
     }
 
 }

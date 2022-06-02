@@ -46,7 +46,7 @@ public class Replenishment {
             return false;
         }
         log.info("<----------- replenishment was successfully");
-        return false;
+        return true;
     }
 
     private boolean updateUser(User user) {

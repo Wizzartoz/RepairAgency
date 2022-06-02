@@ -30,10 +30,12 @@
         <div class="container-xxl align-items-start">
             <ul class="nav">
                 <li class="my-1"><a class="navbar-brand text-white"
-                                    href="${pageContext.request.contextPath}/ManagerReportServlet">RepairAgent</a></li>
+                                    href="${pageContext.request.contextPath}/ManagerServlet">RepairAgent</a></li>
             </ul>
             <ul class="nav">
-                <li class="nav-item mx-3 my-2"><b class="text-white">${requestScope.totalSum} - total sum</b></li>
+                <c:if test="${requestScope.table == null}">
+                    <li class="nav-item mx-3 my-2"><b class="text-white">${requestScope.totalSum} - total sum</b></li>
+                </c:if>
                 <li class="mx-2">
                     <div class="dropdown">
                         <a class="btn btn-outline-warning dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -42,13 +44,13 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="ManagerReportServlet?locale=en">En</a></li>
-                            <li><a class="dropdown-item" href="ManagerReportServlet?locale=ru">Ru</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ManagerReportServlet?locale=en">En</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/ManagerReportServlet?locale=ru">Ru</a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <form action="GeneralCustomerServlet" method="post">
+                    <form action="${pageContext.request.contextPath}/ManagerReportServlet" method="post">
                         <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
                         <input value="<fmt:message key = "customer.header.button.log_out" bundle = "${lang}"/>"
                                type="submit" class="btn btn-outline-warning">
@@ -89,11 +91,11 @@
                     <table class="table table-hover">
                         <thead>
                         <tr class="border-dark">
-                            <th>user login</th>
-                            <th>done orders</th>
-                            <th>orders</th>
-                            <th>bank</th>
-                            <th>statement</th>
+                            <th><fmt:message key = "manager.report.table.user_login" bundle = "${lang}"/></th>
+                            <th><fmt:message key = "manager.report.table.done_orders" bundle = "${lang}"/></th>
+                            <th><fmt:message key = "manager.report.table.orders" bundle = "${lang}"/></th>
+                            <th><fmt:message key = "manager.report.table.bank" bundle = "${lang}"/></th>
+                            <th><fmt:message key = "manager.report.table.statement" bundle = "${lang}"/></th>
                             <th></th>
                         </tr>
                         </thead>
@@ -126,12 +128,12 @@
                     <table class="table table-hover">
                         <thead>
                         <tr class="border-dark">
-                            <th>master login</th>
-                            <th>take order</th>
-                            <th>done order</th>
-                            <th>orders</th>
-                            <th>earnings</th>
-                            <th>rating</th>
+                            <th><fmt:message key = "manager.report.master_table.master_login" bundle = "${lang}"/></th>
+                            <th><fmt:message key = "manager.report.master_table.take_order" bundle = "${lang}"/></th>
+                            <th><fmt:message key = "manager.report.master_table.done_order" bundle = "${lang}"/></th>
+                            <th><fmt:message key = "manager.report.master_table.orders" bundle = "${lang}"/></th>
+                            <th><fmt:message key = "manager.report.master_table.earnings" bundle = "${lang}"/></th>
+                            <th><fmt:message key = "manager.report.master_table.rating" bundle = "${lang}"/></th>
                             <th></th>
                         </tr>
                         </thead>

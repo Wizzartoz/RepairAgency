@@ -45,6 +45,6 @@ public class    SuccessfulDelete {
         }
         DeleteRequest deleteRequest = new DeleteRequest(requestDAOimpl);
         deleteRequest.execute(request);
-        verify(request).setAttribute("result", "deletion successful");
+        verify(request).setAttribute("result", "Deletion successful");
     }
 }

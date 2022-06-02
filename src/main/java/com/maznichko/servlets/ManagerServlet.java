@@ -82,7 +82,7 @@ public class ManagerServlet extends HttpServlet {
         log.info("command: " + command + " is completed");
         if (request.getParameter("name") != null) {
             path = Path.MANAGER_SERVLET;
-            register.register(request, "MASTER");
+            register.register(request, "MASTER",false);
             log.info("registration method was completed");
         }
         response.sendRedirect(path + "?result=" + request.getAttribute("result"));

@@ -31,7 +31,7 @@
         <div class="container-xxl align-items-start">
             <ul class="nav">
                 <li class="my-1"><a class="navbar-brand text-white"
-                                    href="${pageContext.request.contextPath}/MasterServlet">RepairAgent</a></li>
+                                    href="${pageContext.request.contextPath}/GeneralCustomerServlet">RepairAgent</a></li>
             </ul>
             <ul class="nav">
                 <li class="mx-2">
@@ -41,13 +41,13 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="MasterServlet?locale=en">En</a></li>
-                            <li><a class="dropdown-item" href="MasterServlet?locale=ru">Ru</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/jsp/Customer/profile.jsp?locale=en">En</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/jsp/Customer/profile.jsp?locale=ru">Ru</a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <form action="GeneralCustomerServlet" method="post">
+                    <form action="${pageContext.request.contextPath}/GeneralCustomerServlet" method="get">
                         <input name="logout" type="hidden" value="" class="btn btn-outline-warning">
                         <input value="<fmt:message key = "customer.header.button.log_out" bundle = "${lang}"/>" type="submit" class="btn btn-outline-warning">
                     </form>
@@ -62,22 +62,14 @@
             <div class="col-12">
                 <form action="${pageContext.request.contextPath}/GeneralCustomerServlet" method="post">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input disabled type="text" class="form-control"  id="name" aria-describedby="emailHelp" placeholder="Name">
+                        <label for="password"><fmt:message key = "register.label.password" bundle = "${lang}"/></label>
+                        <input oninput="changePassword()" disabled type="password" name="Password" class="form-control" id="password" placeholder="<fmt:message key = "register.label.password" bundle = "${lang}"/>">
+                        <a class="btn btn-outline-warning my-1" onclick="checkLogin('password')" role="button"><fmt:message key = "customer.profile.change" bundle = "${lang}"/></a>
                     </div>
                     <div class="form-group">
-                        <label for="surname">Surname</label>
-                        <input disabled type="password" class="form-control" id="surname" placeholder="Surname">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input disabled type="password" name="Password" class="form-control" id="password" placeholder="Password">
-                        <a class="btn btn-outline-warning" onclick="checkLogin('password')" role="button">Change</a>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input disabled type="email" name="Email" class="form-control" id="email" placeholder="Email">
-                        <a class="btn btn-outline-warning" onclick="checkLogin('email')" role="button">Change</a>
+                        <label for="email"><fmt:message key = "register.label.email" bundle = "${lang}"/></label>
+                        <input oninput="changeEmail()" disabled type="email" name="Email" class="form-control" id="email" placeholder="<fmt:message key = "register.label.email" bundle = "${lang}"/>">
+                        <a class="btn btn-outline-warning my-1" onclick="checkLogin('email')" role="button"><fmt:message key = "customer.profile.change" bundle = "${lang}"/></a>
                     </div>
                     <script>
                         function checkLogin(id){
@@ -86,12 +78,68 @@
                     </script>
                     <input hidden name="command" value="editProfile">
                     <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input disabled name="Phone" type="number" class="form-control" id="phone" placeholder="Phone">
-                        <a class="btn btn-outline-warning" onclick="checkLogin('phone')" role="button">Change</a>
+                        <label for="phone"><fmt:message key = "register.label.phone" bundle = "${lang}"/></label>
+                        <input oninput="changeNumber()" disabled name="Phone" type="number" class="form-control my-1" id="phone" placeholder="<fmt:message key = "register.label.phone" bundle = "${lang}"/>">
+                        <a class="btn btn-outline-warning my-1" onclick="checkLogin('phone')" role="button"><fmt:message key = "customer.profile.change" bundle = "${lang}"/></a>
                     </div>
 
-                    <button type="submit" class="btn btn-warning">Change profile</button>
+                    <button type="submit" id="btn" class="btn btn-warning"><fmt:message key = "customer.profile.button.change" bundle = "${lang}"/></button>
+                <script>
+                    function  changePassword() {
+                        let x = document.getElementById("password").value;
+                        const reg = new RegExp("[A-Za-z0-9]{"+x.length+"}");
+                        if (!reg.test(x)){
+                            document.getElementById("password").style.color = "inherit";
+                            document.getElementById("password").style.backgroundColor = "rgba(250,233,233,0.51)";
+                            document.getElementById("btn").disabled = true;
+                        }
+                        else if (x.length < 6 || x.length > 12){
+                            document.getElementById("password").style.color = "inherit";
+                            document.getElementById("password").style.backgroundColor = "rgba(250,233,233,0.51)";
+                            document.getElementById("btn").disabled = true;
+                        }
+                        else{
+                            document.getElementById("password").style.color = "inherit";
+                            document.getElementById("password").style.backgroundColor = "rgba(207,243,210,0.5)";
+                            document.getElementById("btn").disabled = false;
+                            return true;
+                        }
+                    }
+                    function changeEmail() {
+                        let x = document.getElementById("email").value;
+                        const reg = new RegExp("[a-zA-z]{1,15}[-_.]?[A-Za-z\\d]{1,15}@[a-z]{2,5}[.][a-z]{2,4}");
+                        if (!reg.test(x)){
+                            document.getElementById("email").style.color = "inherit";
+                            document.getElementById("email").style.backgroundColor = "rgba(250,233,233,0.51)";
+                            document.getElementById("btn").disabled = true;
+                        }
+                        else{
+                            document.getElementById("email").style.color = "inherit";
+                            document.getElementById("email").style.backgroundColor = "rgba(207,243,210,0.5)";
+                            document.getElementById("btn").disabled = false;
+                            return true;
+                        }
+
+                    }
+                    function changeNumber() {
+                        let x = document.getElementById("phone").value;
+                        const reg = new RegExp("\\d{10}")
+                        if (x.length !== 10) {
+                            document.getElementById("phone").style.color = "inherit";
+                            document.getElementById("phone").style.backgroundColor = "rgba(250,233,233,0.51)";
+                            document.getElementById("btn").disabled = true;
+                        } else if (!reg.test(x)) {
+                            document.getElementById("phone").style.color = "inherit";
+                            document.getElementById("phone").style.backgroundColor = "rgba(250,233,233,0.51)";
+                            document.getElementById("btn").disabled = true;
+                        } else {
+                            document.getElementById("phone").style.color = "inherit";
+                            document.getElementById("phone").style.backgroundColor = "rgba(207,243,210,0.5)";
+                            document.getElementById("btn").disabled = false;
+                            return true;
+                        }
+                    }
+                </script>
                 </form>
             </div>
         </div>

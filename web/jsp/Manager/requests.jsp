@@ -31,7 +31,7 @@
     <div class="container-xxl align-items-start">
       <ul class="nav">
         <li class="my-1"><a class="navbar-brand text-white"
-                            href="${pageContext.request.contextPath}/ManagerReportServlet">RepairAgent</a></li>
+                            href="${pageContext.request.contextPath}/ManagerServlet">RepairAgent</a></li>
       </ul>
       <ul class="nav">
         <li class="mx-2">
@@ -65,11 +65,11 @@
         <table class="table table-hover">
           <thead>
           <tr class="border-dark">
-            <th>id</th>
-            <th>text</th>
-            <th>price</th>
-            <th>complication status</th>
-            <th>date</th>
+            <th><fmt:message key = "customer.main.table_title.id" bundle = "${lang}"/></th>
+            <th><fmt:message key = "manager.report.rating.table.text" bundle = "${lang}"/></th>
+            <th><fmt:message key = "customer.main.table_title.price" bundle = "${lang}"/></th>
+            <th><fmt:message key = "manager.filter.complication.label" bundle = "${lang}"/></th>
+            <th><fmt:message key = "customer.main.table_title.date" bundle = "${lang}"/></th>
           </tr>
           </thead>
           <tbody>

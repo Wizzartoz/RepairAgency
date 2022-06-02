@@ -31,7 +31,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = Path.REGISTER_SERVLET;
-        boolean isRegister = register.register(request, "CUSTOMER");
+        boolean isRegister = register.register(request, "CUSTOMER",true);
         log.info("method login is completed path: " + path);
         if (isRegister) {
             path = Path.CUSTOMER_SERVLET;

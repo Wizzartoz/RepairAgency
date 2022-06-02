@@ -29,7 +29,7 @@ public class Register {
      * @param role - role of user
      * @return - true if register was successful or not if false
      */
-    public boolean register(HttpServletRequest req, String role) {
+    public boolean register(HttpServletRequest req, String role,boolean captcha) {
         String name = req.getParameter("name");
         if (name == null || name.isEmpty()) {
             req.setAttribute("result", "Name is empty");
@@ -71,10 +71,12 @@ public class Register {
             httpSession.setAttribute("login", login);
             httpSession.setAttribute("role", role);
         }
-        boolean isCaptcha = checkCaptcha(req);
-        if (!isCaptcha) {
-            req.setAttribute("result", "captcha is failed");
-            return false;
+        if (captcha){
+            boolean isCaptcha = checkCaptcha(req);
+            if (!isCaptcha) {
+                req.setAttribute("result", "captcha is failed");
+                return false;
+            }
         }
         boolean isInsert = insertUser(req);
         if (!isInsert) {
