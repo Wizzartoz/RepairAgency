@@ -5,6 +5,7 @@ import com.maznichko.dao.FeedbackDAO;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.impl.FeedbackDAOimpl;
 import com.maznichko.dao.impl.RequestDAOimpl;
+import com.maznichko.dao.impl.UserDAOimpl;
 import org.apache.log4j.Logger;
 
 

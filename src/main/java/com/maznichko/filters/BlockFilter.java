@@ -15,6 +15,7 @@ public class BlockFilter implements Filter {
         HttpSession session = req.getSession();
         if (session.getAttribute("role") != null) {
             if (session.getAttribute("role").equals("BLOCK")) {
+                session.removeAttribute("role");
                 req.getRequestDispatcher(Path.BLOCK_JSP).forward(request, response);
             }
         }

@@ -54,6 +54,7 @@
         <filter-name>Block</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
     <resource-ref>
         <description>DB Connection</description>
         <res-ref-name>jdbc/postgres</res-ref-name>

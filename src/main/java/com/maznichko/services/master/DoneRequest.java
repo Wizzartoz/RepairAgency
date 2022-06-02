@@ -2,19 +2,24 @@ package com.maznichko.services.master;
 
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
+import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.Request;
+import com.maznichko.dao.entity.User;
 import com.maznichko.services.Path;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class DoneRequest implements MasterCommand {
     private final RequestDAO requestDAO;
+    private final UserDAO userDAO;
     private static final Logger log = Logger.getLogger(DoneRequest.class);
 
-    public DoneRequest(RequestDAO requestDAO) {
+    public DoneRequest(RequestDAO requestDAO,UserDAO userDAO) {
         this.requestDAO = requestDAO;
+        this.userDAO = userDAO;
 
     }
 
@@ -44,9 +49,43 @@ public class DoneRequest implements MasterCommand {
         if (!isUpdate) {
             return Path.ERROR;
         }
+        //Replenishment master's bank
+        User master = getUser(req);
+        if (master == null){
+            return Path.ERROR;
+        }
+        master.setBank(((master.getBank() + request.getPrice().intValue())));
+        //Updating master
+        boolean isUpdateMaster = updateUser(master);
+        if (!isUpdateMaster){
+            return Path.ERROR;
+        }
+
         req.setAttribute("result", "Status changed successfully");
         return Path.MASTER_SERVLET;
     }
+    private boolean updateUser(User user){
+        try {
+            userDAO.update(user);
+        } catch (DBException e) {
+            log.error("<------------ update master is failed",e);
+            return false;
+        }
+        return true;
+    }
+
+    private User getUser(HttpServletRequest request){
+        HttpSession httpSession = request.getSession();
+        User user;
+        try {
+           user =  userDAO.getUserByLogin((String) httpSession.getAttribute("login"));
+        } catch (DBException e) {
+            log.error("<------------ get master is failed",e);
+            return null;
+        }
+        return user;
+    }
+
 
     private Request getRequest(long id) {
         Request request;

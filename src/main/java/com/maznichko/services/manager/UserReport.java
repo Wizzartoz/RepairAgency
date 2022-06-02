@@ -51,7 +51,10 @@ public class UserReport {
                     .count());
             userEntities.add(userEntity);
         }
-        request.setAttribute("table", userEntities);
+        request.setAttribute("table", userEntities
+                .stream()
+                .sorted((entity1,entity2)->-entity1.getLogin().compareTo(entity2.getLogin()))
+                .collect(Collectors.toList()));
         return Path.REPORT_JSP;
 
     }
