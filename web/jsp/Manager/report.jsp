@@ -96,7 +96,6 @@
                             <th><fmt:message key = "manager.report.table.orders" bundle = "${lang}"/></th>
                             <th><fmt:message key = "manager.report.table.bank" bundle = "${lang}"/></th>
                             <th><fmt:message key = "manager.report.table.statement" bundle = "${lang}"/></th>
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -134,7 +133,6 @@
                             <th><fmt:message key = "manager.report.master_table.orders" bundle = "${lang}"/></th>
                             <th><fmt:message key = "manager.report.master_table.earnings" bundle = "${lang}"/></th>
                             <th><fmt:message key = "manager.report.master_table.rating" bundle = "${lang}"/></th>
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>

@@ -125,14 +125,14 @@
 <section>
     <div class="container-fluid d-flex justify-content-center">
         <div class="row my-5">
-            <div class="col-2" style="width: 300px">
+            <div class="col-1"  style="width: 250px">
                 <!-- Button trigger modal -->
-                <button onclick="offCheckBox()" type="button" class="btn btn-dark my-1" data-bs-toggle="modal"
+                <button onclick="offCheckBox()" type="button" class="btn btn-dark my-2" data-bs-toggle="modal"
                         data-bs-target="#registerModal">
                     <fmt:message key="register.button.register_master" bundle="${lang}"/>
                 </button>
                 <form action="ManagerReportServlet" method="get">
-                <button type="submit" class="btn btn-dark">Statistic</button>
+                <button style="width: 176px" type="submit" class="btn btn-dark"> <fmt:message key="register.button.statistic" bundle="${lang}"/></button>
                 </form>
 
 
@@ -627,7 +627,7 @@
                 </script>
                 <a id="sendFilterForm" href=""></a>
             </div>
-            <div class="col-10" style="width: 1450px">
+            <div class="col-11" style="width: 1550px">
                 <select id="sorted" name="sort" onchange="SortingContent1();" class="form-select"
                         aria-label="Default select example">
                     <option value="date"><fmt:message key="manager.sorting.date" bundle="${lang}"/></option>

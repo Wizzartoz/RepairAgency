@@ -2,7 +2,6 @@ package com.maznichko.servlets;
 
 import com.maznichko.dao.FeedbackDAO;
 import com.maznichko.dao.RequestDAO;
-import com.maznichko.dao.entity.Feedback;
 import com.maznichko.dao.impl.FeedbackDAOimpl;
 import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.dao.impl.UserDAOimpl;
@@ -18,7 +17,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "ManagerReportServlet", value = "/ManagerReportServlet")
 public class ManagerReportServlet extends HttpServlet {
