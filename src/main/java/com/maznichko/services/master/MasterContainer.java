@@ -1,5 +1,6 @@
 package com.maznichko.services.master;
 
+import com.maznichko.SendEmail;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.dao.impl.UserDAOimpl;
@@ -16,8 +17,8 @@ public class MasterContainer {
 
 
     static {
-        commands.put("doneRequest", new DoneRequest(REQUEST_DAO,new UserDAOimpl()));
-        commands.put("takeRequest", new TakeRequest(REQUEST_DAO));
+        commands.put("doneRequest", new DoneRequest(REQUEST_DAO,new UserDAOimpl(),new SendEmail()));
+        commands.put("takeRequest", new TakeRequest(REQUEST_DAO,new SendEmail()));
         log.info("<--------- master container is set up");
 
     }

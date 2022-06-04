@@ -45,10 +45,16 @@
             <artifactId>javax.json</artifactId>
             <version>1.0.4</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>javax.activation</artifactId>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>

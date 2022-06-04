@@ -1,6 +1,7 @@
 package com.maznichko.servlets;
 
 
+import com.maznichko.SendEmail;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.impl.RequestDAOimpl;
 import com.maznichko.dao.impl.UserDAOimpl;
@@ -39,7 +40,7 @@ public class ManagerServlet extends HttpServlet {
                 .linkWith(new Sort())
                 .linkWith(new Pagination());
         replenishment = new Replenishment(userDAO);
-        register = new Register(userDAO);
+        register = new Register(userDAO,new SendEmail());
     }
 
     @Override

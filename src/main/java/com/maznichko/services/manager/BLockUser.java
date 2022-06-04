@@ -1,5 +1,6 @@
 package com.maznichko.services.manager;
 
+import com.maznichko.Sender;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
@@ -8,10 +9,12 @@ import org.apache.log4j.Logger;
 
 public class BLockUser {
     private final UserDAO userDAO;
+    private final Sender sender;
     private static final Logger log = Logger.getLogger(BLockUser.class);
 
-    public BLockUser(UserDAO userDAO){
+    public BLockUser(UserDAO userDAO,Sender sender){
         this.userDAO = userDAO;
+        this.sender = sender;
 
     }
     public String block(String userLogin){
@@ -25,6 +28,14 @@ public class BLockUser {
         boolean isUpdate = updateUser(user);
         if (isUpdate){
             log.info(user + " " + user.getLogin() + " is block <------");
+            /*
+            sender.send(
+                    "RepairAgent",
+                    "Sorry, but you have been block",
+                    "maznichkogame@gmail.com"
+            );
+
+             */
             return Path.REPORT_SERVLET;
         }
         return Path.ERROR;
@@ -40,6 +51,14 @@ public class BLockUser {
         boolean isUpdate = updateUser(user);
         if (isUpdate){
             log.info(user + " " + user.getLogin() + " is unblock <------");
+            /*
+            sender.send(
+                    "RepairAgent",
+                    "Congratulation, you have been unblock",
+                    "maznichkogame@gmail.com"
+            );
+
+             */
             return Path.REPORT_SERVLET;
         }
         return Path.ERROR;

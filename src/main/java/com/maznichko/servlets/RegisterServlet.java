@@ -1,5 +1,6 @@
 package com.maznichko.servlets;
 
+import com.maznichko.SendEmail;
 import com.maznichko.dao.impl.UserDAOimpl;
 import com.maznichko.services.Path;
 import com.maznichko.services.Register;
@@ -18,7 +19,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        register = new Register(new UserDAOimpl());
+        register = new Register(new UserDAOimpl(),new SendEmail());
     }
 
     @Override

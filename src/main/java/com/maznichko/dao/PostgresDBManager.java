@@ -2,9 +2,12 @@ package com.maznichko.dao;
 
 import org.apache.log4j.Logger;
 
+import javax.el.ResourceBundleELResolver;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * Concrete realisation connect to Postgres DB

@@ -1,51 +1,61 @@
 package com.maznichko;
 
-import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
+import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-public class SendEmail {
-    final String username = "maznichkogame@gmail.com";
-    final String password = "Maznichko455";
-    private static final Properties prop = new Properties();
+
+/**
+ * This class sending message on email
+ */
+public class SendEmail extends Thread implements Sender {
+    private static final Logger log = Logger.getLogger(SendEmail.class);
+    private static final String user = "repairagent455@gmail.com";
+    private static final String password = "dkmpirvdknocxtha";
+    private String header;
+    private String body;
+    private String to;
+    private static final Properties props = new Properties();
 
     static {
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", "587");
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.ssl.trust", "*");
     }
-    Session session = Session.getInstance(prop,
+
+    Session session = Session.getDefaultInstance(props,
             new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(username, password);
+                    return new PasswordAuthentication(user, password);
                 }
             });
 
-    public void sendEmail(){
+    @Override
+    public void run() {
         try {
-            Class.forName("javax.activation.DataHandler");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("maznichkogame@gmail.com"));
-            message.setRecipients(
-                    Message.RecipientType.TO,
-                    InternetAddress.parse("mmaznicko@gmail.com")
-            );
-            message.setSubject("Testing Gmail TLS");
-            message.setText("Dear Mail Crawler,"
-                    + "\n\n Please do not spam my email!");
-
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(user));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject(header);
+            message.setText(body);
             Transport.send(message);
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        } catch (MessagingException mex) {
+            log.warn("<------------------ send message is failed");
+            mex.printStackTrace();
         }
+    }
 
+    @Override
+    public void send(String header, String body, String to) {
+        this.header = header;
+        this.body = body;
+        this.to = to;
+        start();
     }
 
 }

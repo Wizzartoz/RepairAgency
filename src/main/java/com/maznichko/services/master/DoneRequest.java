@@ -1,5 +1,6 @@
 package com.maznichko.services.master;
 
+import com.maznichko.Sender;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.UserDAO;
@@ -15,11 +16,13 @@ import javax.servlet.http.HttpSession;
 public class DoneRequest implements MasterCommand {
     private final RequestDAO requestDAO;
     private final UserDAO userDAO;
+    private final Sender sender;
     private static final Logger log = Logger.getLogger(DoneRequest.class);
 
-    public DoneRequest(RequestDAO requestDAO,UserDAO userDAO) {
+    public DoneRequest(RequestDAO requestDAO,UserDAO userDAO,Sender sender) {
         this.requestDAO = requestDAO;
         this.userDAO = userDAO;
+        this.sender = sender;
 
     }
 
@@ -60,7 +63,14 @@ public class DoneRequest implements MasterCommand {
         if (!isUpdateMaster){
             return Path.ERROR;
         }
+        /*
+        sender.send(
+                "Request",
+                "The master did your order",
+                "maznichkogame@gmail.com"
+        );
 
+         */
         req.setAttribute("result", "Status changed successfully");
         return Path.MASTER_SERVLET;
     }

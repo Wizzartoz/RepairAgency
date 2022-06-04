@@ -1,5 +1,7 @@
 package com.maznichko.services.customer;
 
+import com.maznichko.SendEmail;
+import com.maznichko.Sender;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.entity.Request;
@@ -13,10 +15,12 @@ public class SendRequest implements CustomerCommand {
     private static final Logger log = Logger.getLogger(SendRequest.class);
     private final RequestDAO requestDAO;
     private final Request request;
+    private final Sender sender;
 
-    public SendRequest(RequestDAO requestDAO) {
+    public SendRequest(RequestDAO requestDAO,Sender sender) {
         this.requestDAO = requestDAO;
         request = new Request();
+        this.sender = sender;
     }
 
     /**
@@ -50,10 +54,14 @@ public class SendRequest implements CustomerCommand {
             log.error("<----------- send request is failed", e);
             return Path.ERROR;
         }
-        req.setAttribute("result", "you have successfully submitted your request");
+        /*
+        sender.send("Request",
+                "You're successfully left request, wait for consideration",
+                "maznichkogame@gmail.com");
+
+         */
         return Path.CUSTOMER_SERVLET;
     }
-
     private boolean insertRequest() {
         try {
             requestDAO.insert(request);

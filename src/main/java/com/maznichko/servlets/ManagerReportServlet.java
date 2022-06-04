@@ -1,5 +1,6 @@
 package com.maznichko.servlets;
 
+import com.maznichko.SendEmail;
 import com.maznichko.dao.FeedbackDAO;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.impl.FeedbackDAOimpl;
@@ -34,7 +35,7 @@ public class ManagerReportServlet extends HttpServlet {
         masterReport = new MasterReport(requestDAO, feedbackDAO);
         userReport = new UserReport(requestDAO);
         getFeedback = new GetFeedback(feedbackDAO);
-        bLockUser = new BLockUser(new UserDAOimpl());
+        bLockUser = new BLockUser(new UserDAOimpl(),new SendEmail());
         getMasterRequests = new GetMasterRequests(requestDAO);
     }
 

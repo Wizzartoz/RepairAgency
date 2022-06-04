@@ -1,5 +1,6 @@
 package com.maznichko.services.customer;
 
+import com.maznichko.SendEmail;
 import com.maznichko.dao.FeedbackDAO;
 import com.maznichko.dao.RequestDAO;
 import com.maznichko.dao.UserDAO;
@@ -24,7 +25,7 @@ public class CustomerContainer {
         commands.put("deleteRequest", new DeleteRequest(REQUEST_DAO));
         commands.put("leaveFeedback", new LeaveFeedback(FEEDBACK_DAO,REQUEST_DAO));
         commands.put("paid", new Paid(USER_DAO,REQUEST_DAO));
-        commands.put("sendRequest", new SendRequest(REQUEST_DAO));
+        commands.put("sendRequest", new SendRequest(REQUEST_DAO,new SendEmail()));
         commands.put("editProfile", new EditProfile(USER_DAO));
         log.info("<--------- customer container is set up");
     }

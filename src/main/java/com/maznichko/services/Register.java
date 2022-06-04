@@ -1,6 +1,7 @@
 package com.maznichko.services;
 
 import com.maznichko.MD5;
+import com.maznichko.Sender;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
@@ -15,10 +16,12 @@ public class Register {
     private final UserDAO userDAO;
     private static final Logger log = Logger.getLogger(Register.class);
     private final User user;
+    private final Sender sender;
 
-    public Register(UserDAO userDAO) {
+    public Register(UserDAO userDAO,Sender sender) {
         this.userDAO = userDAO;
         user = new User();
+        this.sender = sender;
     }
 
 
@@ -82,6 +85,14 @@ public class Register {
         if (!isInsert) {
             return false;
         }
+        /*
+        sender.send(
+                "Successfully registered",
+                "We're congratulation you with registration!",
+                "maznichkogame@gmail.com"
+        );
+
+         */
         req.setAttribute("result", "user successfully registered");
         log.info("user " + login + "<-------- was registering successful");
         return true;
