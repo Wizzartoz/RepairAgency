@@ -50,7 +50,7 @@ public class SendRequest implements CustomerCommand {
         try {
             requestDAO.insertRequestInUserRequest(login, request.getRequestID());
             requestDAO.insertRequestInUserRequest(
-                    GetProperties.getProp("src/main/resources/config.properties")
+                    GetProperties.getProp("/home/misha/IdeaProjects/RepairAgent/src/main/resources/config.properties")
                     .getProperty("root"),
                     request.getRequestID()
             );
