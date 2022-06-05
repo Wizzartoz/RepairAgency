@@ -2,4 +2,4 @@
 /out/
 /target/
 *.log
-**/config.properties
+config.properties
