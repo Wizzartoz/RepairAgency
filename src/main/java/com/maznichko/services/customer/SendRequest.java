@@ -1,5 +1,6 @@
 package com.maznichko.services.customer;
 
+import com.maznichko.GetProperties;
 import com.maznichko.SendEmail;
 import com.maznichko.Sender;
 import com.maznichko.dao.DBException;
@@ -46,10 +47,13 @@ public class SendRequest implements CustomerCommand {
         if (!isInsert) {
             return Path.ERROR;
         }
-        //TODO change insert user
         try {
             requestDAO.insertRequestInUserRequest(login, request.getRequestID());
-            requestDAO.insertRequestInUserRequest("user3", request.getRequestID());
+            requestDAO.insertRequestInUserRequest(
+                    GetProperties.getProp("src/main/resources/config.properties")
+                    .getProperty("root"),
+                    request.getRequestID()
+            );
         } catch (DBException e) {
             log.error("<----------- send request is failed", e);
             return Path.ERROR;

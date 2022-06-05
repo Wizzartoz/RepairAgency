@@ -3,7 +3,6 @@ package com.maznichko.services.common;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
-import com.maznichko.services.Path;
 import org.apache.log4j.Logger;
 
 

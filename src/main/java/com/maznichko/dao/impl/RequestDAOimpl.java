@@ -35,7 +35,7 @@ public class RequestDAOimpl extends RequestDAO {
         Connection connection = null;
         ResultSet resultSet;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             resultSet = connection
                     .createStatement()
                     .executeQuery(SQLQuery.RequestQuery.SELECT_ALL_FROM_REQUEST);
@@ -48,7 +48,7 @@ public class RequestDAOimpl extends RequestDAO {
             log.error(e.getMessage() + " failed to find all requests");
             throw new DBException("SQL Exception: failed to find all requests", e);
         } finally {
-            dao.close(connection);
+            DBCPDataSource.close(connection);
         }
         return requests;
     }
@@ -60,7 +60,7 @@ public class RequestDAOimpl extends RequestDAO {
         Connection connection = null;
         PreparedStatement prGet = null;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             prGet = connection.prepareStatement(SQLQuery.RequestQuery.SELECT_ALL_FROM_REQUEST_WHERE);
             prGet.setLong(1, id);
             ResultSet rs = prGet.executeQuery();
@@ -71,8 +71,8 @@ public class RequestDAOimpl extends RequestDAO {
             log.error(e.getMessage() + " failed to get request by id");
             throw new DBException("SQL Exception: failed to get request by id", e);
         } finally {
-            dao.close(prGet);
-            dao.close(connection);
+            DBCPDataSource.close(prGet);
+            DBCPDataSource.close(connection);
         }
         return request;
     }
@@ -82,8 +82,8 @@ public class RequestDAOimpl extends RequestDAO {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = dao.connect();
-            dao.autocommit(con, false);
+            con = DBCPDataSource.getConnection();
+            DBCPDataSource.autocommit(con, false);
             pstmt = con.prepareStatement(SQLQuery.RequestQuery.UPDATE_REQUEST);
             pstmt.setString(1, data.getDescription());
             pstmt.setString(2, data.getComplicationStatus());
@@ -93,19 +93,19 @@ public class RequestDAOimpl extends RequestDAO {
             pstmt.setLong(6, data.getRequestID());
             int updateResult = pstmt.executeUpdate();
             if (updateResult == 0) {
-                dao.rollback(con);
+                DBCPDataSource.rollback(con);
                 return false;
             }
             con.commit();
             log.info("update request was successfully");
 
         } catch (SQLException e) {
-            dao.rollback(con);
+            DBCPDataSource.rollback(con);
             throw new DBException("SQL Exception", e);
         } finally {
-            dao.autocommit(con, true);
-            dao.close(pstmt);
-            dao.close(con);
+            DBCPDataSource.autocommit(con, true);
+            DBCPDataSource.close(pstmt);
+            DBCPDataSource.close(con);
         }
         return true;
     }
@@ -115,7 +115,7 @@ public class RequestDAOimpl extends RequestDAO {
         Connection connection = null;
         PreparedStatement prDelete = null;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             prDelete = connection.prepareStatement(SQLQuery.RequestQuery.DELETE_FROM_REQUEST);
             prDelete.setLong(1, data.getRequestID());
             int delResult = prDelete.executeUpdate();
@@ -127,8 +127,8 @@ public class RequestDAOimpl extends RequestDAO {
             log.error(e.getMessage() + " failed to delete request");
             throw new DBException("SQL Exception: failed to delete request", e);
         } finally {
-            dao.close(prDelete);
-            dao.close(connection);
+            DBCPDataSource.close(prDelete);
+            DBCPDataSource.close(connection);
         }
         return true;
     }
@@ -138,8 +138,8 @@ public class RequestDAOimpl extends RequestDAO {
         Connection connection = null;
         PreparedStatement pstmt = null;
         try {
-            connection = dao.connect();
-            dao.autocommit(connection, false);
+            connection = DBCPDataSource.getConnection();
+            DBCPDataSource.autocommit(connection, false);
             pstmt = connection.prepareStatement(SQLQuery.RequestQuery.INSERT_REQUEST, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, data.getDescription());
             pstmt.setString(2, data.getComplicationStatus());
@@ -154,19 +154,19 @@ public class RequestDAOimpl extends RequestDAO {
                     log.info("insert feedback was successfully");
                     return true;
                 }
-                dao.rollback(connection);
+                DBCPDataSource.rollback(connection);
                 return false;
             }
-            dao.rollback(connection);
+            DBCPDataSource.rollback(connection);
             return false;
         } catch (SQLException e) {
-            dao.rollback(connection);
+            DBCPDataSource.rollback(connection);
             log.error(e.getMessage() + " failed to insert request");
             throw new DBException("SQL Exception: failed to insert request", e);
         } finally {
-            dao.autocommit(connection, true);
-            dao.close(pstmt);
-            dao.close(connection);
+            DBCPDataSource.autocommit(connection, true);
+            DBCPDataSource.close(pstmt);
+            DBCPDataSource.close(connection);
         }
     }
 
@@ -176,7 +176,7 @@ public class RequestDAOimpl extends RequestDAO {
         PreparedStatement prGet = null;
         List<Request> requests = new ArrayList<>();
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             prGet = connection.prepareStatement(SQLQuery.RequestQuery.SELECT_ALL_FROM_USER_REQUEST);
             prGet.setString(1, login);
             ResultSet rs = prGet.executeQuery();
@@ -189,8 +189,8 @@ public class RequestDAOimpl extends RequestDAO {
             log.error(e.getMessage() + " failed get request by login");
             throw new DBException("SQL Exception: failed request by login", e);
         } finally {
-            dao.close(prGet);
-            dao.close(connection);
+            DBCPDataSource.close(prGet);
+            DBCPDataSource.close(connection);
         }
         return requests;
     }
@@ -200,7 +200,7 @@ public class RequestDAOimpl extends RequestDAO {
         Connection connection = null;
         PreparedStatement pstmt = null;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             pstmt = connection.prepareStatement(SQLQuery.RequestQuery.INSERT_INTO_USER_REQUEST);
             pstmt.setString(1, login);
             pstmt.setLong(2, requestID);
@@ -213,8 +213,8 @@ public class RequestDAOimpl extends RequestDAO {
             log.error(e.getMessage() + " failed insert request in user_request table");
             throw new DBException("SQL Exception: failed insert request in user_request table", e);
         } finally {
-            dao.close(pstmt);
-            dao.close(connection);
+            DBCPDataSource.close(pstmt);
+            DBCPDataSource.close(connection);
         }
         return true;
     }

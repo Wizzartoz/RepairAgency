@@ -734,7 +734,7 @@
                                     </c:if>
                                     <c:if test="${request.masterLogin == null}">
                                     <td>
-                                        <select name="usr" class="form-select my-2"
+                                        <select name="usr" class="form-select"
                                                 aria-label="Default select example">
                                             <option>мастер не назначен</option>
                                             <c:forEach var="user" items="${requestScope.masters}">

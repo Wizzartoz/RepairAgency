@@ -53,14 +53,14 @@ public class GeneralCustomerServlet extends HttpServlet {
             if (isReplenishment) {
                 path = Path.CUSTOMER_SERVLET;
             } else {
-                log.error("replenishment is failed");
+                log.error("<------------- replenishment is failed");
                 path = Path.ERROR;
             }
         }
         CustomerCommand command = CustomerContainer.get(request.getParameter("command"));
         if (command != null) {
             path = command.execute(request);
-            log.info("command: " + command + " is completed");
+            log.info("<------------ command: " + command + " is completed");
         }
         response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }

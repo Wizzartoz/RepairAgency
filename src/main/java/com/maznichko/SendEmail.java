@@ -13,13 +13,13 @@ import javax.mail.internet.MimeMessage;
  */
 public class SendEmail extends Thread implements Sender {
     private static final Logger log = Logger.getLogger(SendEmail.class);
-    private static final String user = "repairagent455@gmail.com";
-    private static final String password = "dkmpirvdknocxtha";
+    private static Properties properties = GetProperties.getProp("/home/misha/IdeaProjects/RepairAgent/src/main/resources/config.properties");
+    private static final String user = properties.getProperty("email.login");
+    private static final String password = properties.getProperty("email.password");
     private String header;
     private String body;
     private String to;
     private static final Properties props = new Properties();
-
     static {
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.auth", "true");

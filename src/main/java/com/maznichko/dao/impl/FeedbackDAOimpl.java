@@ -37,7 +37,7 @@ public class FeedbackDAOimpl extends FeedbackDAO {
         Connection connection = null;
         ResultSet resultSet;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             resultSet = connection
                     .createStatement()
                     .executeQuery(SQLQuery.RequestFeedback.SELECT_ALL_FROM_FEEDBACK);
@@ -50,7 +50,7 @@ public class FeedbackDAOimpl extends FeedbackDAO {
             log.error(e.getMessage() + " cannot find all feedback");
             throw new DBException("SQL Exception: cannot find all feedback", e);
         } finally {
-            dao.close(connection);
+            DBCPDataSource.close(connection);
         }
         return feedbacks;
     }
@@ -61,7 +61,7 @@ public class FeedbackDAOimpl extends FeedbackDAO {
         Connection connection = null;
         PreparedStatement prGet = null;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             prGet = connection.prepareStatement(SQLQuery.RequestFeedback.SELECT_ALL_FROM_FEEDBACK_WHERE);
             prGet.setLong(1, id);
             ResultSet rs = prGet.executeQuery();
@@ -72,8 +72,8 @@ public class FeedbackDAOimpl extends FeedbackDAO {
             log.error(e.getMessage() + " cannot get feedback");
             throw new DBException("SQL Exception: cannot get feedback", e);
         } finally {
-            dao.close(prGet);
-            dao.close(connection);
+            DBCPDataSource.close(prGet);
+            DBCPDataSource.close(connection);
         }
         return feedback;
     }
@@ -88,7 +88,7 @@ public class FeedbackDAOimpl extends FeedbackDAO {
         Connection connection = null;
         PreparedStatement prDelete = null;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             prDelete = connection.prepareStatement(SQLQuery.RequestFeedback.DELETE_FROM_FEEDBACK);
             prDelete.setLong(1, data.getFeedbackID());
             int delResult = prDelete.executeUpdate();
@@ -100,8 +100,8 @@ public class FeedbackDAOimpl extends FeedbackDAO {
             log.error(e.getMessage() + " cannot delete feedback");
             throw new DBException("SQL Exception: cannot delete feedback", e);
         } finally {
-            dao.close(prDelete);
-            dao.close(connection);
+            DBCPDataSource.close(prDelete);
+            DBCPDataSource.close(connection);
         }
         return true;
     }
@@ -111,8 +111,8 @@ public class FeedbackDAOimpl extends FeedbackDAO {
         Connection connection = null;
         PreparedStatement pstmt = null;
         try {
-            connection = dao.connect();
-            dao.autocommit(connection, false);
+            connection = DBCPDataSource.getConnection();
+            DBCPDataSource.autocommit(connection, false);
             pstmt = connection.prepareStatement(SQLQuery.RequestFeedback.INSERT_FEEDBACK);
             pstmt.setString(1, data.getFeedbackText());
             pstmt.setInt(2, data.getRating());
@@ -120,19 +120,19 @@ public class FeedbackDAOimpl extends FeedbackDAO {
             pstmt.setString(4, data.getMasterLogin());
             int rs = pstmt.executeUpdate();
             if (rs == 0) {
-                dao.rollback(connection);
+                DBCPDataSource.rollback(connection);
                 return false;
             }
             connection.commit();
             log.info("insert feedback was successfully");
         } catch (SQLException e) {
             log.error(e.getMessage() + " cannot insert feedback");
-            dao.rollback(connection);
+            DBCPDataSource.rollback(connection);
             throw new DBException("SQL Exception: cannot insert feedback", e);
         } finally {
-            dao.autocommit(connection, true);
-            dao.close(pstmt);
-            dao.close(connection);
+            DBCPDataSource.autocommit(connection, true);
+            DBCPDataSource.close(pstmt);
+            DBCPDataSource.close(connection);
         }
         return true;
     }

@@ -54,7 +54,7 @@ public class ManagerServlet extends HttpServlet {
         if (command != null) {
             path = command.execute(request, response);
         }
-        log.info("command: " + command + " is completed");
+        log.info("<----------- command: " + command + " is completed");
         String result = request.getParameter("result");
         request.setAttribute("result", result);
         request.setAttribute("bank", request.getSession().getAttribute("bank"));
@@ -72,7 +72,7 @@ public class ManagerServlet extends HttpServlet {
             if (isReplenishment) {
                 path = Path.MANAGER_SERVLET;
             } else {
-                log.error("replenishment is failed");
+                log.error("<-------------- replenishment is failed");
                 path = Path.ERROR;
             }
         }
@@ -80,11 +80,11 @@ public class ManagerServlet extends HttpServlet {
         if (command != null) {
             path = command.execute(request, response);
         }
-        log.info("command: " + command + " is completed");
+        log.info("<------------ command: " + command + " is completed");
         if (request.getParameter("name") != null) {
             path = Path.MANAGER_SERVLET;
             register.register(request, "MASTER",false);
-            log.info("registration method was completed");
+            log.info("<------------ registration method was completed");
         }
         response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }

@@ -8,21 +8,6 @@ import java.sql.Statement;
  * Abstract class for set connection to DB
  */
 public abstract class ManagerDB {
-    /**
-     * connection url for create connect to DB
-     */
-    public String CONNECTION_URL;
-    //Singlton
-    protected ManagerDB(){
-
-    }
-
-    /**
-     * create connection to DB
-     * @return - connection
-     * @throws SQLException - throw if we are cannot connect to DB
-     */
-    public abstract Connection connect() throws SQLException;
 
     /**
      * close connection to DB
@@ -30,7 +15,7 @@ public abstract class ManagerDB {
      * @throws DBException - if a database access error occurs
      */
 
-    public void close(Statement statement) throws DBException {
+    public static void close(Statement statement) throws DBException {
         try {
             if (statement != null) {
                 statement.close();
@@ -45,7 +30,7 @@ public abstract class ManagerDB {
      * @throws DBException - if a database access error occurs
      */
 
-    public void close(Connection connection) throws DBException {
+    public static void close(Connection connection) throws DBException {
         try {
             if (connection != null) {
                 connection.close();
@@ -62,7 +47,7 @@ public abstract class ManagerDB {
      * @throws DBException - if a database access error occurs
      */
 
-    public void rollback(Connection connection) throws DBException {
+    public static void rollback(Connection connection) throws DBException {
         try {
             if (connection != null) {
                 connection.rollback();
@@ -79,7 +64,7 @@ public abstract class ManagerDB {
      * @param flag - statement of autocommit
      * @throws DBException - if a database access error occurs
      */
-    public void autocommit(Connection connection,boolean flag) throws DBException {
+    public static void autocommit(Connection connection,boolean flag) throws DBException {
         try {
             if (connection != null) {
                 connection.setAutoCommit(flag);

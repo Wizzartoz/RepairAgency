@@ -30,6 +30,7 @@ public class Pagination extends Filterable {
         } else if (httpSession.getAttribute("offset") != null) {
             offset = (int) httpSession.getAttribute("offset");
         }
+        //TODO КОСТЫЛЬ
         if (request.getParameter("payStatus") != null
                 || request.getParameter("compStatus") != null
                 || request.getParameter("masterLogin") != null){

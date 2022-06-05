@@ -8,10 +8,6 @@ import java.util.List;
  * @param <T> parameterizable type of entity
  */
 public abstract class BaseDAO<T extends Entity> {
-    /**
-     * concrete instance of DB
-     */
-    protected ManagerDB dao = PostgresDBManager.getInstance();
 
     /**
      * get all element from DB

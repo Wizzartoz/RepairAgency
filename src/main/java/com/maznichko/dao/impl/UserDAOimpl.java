@@ -1,6 +1,7 @@
 package com.maznichko.dao.impl;
 
 
+import com.maznichko.dao.DBCPDataSource;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.UserDAO;
 import com.maznichko.dao.entity.User;
@@ -39,7 +40,7 @@ public class UserDAOimpl extends UserDAO {
         Connection connection = null;
         ResultSet resultSet;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             resultSet = connection
                     .createStatement()
                     .executeQuery(SQLQuery.UserQuery.SELECT_ALL_FROM_USER);
@@ -52,7 +53,7 @@ public class UserDAOimpl extends UserDAO {
             log.error(e.getMessage() + " failed to find all users");
             throw new DBException("SQl Exception: failed to find all users", e);
         } finally {
-            dao.close(connection);
+            DBCPDataSource.close(connection);
         }
         return users;
     }
@@ -63,7 +64,7 @@ public class UserDAOimpl extends UserDAO {
         Connection connection = null;
         PreparedStatement prGet = null;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             prGet = connection.prepareStatement(SQLQuery.UserQuery.SELECT_ALL_FROM_USERS_WHERE_ID);
             prGet.setLong(1, id);
             ResultSet rs = prGet.executeQuery();
@@ -74,8 +75,8 @@ public class UserDAOimpl extends UserDAO {
             log.error(e.getMessage() + " failed to get user by id");
             throw new DBException("SQl Exception: failed to get user by id", e);
         } finally {
-            dao.close(prGet);
-            dao.close(connection);
+            DBCPDataSource.close(prGet);
+            DBCPDataSource.close(connection);
         }
         return user;
     }
@@ -85,8 +86,8 @@ public class UserDAOimpl extends UserDAO {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
-            con = dao.connect();
-            dao.autocommit(con, false);
+            con = DBCPDataSource.getConnection();
+            DBCPDataSource.autocommit(con, false);
             pstmt = con.prepareStatement(SQLQuery.UserQuery.UPDATE_USER);
             pstmt.setString(1, data.getLogin());
             pstmt.setString(2, data.getPassword());
@@ -105,13 +106,13 @@ public class UserDAOimpl extends UserDAO {
             con.commit();
 
         } catch (SQLException e) {
-            dao.rollback(con);
+            DBCPDataSource.rollback(con);
             log.error(e.getMessage() + " failed to update user");
             throw new DBException("SQl Exception: failed to update user", e);
         } finally {
-            dao.autocommit(con, true);
-            dao.close(pstmt);
-            dao.close(con);
+            DBCPDataSource.autocommit(con, true);
+            DBCPDataSource.close(pstmt);
+            DBCPDataSource.close(con);
         }
         return true;
     }
@@ -121,7 +122,7 @@ public class UserDAOimpl extends UserDAO {
         Connection connection = null;
         PreparedStatement prDelete = null;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             prDelete = connection.prepareStatement(SQLQuery.UserQuery.DELETE_FROM_USER);
             prDelete.setString(1, data.getLogin());
             int delResult = prDelete.executeUpdate();
@@ -133,8 +134,8 @@ public class UserDAOimpl extends UserDAO {
             log.error(e.getMessage() + " failed to delete user");
             throw new DBException("SQl Exception: failed to delete user", e);
         } finally {
-            dao.close(prDelete);
-            dao.close(connection);
+            DBCPDataSource.close(prDelete);
+            DBCPDataSource.close(connection);
         }
         return true;
     }
@@ -145,8 +146,8 @@ public class UserDAOimpl extends UserDAO {
         PreparedStatement prInsert = null;
         ResultSet rs;
         try {
-            connection = dao.connect();
-            dao.autocommit(connection, false);
+            connection = DBCPDataSource.getConnection();
+            DBCPDataSource.autocommit(connection, false);
             prInsert = connection.prepareStatement(SQLQuery.UserQuery.INSERT_USER_INTO_USER, Statement.RETURN_GENERATED_KEYS);
             prInsert.setString(1, data.getLogin());
             prInsert.setString(2, data.getPassword());
@@ -165,17 +166,17 @@ public class UserDAOimpl extends UserDAO {
                     connection.commit();
                 }
             } else {
-                dao.rollback(connection);
+                DBCPDataSource.rollback(connection);
                 return false;
             }
         } catch (SQLException e) {
-            dao.rollback(connection);
+            DBCPDataSource.rollback(connection);
             log.error(e.getMessage() + " failed to insert user");
             throw new DBException("SQl Exception: failed to insert user", e);
         } finally {
-            dao.autocommit(connection, true);
-            dao.close(prInsert);
-            dao.close(connection);
+            DBCPDataSource.autocommit(connection, true);
+            DBCPDataSource.close(prInsert);
+            DBCPDataSource.close(connection);
         }
         return true;
     }
@@ -186,7 +187,7 @@ public class UserDAOimpl extends UserDAO {
         Connection connection = null;
         PreparedStatement prGet = null;
         try {
-            connection = dao.connect();
+            connection = DBCPDataSource.getConnection();
             prGet = connection.prepareStatement(SQLQuery.UserQuery.SELECT_ALL_FROM_USERS_WHERE_LOGIN);
             prGet.setString(1, login);
             ResultSet rs = prGet.executeQuery();
@@ -197,8 +198,8 @@ public class UserDAOimpl extends UserDAO {
             log.error(e.getMessage() + " failed to get user by login");
             throw new DBException("SQl Exception: failed to get user by login", e);
         } finally {
-            dao.close(prGet);
-            dao.close(connection);
+            DBCPDataSource.close(prGet);
+            DBCPDataSource.close(connection);
         }
         return user;
     }

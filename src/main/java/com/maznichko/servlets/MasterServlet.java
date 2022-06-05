@@ -47,7 +47,7 @@ public class MasterServlet extends HttpServlet {
         if (command != null) {
             path = command.execute(request, response);
         }
-        log.info("command: " + command + " is completed");
+        log.info("<-------------- command: " + command + " is completed");
         response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }
 }

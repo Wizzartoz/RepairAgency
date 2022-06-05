@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = login.execute(request);
-        log.info("method login is completed path: " + path);
+        log.info("<---------- method login is completed path: " + path);
         response.sendRedirect(path + "?result=" + request.getAttribute("result"));
     }
 }
