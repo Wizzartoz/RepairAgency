@@ -35,7 +35,7 @@
         <div class="container-xxl">
             <ul class="nav">
                 <li><a class="navbar-brand text-white"
-                       href="${pageContext.request.contextPath}/index.jsp">RepairAgent</a></li>
+                       href="${pageContext.request.contextPath}/index.jsp">RepairAgency</a></li>
             </ul>
             <ul class="nav my-2 mx-1">
                 <c:if test="${sessionScope.get('role') != null}">

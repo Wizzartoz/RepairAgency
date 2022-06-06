@@ -31,7 +31,7 @@
         <div class="container-xxl align-items-start">
             <ul class="nav">
                 <li class="my-1"><a class="navbar-brand text-white"
-                                    href="${pageContext.request.contextPath}/ManagerServlet">RepairAgent</a></li>
+                                    href="${pageContext.request.contextPath}/ManagerServlet">RepairAgency</a></li>
             </ul>
             <ul class="nav">
                 <li class="mx-2">

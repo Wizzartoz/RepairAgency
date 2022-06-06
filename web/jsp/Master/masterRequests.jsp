@@ -30,7 +30,7 @@
         <div class="container-xxl align-items-start">
             <ul class="nav">
                 <li class="my-1"><a class="navbar-brand text-white"
-                       href="${pageContext.request.contextPath}/MasterServlet">RepairAgent</a></li>
+                       href="${pageContext.request.contextPath}/MasterServlet">RepairAgency</a></li>
             </ul>
             <ul class="nav">
                 <li class="nav-item mx-3 my-2"><b class="text-white">${requestScope.bank} - <fmt:message key = "customer.header.count" bundle = "${lang}"/></b></li>
