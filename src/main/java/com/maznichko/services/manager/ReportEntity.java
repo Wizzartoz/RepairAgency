@@ -1,6 +1,6 @@
 package com.maznichko.services.manager;
 
-public class ReportEntity implements Comparable{
+public class ReportEntity implements Comparable {
     String masterLogin;
     int takeOrders;
     int doneOrders;
@@ -8,16 +8,9 @@ public class ReportEntity implements Comparable{
     float earnings;
     String rate;
 
-    public int getTakeOrders() {
-        return takeOrders;
-    }
 
     public void setTakeOrders(int takeOrders) {
         this.takeOrders = takeOrders;
-    }
-
-    public int getDoneOrders() {
-        return doneOrders;
     }
 
     public void setDoneOrders(int doneOrders) {
@@ -46,10 +39,6 @@ public class ReportEntity implements Comparable{
 
     public void setEarnings(float earnings) {
         this.earnings = earnings;
-    }
-
-    public String getRate() {
-        return rate;
     }
 
     public void setRate(String rate) {

@@ -30,10 +30,9 @@ public class Pagination extends Filterable {
         } else if (httpSession.getAttribute("offset") != null) {
             offset = (int) httpSession.getAttribute("offset");
         }
-        //TODO КОСТЫЛЬ
         if (request.getParameter("payStatus") != null
                 || request.getParameter("compStatus") != null
-                || request.getParameter("masterLogin") != null){
+                || request.getParameter("masterLogin") != null) {
             httpSession.removeAttribute("offset");
         }
         List<Request> table = requests.stream()

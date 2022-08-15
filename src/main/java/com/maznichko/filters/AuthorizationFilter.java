@@ -1,7 +1,6 @@
 package com.maznichko.filters;
 
 import com.maznichko.services.Path;
-import com.maznichko.servlets.MasterServlet;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -23,15 +22,13 @@ public class AuthorizationFilter implements Filter {
         log.info("redirect filter is working...");
         if (session.getAttribute("role") != null) {
             if (session.getAttribute("role").equals("CUSTOMER")) {
-               resp.sendRedirect(Path.CUSTOMER_SERVLET);
-            }
-            else if (session.getAttribute("role").equals("MANAGER")) {
+                resp.sendRedirect(Path.CUSTOMER_SERVLET);
+            } else if (session.getAttribute("role").equals("MANAGER")) {
                 resp.sendRedirect(Path.MANAGER_SERVLET);
-            }
-            else if (session.getAttribute("role").equals("MASTER")) {
+            } else if (session.getAttribute("role").equals("MASTER")) {
                 resp.sendRedirect(Path.MASTER_SERVLET);
             }
-        }else {
+        } else {
             chain.doFilter(request, response);
         }
     }

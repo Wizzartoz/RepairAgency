@@ -26,7 +26,7 @@ public class UserReport {
         List<UserEntity> userEntities = new ArrayList<>();
         //Getting users
         List<User> users = GetUsers.execute(request);
-        if (users == null){
+        if (users == null) {
             return Path.ERROR;
         }
         List<User> customerUsers = users.stream()
@@ -39,7 +39,7 @@ public class UserReport {
             userEntity.setBank(user.getBank());
             userEntity.setLogin(login);
             List<Request> requests = getRequests(login);
-            if (requests == null){
+            if (requests == null) {
 
                 return Path.ERROR;
             }
@@ -53,7 +53,7 @@ public class UserReport {
         }
         request.setAttribute("table", userEntities
                 .stream()
-                .sorted((entity1,entity2)->-entity1.getLogin().compareTo(entity2.getLogin()))
+                .sorted((entity1, entity2) -> -entity1.getLogin().compareTo(entity2.getLogin()))
                 .collect(Collectors.toList()));
         return Path.REPORT_JSP;
 
@@ -64,7 +64,7 @@ public class UserReport {
         try {
             requests = requestDAO.getRequestByLogin(login);
         } catch (DBException e) {
-            log.error("<--------- get requests is failed",e);
+            log.error("<--------- get requests is failed", e);
             return null;
         }
         return requests;

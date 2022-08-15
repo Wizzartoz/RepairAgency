@@ -58,7 +58,7 @@ public class EditProfile implements CustomerCommand {
         try {
             user = userDAO.getUserByLogin(login);
         } catch (DBException e) {
-            log.error("<--------- get user is failed",e);
+            log.error("<--------- get user is failed", e);
             return null;
         }
         return user;
@@ -68,7 +68,7 @@ public class EditProfile implements CustomerCommand {
         try {
             userDAO.update(user);
         } catch (DBException e) {
-            log.error("<--------- update user is failed",e);
+            log.error("<--------- update user is failed", e);
             return false;
         }
         return true;

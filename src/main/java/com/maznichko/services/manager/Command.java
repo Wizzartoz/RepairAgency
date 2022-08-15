@@ -10,6 +10,6 @@ public interface Command {
      * @param req - request who we are getting
      * @return - return path to the jsp or servlet
      */
-    String execute(HttpServletRequest req , HttpServletResponse resp);
+    String execute(HttpServletRequest req, HttpServletResponse resp);
 
 }

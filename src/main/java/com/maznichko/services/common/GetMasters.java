@@ -11,16 +11,17 @@ import java.util.stream.Collectors;
 
 public class GetMasters {
     private static final Logger log = Logger.getLogger(GetMasters.class);
+
     public static List<User> findMasters(HttpServletRequest req) {
         List<User> users;
         try {
-           users = new UserDAOimpl().findAll();
+            users = new UserDAOimpl().findAll();
         } catch (DBException e) {
-            log.error("<---------- find all users was failed",e);
+            log.error("<---------- find all users was failed", e);
             return null;
         }
-        List<User> list = users.stream().filter(x->x.getRole().equals("MASTER")).collect(Collectors.toList());
-        req.setAttribute("masters",list);
+        List<User> list = users.stream().filter(x -> x.getRole().equals("MASTER")).collect(Collectors.toList());
+        req.setAttribute("masters", list);
         log.info("<--------- find all users was successful");
         return list;
     }

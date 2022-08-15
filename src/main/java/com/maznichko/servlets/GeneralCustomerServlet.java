@@ -25,7 +25,7 @@ public class GeneralCustomerServlet extends HttpServlet {
     private Replenishment replenishment;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         getTable = new GenerateTableRequests(new RequestDAOimpl());
         getTable.linkWith(new Pagination());
         replenishment = new Replenishment(new UserDAOimpl());

@@ -4,6 +4,7 @@ package com.maznichko;
 import org.apache.log4j.Logger;
 
 import java.util.Properties;
+import java.util.ResourceBundle;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -13,14 +14,17 @@ import javax.mail.internet.MimeMessage;
  */
 public class SendEmail extends Thread implements Sender {
     private static final Logger log = Logger.getLogger(SendEmail.class);
-    private static Properties properties = GetProperties.getProp("/home/misha/IdeaProjects/RepairAgent/src/main/resources/config.properties");
-    private static final String user = properties.getProperty("email.login");
-    private static final String password = properties.getProperty("email.password");
+    private static final ResourceBundle properties;
+    private static final String user;
+    private static final String password;
     private String header;
     private String body;
     private String to;
     private static final Properties props = new Properties();
     static {
+        properties = ResourceBundle.getBundle("config");
+        user = properties.getString("email.login");
+        password = properties.getString("email.password");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "587");

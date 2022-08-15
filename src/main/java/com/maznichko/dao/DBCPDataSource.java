@@ -1,29 +1,30 @@
 package com.maznichko.dao;
 
-import com.maznichko.GetProperties;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.ResourceBundle;
 
-public class DBCPDataSource extends ManagerDB {
-    private static BasicDataSource ds = new BasicDataSource();
-    static Properties properties = GetProperties.getProp("/home/misha/IdeaProjects/RepairAgent/src/main/resources/config.properties");
+public class DBCPDataSource extends UtilDB {
+
+    private static final BasicDataSource ds = new BasicDataSource();
+    private static final ResourceBundle properties;
 
     static {
-        ds.setUrl(properties.getProperty("postgres.url"));
-        ds.setUsername(properties.getProperty("postgres.user"));
-        ds.setPassword(properties.getProperty("postgres.password"));
+        properties = ResourceBundle.getBundle("config");
+        ds.setUrl(properties.getString("postgres.url"));
+        ds.setUsername(properties.getString("postgres.user"));
+        ds.setPassword(properties.getString("postgres.password"));
         ds.setMinIdle(5);
         ds.setMaxIdle(10);
         ds.setMaxOpenPreparedStatements(100);
     }
 
-    public static Connection getConnection() throws SQLException {
-        return ds.getConnection();
+    private DBCPDataSource() {
     }
 
-    private DBCPDataSource(){
+    public static Connection getConnection() throws SQLException {
+        return ds.getConnection();
     }
 }

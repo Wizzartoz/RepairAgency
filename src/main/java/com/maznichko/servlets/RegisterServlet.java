@@ -18,8 +18,8 @@ public class RegisterServlet extends HttpServlet {
     private Register register;
 
     @Override
-    public void init() throws ServletException {
-        register = new Register(new UserDAOimpl(),new SendEmail());
+    public void init() {
+        register = new Register(new UserDAOimpl(), new SendEmail());
     }
 
     @Override
@@ -32,7 +32,7 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = Path.REGISTER_SERVLET;
-        boolean isRegister = register.register(request, "CUSTOMER",true);
+        boolean isRegister = register.register(request, "CUSTOMER", true);
         log.info("<------------- method login is completed path: " + path);
         if (isRegister) {
             path = Path.CUSTOMER_SERVLET;

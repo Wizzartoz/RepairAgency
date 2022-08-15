@@ -13,15 +13,17 @@ import java.util.stream.Collectors;
 public class GetFeedback {
     private final FeedbackDAO feedbackDAO;
     private static final Logger log = Logger.getLogger(GetBank.class);
-    public GetFeedback(FeedbackDAO feedbackDAO){
+
+    public GetFeedback(FeedbackDAO feedbackDAO) {
         this.feedbackDAO = feedbackDAO;
     }
-    public String getFeedback(HttpServletRequest request, String masterLogin){
+
+    public String getFeedback(HttpServletRequest request, String masterLogin) {
         List<Feedback> feedbacks;
         try {
             feedbacks = feedbackDAO.findAll();
         } catch (DBException e) {
-            log.error("<----------- find all feedbacks is failed",e);
+            log.error("<----------- find all feedbacks is failed", e);
             return Path.ERROR;
         }
         List<Feedback> table = feedbacks

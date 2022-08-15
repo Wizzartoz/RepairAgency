@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
 
-public class    SuccessfulDelete {
+public class SuccessfulDeleteTest {
     HttpServletRequest request = mock(HttpServletRequest.class);
     RequestDAOimpl requestDAOimpl = mock(RequestDAOimpl.class);
     Request requestEntity = new Request();

@@ -39,7 +39,7 @@ public class MasterReport implements Command {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         //Getting all masters
         List<User> masters = GetMasters.findMasters(req);
-        if (masters == null){
+        if (masters == null) {
             return Path.ERROR;
         }
         List<ReportEntity> report = new ArrayList<>();

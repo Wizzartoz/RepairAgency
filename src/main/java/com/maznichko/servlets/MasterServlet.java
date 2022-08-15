@@ -23,7 +23,7 @@ public class MasterServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(MasterServlet.class);
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         filter = new GenerateTableRequests(new RequestDAOimpl());
         filter.linkWith(new Pagination());
     }

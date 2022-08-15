@@ -75,7 +75,7 @@ public class EditRequest implements Command {
             }
             //Getting masters
             List<User> masters = GetMasters.findMasters(req);
-            if (masters == null){
+            if (masters == null) {
                 return Path.ERROR;
             }
             User master = new User();

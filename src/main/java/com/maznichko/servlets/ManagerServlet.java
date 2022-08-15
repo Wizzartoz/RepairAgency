@@ -31,7 +31,7 @@ public class ManagerServlet extends HttpServlet {
     private Register register;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         UserDAO userDAO = new UserDAOimpl();
         filter = new GenerateTableRequests(new RequestDAOimpl());
         filter.linkWith(new StatusFilter())
@@ -40,7 +40,7 @@ public class ManagerServlet extends HttpServlet {
                 .linkWith(new Sort())
                 .linkWith(new Pagination());
         replenishment = new Replenishment(userDAO);
-        register = new Register(userDAO,new SendEmail());
+        register = new Register(userDAO, new SendEmail());
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ManagerServlet extends HttpServlet {
         log.info("<------------ command: " + command + " is completed");
         if (request.getParameter("name") != null) {
             path = Path.MANAGER_SERVLET;
-            register.register(request, "MASTER",false);
+            register.register(request, "MASTER", false);
             log.info("<------------ registration method was completed");
         }
         response.sendRedirect(path + "?result=" + request.getAttribute("result"));

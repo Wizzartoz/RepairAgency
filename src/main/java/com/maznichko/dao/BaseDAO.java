@@ -1,16 +1,19 @@
 package com.maznichko.dao;
 
 import com.maznichko.dao.entity.Entity;
+
 import java.util.List;
 
 /**
  * It's basically crud interface
+ *
  * @param <T> parameterizable type of entity
  */
 public abstract class BaseDAO<T extends Entity> {
 
     /**
      * get all element from DB
+     *
      * @return - all element
      * @throws DBException - if element don't exist or connection to DB was failed
      */
@@ -18,6 +21,7 @@ public abstract class BaseDAO<T extends Entity> {
 
     /**
      * get element by id
+     *
      * @param id - id of column
      * @return - element
      * @throws DBException - if element don't exist or connection to DB was failed
@@ -26,6 +30,7 @@ public abstract class BaseDAO<T extends Entity> {
 
     /**
      * update element of DB
+     *
      * @param data - request or the similar entity
      * @return - element
      * @throws DBException - if element don't exist or connection to DB was failed
@@ -34,6 +39,7 @@ public abstract class BaseDAO<T extends Entity> {
 
     /**
      * delete element of DB
+     *
      * @param data - request or the similar entity
      * @return - element
      * @throws DBException - if element don't exist or connection to DB was failed
@@ -43,6 +49,7 @@ public abstract class BaseDAO<T extends Entity> {
 
     /**
      * insert element into DB
+     *
      * @param data - request or the similar entity
      * @return - element
      * @throws DBException - if element don't exist or connection to DB was failed

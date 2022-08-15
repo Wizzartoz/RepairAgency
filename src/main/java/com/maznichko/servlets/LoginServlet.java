@@ -16,7 +16,7 @@ public class LoginServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(LoginServlet.class);
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         login = new Login(new UserDAOimpl());
     }
 

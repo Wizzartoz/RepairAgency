@@ -15,7 +15,7 @@ public class TakeRequest implements MasterCommand {
     private final Sender sender;
     private static final Logger log = Logger.getLogger(TakeRequest.class);
 
-    public TakeRequest(RequestDAO requestDAO,Sender sender) {
+    public TakeRequest(RequestDAO requestDAO, Sender sender) {
         this.requestDAO = requestDAO;
         this.sender = sender;
     }
@@ -54,14 +54,11 @@ public class TakeRequest implements MasterCommand {
         if (!isUpdate) {
             return Path.ERROR;
         }
-        /*
         sender.send(
                 "Request",
                 "The master took your order",
                 "maznichkogame@gmail.com"
         );
-
-         */
         req.setAttribute("result", "Status changed successfully");
         return Path.MASTER_SERVLET;
     }

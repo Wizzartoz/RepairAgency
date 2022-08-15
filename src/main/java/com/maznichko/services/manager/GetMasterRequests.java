@@ -19,8 +19,9 @@ public class GetMasterRequests {
 
     /**
      * method, need-able for get requests by master's login
+     *
      * @param request - request of servlet
-     * @param login - master's login
+     * @param login   - master's login
      * @return - path of servlet or jsp page
      */
     public String getRequests(HttpServletRequest request, String login) {
@@ -28,7 +29,7 @@ public class GetMasterRequests {
         try {
             requests = requestDAO.getRequestByLogin(login);
         } catch (DBException e) {
-            log.error("<------ get request by login is failed",e);
+            log.error("<------ get request by login is failed", e);
             return Path.ERROR;
         }
         request.setAttribute("table", requests);

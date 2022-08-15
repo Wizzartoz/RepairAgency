@@ -16,7 +16,7 @@ public class RequestDAOimpl extends RequestDAO {
         try {
             request.setRequestID(resultSet.getInt("id_request"));
             request.setDescription(resultSet.getString("description"));
-            request.setDate(resultSet.getTimestamp("date").toString().substring(0,19));
+            request.setDate(resultSet.getTimestamp("date").toString().substring(0, 19));
             request.setComplicationStatus(resultSet.getString("complication_status"));
             request.setPaymentStatus(resultSet.getString("payment_status"));
             request.setPrice(resultSet.getFloat("price"));

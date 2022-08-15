@@ -1,7 +1,5 @@
 package com.maznichko.services.customer;
 
-import com.maznichko.GetProperties;
-import com.maznichko.SendEmail;
 import com.maznichko.Sender;
 import com.maznichko.dao.DBException;
 import com.maznichko.dao.RequestDAO;
@@ -11,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ResourceBundle;
 
 public class SendRequest implements CustomerCommand {
     private static final Logger log = Logger.getLogger(SendRequest.class);
@@ -18,7 +17,7 @@ public class SendRequest implements CustomerCommand {
     private final Request request;
     private final Sender sender;
 
-    public SendRequest(RequestDAO requestDAO,Sender sender) {
+    public SendRequest(RequestDAO requestDAO, Sender sender) {
         this.requestDAO = requestDAO;
         request = new Request();
         this.sender = sender;
@@ -49,23 +48,21 @@ public class SendRequest implements CustomerCommand {
         }
         try {
             requestDAO.insertRequestInUserRequest(login, request.getRequestID());
-            requestDAO.insertRequestInUserRequest(
-                    GetProperties.getProp("/home/misha/IdeaProjects/RepairAgent/src/main/resources/config.properties")
-                    .getProperty("root"),
-                    request.getRequestID()
+            ResourceBundle properties = ResourceBundle.getBundle("config");
+            requestDAO.insertRequestInUserRequest(properties.getString("root"), request.getRequestID()
             );
         } catch (DBException e) {
             log.error("<----------- send request is failed", e);
             return Path.ERROR;
         }
-        /*
+
         sender.send("Request",
                 "You're successfully left request, wait for consideration",
                 "maznichkogame@gmail.com");
 
-         */
         return Path.CUSTOMER_SERVLET;
     }
+
     private boolean insertRequest() {
         try {
             requestDAO.insert(request);

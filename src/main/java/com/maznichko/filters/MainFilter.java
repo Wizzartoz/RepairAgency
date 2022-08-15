@@ -1,7 +1,6 @@
 package com.maznichko.filters;
 
 import com.maznichko.services.Path;
-import com.maznichko.servlets.MasterServlet;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -19,6 +18,7 @@ import java.io.IOException;
 })
 public class MainFilter implements Filter {
     private static final Logger log = Logger.getLogger(MainFilter.class);
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         log.info("permissions filter is working...");

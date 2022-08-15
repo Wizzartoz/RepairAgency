@@ -7,7 +7,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 
 @WebListener
-public class ApplicationListener implements ServletContextListener{
+public class ApplicationListener implements ServletContextListener {
 
     private static final Logger log = Logger.getLogger(GetMasters.class);
 

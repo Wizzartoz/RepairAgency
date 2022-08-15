@@ -3,9 +3,9 @@ package com.maznichko;
 /**
  * This class send notify to other places
  */
-public interface Sender  {
+public interface Sender {
     /**
      * send notify
      */
-    void send(String header,String body,String to);
+    void send(String header, String body, String to);
 }

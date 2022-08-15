@@ -19,7 +19,7 @@ public class DoneRequest implements MasterCommand {
     private final Sender sender;
     private static final Logger log = Logger.getLogger(DoneRequest.class);
 
-    public DoneRequest(RequestDAO requestDAO,UserDAO userDAO,Sender sender) {
+    public DoneRequest(RequestDAO requestDAO, UserDAO userDAO, Sender sender) {
         this.requestDAO = requestDAO;
         this.userDAO = userDAO;
         this.sender = sender;
@@ -54,43 +54,42 @@ public class DoneRequest implements MasterCommand {
         }
         //Replenishment master's bank
         User master = getUser(req);
-        if (master == null){
+        if (master == null) {
             return Path.ERROR;
         }
         master.setBank(((master.getBank() + request.getPrice().intValue())));
         //Updating master
         boolean isUpdateMaster = updateUser(master);
-        if (!isUpdateMaster){
+        if (!isUpdateMaster) {
             return Path.ERROR;
         }
-        /*
         sender.send(
                 "Request",
                 "The master did your order",
                 "maznichkogame@gmail.com"
         );
 
-         */
         req.setAttribute("result", "Status changed successfully");
         return Path.MASTER_SERVLET;
     }
-    private boolean updateUser(User user){
+
+    private boolean updateUser(User user) {
         try {
             userDAO.update(user);
         } catch (DBException e) {
-            log.error("<------------ update master is failed",e);
+            log.error("<------------ update master is failed", e);
             return false;
         }
         return true;
     }
 
-    private User getUser(HttpServletRequest request){
+    private User getUser(HttpServletRequest request) {
         HttpSession httpSession = request.getSession();
         User user;
         try {
-           user =  userDAO.getUserByLogin((String) httpSession.getAttribute("login"));
+            user = userDAO.getUserByLogin((String) httpSession.getAttribute("login"));
         } catch (DBException e) {
-            log.error("<------------ get master is failed",e);
+            log.error("<------------ get master is failed", e);
             return null;
         }
         return user;

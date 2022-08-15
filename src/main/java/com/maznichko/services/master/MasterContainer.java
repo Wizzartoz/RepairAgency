@@ -15,19 +15,20 @@ public class MasterContainer {
     private static final Logger log = Logger.getLogger(MasterContainer.class);
 
 
-
     static {
-        commands.put("doneRequest", new DoneRequest(REQUEST_DAO,new UserDAOimpl(),new SendEmail()));
-        commands.put("takeRequest", new TakeRequest(REQUEST_DAO,new SendEmail()));
+        commands.put("doneRequest", new DoneRequest(REQUEST_DAO, new UserDAOimpl(), new SendEmail()));
+        commands.put("takeRequest", new TakeRequest(REQUEST_DAO, new SendEmail()));
         log.info("<--------- master container is set up");
 
     }
+
     /**
      * This method by parameter return you object
+     *
      * @param command - parameter who we are getting from request
      * @return - object
      */
-    //TODO maybe will be better make this method like Optional because I don't check method on null
+
     public static MasterCommand get(String command) {
         if (command == null || !commands.containsKey(command)) {
             return null;

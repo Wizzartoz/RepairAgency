@@ -41,14 +41,12 @@ public class Login {
             req.setAttribute("result", "User didn't exist");
             return Path.LOGIN_SERVLET;
         }
-        /*
         //Check captcha
         boolean isCaptcha = checkCaptcha(req);
         if (!isCaptcha) {
             req.setAttribute("result", "Captcha is failed");
             return Path.LOGIN_SERVLET;
         }
-         */
         //Checking conditions before enter
         if (user.getPassword().equals(MD5.getMd5(password))) {
             HttpSession httpSession = req.getSession();

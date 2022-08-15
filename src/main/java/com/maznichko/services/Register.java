@@ -18,7 +18,7 @@ public class Register {
     private final User user;
     private final Sender sender;
 
-    public Register(UserDAO userDAO,Sender sender) {
+    public Register(UserDAO userDAO, Sender sender) {
         this.userDAO = userDAO;
         user = new User();
         this.sender = sender;
@@ -32,7 +32,7 @@ public class Register {
      * @param role - role of user
      * @return - true if register was successful or not if false
      */
-    public boolean register(HttpServletRequest req, String role,boolean captcha) {
+    public boolean register(HttpServletRequest req, String role, boolean captcha) {
         String name = req.getParameter("name");
         if (name == null || name.isEmpty()) {
             req.setAttribute("result", "Name is empty");
@@ -74,7 +74,7 @@ public class Register {
             httpSession.setAttribute("login", login);
             httpSession.setAttribute("role", role);
         }
-        if (captcha){
+        if (captcha) {
             boolean isCaptcha = checkCaptcha(req);
             if (!isCaptcha) {
                 req.setAttribute("result", "captcha is failed");
@@ -85,14 +85,12 @@ public class Register {
         if (!isInsert) {
             return false;
         }
-        /*
         sender.send(
                 "Successfully registered",
                 "We're congratulation you with registration!",
                 "maznichkogame@gmail.com"
         );
 
-         */
         req.setAttribute("result", "user successfully registered");
         log.info("user " + login + "<-------- was registering successful");
         return true;
@@ -114,14 +112,14 @@ public class Register {
         if (gRecaptchaResponse != null) {
             try {
                 VerifyRecaptcha.verify(gRecaptchaResponse);
-                if (gRecaptchaResponse.isEmpty()){
+                if (gRecaptchaResponse.isEmpty()) {
                     throw new IOException();
                 }
             } catch (IOException e) {
                 log.warn("<---------- captcha is failed", e);
                 return false;
             }
-        }else {
+        } else {
             return false;
         }
         return true;

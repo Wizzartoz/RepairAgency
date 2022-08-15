@@ -12,8 +12,6 @@ import com.maznichko.services.manager.BLockUser;
 import com.maznichko.services.manager.GetMasterRequests;
 import com.maznichko.services.manager.MasterReport;
 import com.maznichko.services.manager.UserReport;
-import org.apache.log4j.Logger;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -26,16 +24,15 @@ public class ManagerReportServlet extends HttpServlet {
     private GetFeedback getFeedback;
     private BLockUser bLockUser;
     private GetMasterRequests getMasterRequests;
-    private static final Logger log = Logger.getLogger(ManagerReportServlet.class);
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         RequestDAO requestDAO = new RequestDAOimpl();
         FeedbackDAO feedbackDAO = new FeedbackDAOimpl();
         masterReport = new MasterReport(requestDAO, feedbackDAO);
         userReport = new UserReport(requestDAO);
         getFeedback = new GetFeedback(feedbackDAO);
-        bLockUser = new BLockUser(new UserDAOimpl(),new SendEmail());
+        bLockUser = new BLockUser(new UserDAOimpl(), new SendEmail());
         getMasterRequests = new GetMasterRequests(requestDAO);
     }
 
@@ -44,9 +41,9 @@ public class ManagerReportServlet extends HttpServlet {
         String path;
         String masterLogin = request.getParameter("rating");
         if (masterLogin != null) {
-            path = getFeedback.getFeedback(request,masterLogin);
-        } else if (request.getParameter("requests")!= null) {
-            path = getMasterRequests.getRequests(request,request.getParameter("requests"));
+            path = getFeedback.getFeedback(request, masterLogin);
+        } else if (request.getParameter("requests") != null) {
+            path = getMasterRequests.getRequests(request, request.getParameter("requests"));
         } else if (request.getParameter("repo") == null) {
             path = userReport.getReport(request);
         } else {
@@ -60,13 +57,13 @@ public class ManagerReportServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = Path.REPORT_JSP;
-       if (request.getParameter("block") != null) {
+        if (request.getParameter("block") != null) {
             if (request.getParameter("block").equals("Block")) {
                 path = bLockUser.block(request.getParameter("login"));
             } else {
                 path = bLockUser.unblock(request.getParameter("login"));
             }
         }
-       response.sendRedirect(path);
+        response.sendRedirect(path);
     }
 }
